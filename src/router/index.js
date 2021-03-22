@@ -4,6 +4,8 @@ import Home from '../views/Home.vue';
 import Page from '../views/Page.vue';
 import Dashboard from '../views/Dashboard.vue';
 import Two from '../views/Two.vue';
+import Entries from '../views/Entries.vue';
+import ClientDashboard from '../views/ClientDashboard.vue';
 
 Vue.use(VueRouter);
 
@@ -35,6 +37,16 @@ const routes = [
     path: '/two',
     name: 'Two',
     component: Two,
+  },
+  {
+    path: '/entries',
+    name: 'Entries',
+    component: Entries,
+  },
+  {
+    path: '/client',
+    name: 'ClientDashboard',
+    component: ClientDashboard,
   },
 ];
 

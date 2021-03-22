@@ -2,21 +2,20 @@
 <div class="container-bg d-flex">
   <div class="body-cover">
     <div class="laptopLogo">
-      <img src="../assets/Group.svg" alt="Laptop icon">
+      <img src="../assets/laptop.svg" alt="Laptop icon">
     </div>
   </div>
     <b-container>
       <!-- <div class="wrapper"> -->
         <div class="mainlogo">
-          <img alt="Enyata logo" class="img-fluid" src="../assets/logo2.svg">
+          <img alt="Enyata logo" class="img-fluid" src="../assets/newlogowhite.svg">
         </div>
         <div>
-          <h2 class="companyName">enyata</h2>
           <h4><i>Admin Log In</i></h4>
         </div>
       <!-- </div> -->
       <div class="row justify-content-center mt-4">
-        <div class="col-lg-5">
+        <div class="col-lg-5 form">
           <b-form @submit="onSubmit" >
             <b-form-group
               id="input-group-1"
@@ -98,22 +97,15 @@ export default {
 </script>
 
 <style scoped>
-body {
+/* body {
   background-color: #121F2B;
-}
+} */
 .container-bg {
-  background-color: #121F2B;
+  background-color: #7557D3;
   min-height: 100vh;
   color: #fff;
   position: relative;
   box-sizing: border-box;
-  /* padding-top: 80px; */
-}
-.wrapper {
-  /* max-width: 500px; */
-  /* text-align: center;
-  align-items: center; */
-  /* margin: 0 auto; */
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -121,30 +113,40 @@ h1, h2, h3, h4, h5, h6, p {
   padding: 0;
 }
 .mainlogo {
-  width: 49px;
-  height: 52px;
+  width: 110px;
+  height: 21px;
   margin: 0 auto;
   margin-top: 100px;
   margin-bottom: 16.13px;
+}
+h4 {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #fff;
+  margin-top: 24px;
 }
 .mainlogo img {
   width: 100%;
   height: 100%;
 }
 .input {
-  background-color : #121F2B;
+  background-color : #7557D3;
   color: #fff;
 }
-.companyName {
-  margin-bottom: 8.5px;
+::placeholder {
+  color: gainsboro;
 }
+/* .companyName {
+  margin-bottom: 8.5px;
+} */
 /* .body-cover {
   position: relative;
   box-sizing: border-box;
 } */
 .laptopLogo {
   position: absolute;
-  right:0px;
+  right: 0px;
   /* overflow: hidden; */
   margin-left: 60px;
   margin-top: 80px;
@@ -155,5 +157,8 @@ h1, h2, h3, h4, h5, h6, p {
   width: 100%;
   height: 100%;
   position: relative;
+}
+.form {
+  /* margin-right: 20px; */
 }
 </style>

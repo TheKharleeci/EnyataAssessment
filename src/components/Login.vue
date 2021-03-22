@@ -1,21 +1,20 @@
 <template>
-  <b-container>
+<div>
     <div class="wrapper">
       <div class="mainlogo">
-        <img alt="Enyata logo" class="img-fluid" src="../assets/logo.svg">
+        <img alt="Enyata logo" class="img-fluid" src="../assets/enyatalogo.svg">
       </div>
       <div>
-        <h2 class="companyName">enyata</h2>
         <h4><i>Applicant Log In</i></h4>
       </div>
     </div>
-   <div class="row justify-content-center mt-4">
-     <div class="col-lg-5 mb-5">
+    <div class="row no-gutters justify-content-center mt-4">
+      <div class="col-lg-4 mb-5">
       <b-form @submit="onSubmit" @reset="onReset">
         <b-form-group
           id="input-group-1"
           label="Email address"
-          class="text-left"
+          class="text-left label"
           label-for="input-1"
         >
           <b-form-input
@@ -31,7 +30,7 @@
         id="input-group-2"
         label="Password"
         label-for="input-2"
-        class="text-left"
+        class="text-left label"
         type="password">
           <b-form-input
             id="input-2"
@@ -43,18 +42,17 @@
           ></b-form-input>
           <br>
         </b-form-group>
-        <div class="mt-3">
-        <b-button type="submit" block variant="dark">Sign In</b-button>
-        <br>
+        <div class="">
+        <b-button type="submit" class="button" block variant="dark">Sign In</b-button>
         <div class="register d-flex justify-content-between">
           <p> <i> <small>Don't have an account yet? <a href=""> Sign Up</a></small></i></p>
           <p> <i><small>Forgot Password?</small></i></p>
         </div>
         </div>
       </b-form>
-     </div>
+      </div>
   </div>
-</b-container>
+</div>
 </template>
 
 <script>
@@ -98,8 +96,8 @@ h1, h2, h3, h4, h5, h6, p {
   padding: 0;
 }
 .mainlogo {
-  width: 49px;
-  height: 52px;
+  width: 110px;
+  height: 21px;
   margin-top: 173px;
   margin: 0 auto;
   margin-bottom: 16.13px;
@@ -108,7 +106,41 @@ h1, h2, h3, h4, h5, h6, p {
   width: 100%;
   height: 100%;
 }
-.companyName {
+/* .companyName {
   margin-bottom: 8.5px;
+} */
+h4 {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #2B3C4E;
+  margin-top: 24px;
+}
+.label {
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4F4F4F;
+}
+.button {
+  /* background-color: ; */
+  background: #7557D3;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 16px;
+  height: 45px;
+  border: none;
+  margin-bottom: 12px;
+  /* line-height: 19px; */
+}
+a {
+  text-decoration-line: underline;
+}
+input {
+  border: 1.5px solid #BDBDBD;
+  box-sizing: border-box;
+  border-radius: 4px;
+  /* height: 48px;
+  width: 379px; */
 }
 </style>

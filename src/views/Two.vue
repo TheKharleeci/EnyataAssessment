@@ -1,67 +1,85 @@
 <template>
-  <div class="wrapper">
-    <b-container class="bv-example-row">
+    <div class="wrapper">
       <b-row class="text-center">
-        <div class="d-flex">
-          <b-col cols="2" >
-            <!-- <b-row> -->
-              <ApplicantSideBar />
-            <!-- </b-row> -->
-          </b-col>
-          <b-col cols="10" class="main-page">
-            <b-row>
-              <b-col>
-                <div class="text-left">
-                <h1>Dashboard</h1>
-                <p class="intro-text"><i>Your Application is currently being reviewed,
-                  you wil be notified if successful</i></p>
-                </div>
-              </b-col>
-            </b-row>
-            <b-row>
-              <b-col cols="3" class="text-left">
-                <p>Date of Application</p>
-                <h2>09.09.19</h2>
-                <span id="spanA"></span>
-                <h6>4 days since applied</h6>
-              </b-col>
-              <b-col cols="1"></b-col>
-              <b-col cols="3" class="text-left">
-                <p>Application Status</p>
-                <h2>Pending</h2>
-                <span id="spanB"></span>
-                <h6>We will get back to you</h6>
-              </b-col>
-            </b-row>
-            <b-row class="mt-5">
-              <b-col cols="7" class="text-left">
-                <div class="box">
-                  <p class="boxHeader">Updates</p>
-                  <div class="line"></div>
-                  <div class="line"></div>
-                  <div class="line"></div>
-                  <div class="line"></div>
-                </div>
-              </b-col>
-              <b-col cols="5" class="text-left">
-                <div class="box">
-                  <p class="boxHeader">Take Assessment</p>
-                  <div class="note mt-4 text-center ">
-                    <p id="note">We have 4 days left until the next assessment Watch this space</p>
+        <!-- <b-col cols="3" class="adm">First End
+          <ApplicantSideBar />
+        </b-col>
+        <b-col cols="1">Spacing</b-col>
+        <b-col>second end</b-col> -->
+        <b-col cols="3" >
+          <b-row>
+            <ApplicantSideBar />
+          </b-row>
+        </b-col>
+        <b-col cols="9" class="main-page">
+          <b-row >
+            <b-col cols="8">
+              <div class="text-left">
+                <h1>Take Assessment</h1>
+                <p class="intro-text"><i>Click the finish button below to submit assessment,
+                  you can go back at any time to edit your answers.</i></p>
+              </div>
+            </b-col>
+            <b-col cols="1"></b-col>
+            <b-col cols="3">
+              <div class="text-left">
+              <p>Timer</p>
+              <h3>00 <span> <small>min</small></span> 010<span> <small>sec</small></span></h3>
+              </div>
+            </b-col>
+          </b-row>
+          <b-row class="mb-3">
+            <b-col cols=""></b-col>
+            <b-col cols="7">
+              <h6><i>Question 1</i></h6>
+              <p class="questions"><i>What is the purpose of HDR technology?</i></p>
+              <div class="options text-left">
+                <ul class="list-group">
+                  <li class="list-group-item d-flex justify-content-evenly">
+                    <input type="checkbox" aria-label="">
                     <div>
-                      <b-button type="submit" block variant="secondary" disabled>
-                        Take Assessment
-                      </b-button>
+                      <i>A. To reduce the file size of images and videos.</i>
                     </div>
-                  </div>
-                </div>
-              </b-col>
-            </b-row>
-          </b-col>
-        </div>
+                  </li>
+                  <li class="list-group-item"><i>
+                    <input type="checkbox" aria-label="">
+                    B. To speed up 3D rendering performance.</i></li>
+                  <li class="list-group-item"><i>
+                    <input type="checkbox" aria-label="">
+                    C. To support higher resolutions.</i></li>
+                  <li class="list-group-item"><i>
+                    <input type="checkbox" aria-label="">
+                    D. To display more colors in images and videos.</i></li>
+              </ul>
+              </div>
+            </b-col>
+            <b-col cols=""></b-col>
+          </b-row>
+          <b-row>
+            <b-col cols="">
+            <b-button type="" block variant="dark">
+            Previous</b-button>
+            </b-col>
+            <b-col cols="7">
+              <!-- <b-button type="" block variant="dark" disabled>
+            Finish</b-button> -->
+            </b-col>
+            <b-col cols="">
+            <b-button type="" block variant="dark">
+            Next</b-button>
+            </b-col>
+          </b-row>
+          <b-row class="mt-5">
+            <b-col></b-col>
+            <b-col cols="7">
+              <b-button class="finishBtn" type="submit" variant="dark" disabled>
+            Finish</b-button>
+            </b-col>
+            <b-col></b-col>
+          </b-row>
+        </b-col>
       </b-row>
-    </b-container>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -76,13 +94,37 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
+/* body {
   min-height: 100vh;
-}
+  min-width: 100vw;
+} */
+/* .wrapper {
+  min-height: 100vh;
+} */
 .main-page {
   padding-top: 80px;
   padding-bottom: 15px;
   /* margin-left: 0; */
+}
+.adm {
+  border: 1px solid #ECECF9;
+  width: 50vw;
+}
+li::selection {
+  background-color: yellow;
+}
+.options {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #2B3C4E;
+}
+.finishBtn {
+  width: 205px;
+  background: #CECECE;
+  border-radius: 4px;
+  border: none;
+  font-weight: bold;
 }
 .intro-text {
   font-style: italic;
@@ -95,7 +137,7 @@ export default {
 }
 #spanA, #spanB {
   display:block;
-  width:80%; /*or whatever width you want the effect of <hr>*/
+  width:80%;
   border-top: 4px solid #006DF0;
   /* background: #006DF0; */
   border-radius: 4px;
@@ -118,53 +160,25 @@ h2 {
   color: #2B3C4E;
 }
 h6 {
-  margin-top: 9px;
-  /* font-family: Lato; */
-  /* font-style: normal; */
-  /* font-weight: normal; */
-  font-size: 12px;
-  line-height: 14px;
-  color: #4F4F4F;
-  /* margin-bottom: 20px; */
+  margin-top: 30px;
+  font-family: Lato;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #2B3C4E;
+  margin-bottom: 14px;
 }
-.box {
-  width: 482px;
-  min-height: 352px;
-  border: 1px solid #ECECF9;
-  box-sizing: border-box;
-  border-radius: 4px;
-  padding: 30px;
+.questions {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #2B3C4E;
+  margin-bottom: 48px;
 }
 p {
   font-weight: normal;
   font-size: 14px;
   line-height: 17px;
   color: #4F4F4F;
-}
-.line {
-  border-bottom: 1px solid #CECECE;
-  height: 60px;
-}
-.boxHeader {
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 19px;
-  letter-spacing: -0.02em;
-  color: #2B3C4E;
-}
-.note {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  height: 200px;
-  width: 350px;
-  flex-direction: column;
-}
-#note {
-font-weight: normal;
-font-size: 17px;
-line-height: 20px;
-color: #4F4F4F;
 }
 </style>

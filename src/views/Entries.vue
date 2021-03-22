@@ -9,74 +9,63 @@
         <b-col cols="9">
            <b-row no-gutters >
             <b-col class="text-left">
-              <h2 class="headerText">Dashboard</h2>
+              <h2 class="headerText">Entries - Batch 2</h2>
+              <p> <small> <i>Comprises all that applied for batch 2</i> </small> </p>
             </b-col>
-          </b-row>
-          <b-row no-gutters >
-            <b-col cols="3" class="text-left">
-              <p>Current Applications</p>
-              <h2>233</h2>
-              <span id="spanA"></span>
-              <h6>Academy 2.0</h6>
-            </b-col>
-            <b-col cols="3" class="text-left">
-              <p>Total Applications</p>
-              <h2>4253</h2>
-              <span id="spanB"></span>
-              <h6>All entries so far</h6>
-            </b-col>
-            <b-col cols="3" class="text-left">
-              <p>Academy's</p>
-              <h2>4</h2>
-              <span id="spanC"></span>
-              <h6>So far</h6>
-            </b-col>
-            <b-col cols="3"></b-col>
           </b-row>
           <b-row no-gutters class="mt-5">
-            <b-col cols="5">
+            <b-col cols="11">
               <div>
-                <div class="text-left">
-                <p class="boxHeader">History</p>
-                <p> <small>Last Update <span>18:24, 22/02/19</span></small> </p>
+                <div class="table-header">
+                  <b-row no-gutters class="align-items-center">
+                    <b-col cols="2">Name</b-col>
+                      <b-col cols="2">Email</b-col>
+                      <b-col cols="2">DOB-Age <span>
+                        <button class="btn">
+                          <img src="../assets/age-arrow.svg" alt="sort button">
+                        </button> </span>
+                      </b-col>
+                      <b-col cols="3">Address</b-col>
+                      <b-col cols="2">University</b-col>
+                      <b-col cols="1">CGPA
+                        <button class="btn">
+                          <img src="../assets/age-arrow.svg" alt="sort button">
+                        </button>
+                      </b-col>
+                  </b-row>
                 </div>
-                <b-list-group class="text-left">
+                <b-list-group class="">
                   <b-list-group-item href="#" class="batch">
                     <b-row no-gutters>
-                      <b-col cols="5">Academy Batch 1</b-col>
-                      <b-col cols="3">15 students</b-col>
-                      <b-col cols="4">started 11/09/15</b-col>
+                      <b-col cols="2">Ify Chinke</b-col>
+                      <b-col cols="2">ify@enyata.com</b-col>
+                      <b-col cols="2">12/09/19</b-col>
+                      <b-col cols="3">3 Sabo Ave, Yaba, Lagos</b-col>
+                      <b-col cols="2">University of Nigeria</b-col>
+                      <b-col cols="1">5.0</b-col>
                     </b-row>
                   </b-list-group-item>
                   <b-list-group-item href="#" class="batch">
                     <b-row no-gutters>
-                      <b-col cols="5">Academy Batch 2</b-col>
-                      <b-col cols="3">15 students</b-col>
-                      <b-col cols="4">started 11/09/15</b-col>
+                      <b-col cols="2">Ify Chinke</b-col>
+                      <b-col cols="2">ify@enyata.com</b-col>
+                      <b-col cols="2">12/09/19</b-col>
+                      <b-col cols="3">3 Sabo Ave, Yaba, Lagos</b-col>
+                      <b-col cols="2">University of Nigeria</b-col>
+                      <b-col cols="1">5.0</b-col>
                     </b-row>
                   </b-list-group-item>
                   <b-list-group-item href="#" class="batch">
                     <b-row no-gutters>
-                      <b-col cols="5">Academy Batch 2</b-col>
-                      <b-col cols="3">15 students</b-col>
-                      <b-col cols="4">started 11/09/15</b-col>
+                      <b-col cols="2">Ify Chinke</b-col>
+                      <b-col cols="2">ify@enyata.com</b-col>
+                      <b-col cols="2">12/09/19</b-col>
+                      <b-col cols="3">3 Sabo Ave, Yaba, Lagos</b-col>
+                      <b-col cols="2">University of Nigeria</b-col>
+                      <b-col cols="1">5.0</b-col>
                     </b-row>
                   </b-list-group-item>
                 </b-list-group>
-              </div>
-            </b-col>
-            <b-col cols="1"></b-col>
-            <b-col cols="4">
-              <div class="box">
-                  <p class="boxHeader">Create Assessment</p>
-                  <div class="note mt-4 text-center ">
-                    <p id="note">Create test question for incoming academy students</p>
-                    <div>
-                      <b-button class="btnText" type="submit" block variant="secondary" disabled>
-                        Create Assessment
-                      </b-button>
-                    </div>
-                  </div>
               </div>
             </b-col>
             <b-col cols=""></b-col>
@@ -108,8 +97,8 @@ export default {
   padding: 30px;
 }
 .headerText {
-  margin-top: 60px;
-  margin-bottom: 40px ;
+  margin-top: 90px;
+  margin-bottom: 1px ;
 }
 a {
   color: #4f4f4f;
@@ -121,7 +110,7 @@ a:hover {
   color: #2B3C4E;
   /* background: cadetblue; */
   /* font-weight: 550; */
-  /* border-left-color: #5ABEFD; */
+  /* border-left-color: #31D283; */
   border-color: #7557D3;
   box-shadow: 8px 18px 20px rgba(79, 79, 79, 0.3);
   border-radius: 8px;
@@ -199,7 +188,7 @@ font-size: 14px;
 line-height: 22px;
 color: #4F4F4F;
 /* width: 482px; */
-/* height: 66px; */
+height: 50px;
 }
 /* .batchText {
   font-weight: normal;
@@ -220,7 +209,7 @@ p {
 } */
 .box {
   width: 400px;
-  min-height: 320px;
+  min-height: 352px;
   border: 1px solid #ECECF9;
   box-sizing: border-box;
   border-radius: 4px;
@@ -247,5 +236,32 @@ font-weight: bold;
 font-size: 16px;
 line-height: 19px;
 color: #FFFFFF;
+}
+.table-header {
+  background-color: #2B3C4E;
+  height: 45px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 17px;
+  margin-bottom: 20px;
+  padding: 0 ;
+}
+.sort-btn {
+  height: 7px;
+  width: 10.4px;
+}
+.sort-btn img {
+  height: 100%;
+  width: 100%;
+}
+.btn {
+  border: none;
+  /* padding: 0; */
+  /* padding: 0;
+  margin: 0; */
+}
+button:focus {
+  outline: none;
 }
 </style>

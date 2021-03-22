@@ -30,19 +30,27 @@
               <b-nav-item href="#" >
                 <img src="../assets/application.svg" alt="" class="mr-3 d-inline-block">
                 Application Entries
-                </b-nav-item>
-                <b-nav-item href="#" >
-                  <img src="../assets/compose.svg" alt="" class="mr-3 d-inline-block">
-                  Compose Assessment
-                  </b-nav-item>
+              </b-nav-item>
+              <b-nav-item href="#" >
+                <img src="../assets/compose.svg" alt="" class="mr-3 d-inline-block">
+                Compose Assessment
+              </b-nav-item>
               <b-nav-item href="#" >
                 <img src="../assets/history.svg" alt="" class="mr-3 d-inline-block">
                 Assessment History
-                </b-nav-item>
-                <b-nav-item href="#" >
-                  <img src="../assets/results.svg" alt="" class="mr-3 d-inline-block">
-                  Results
-                  </b-nav-item>
+              </b-nav-item>
+              <b-nav-item href="#" >
+                <img src="../assets/results.svg" alt="" class="mr-3 d-inline-block">
+                Results
+              </b-nav-item>
+              <b-nav-item href="#" >
+                <img src="../assets/Setting.svg" alt="" class="mr-3 d-inline-block">
+                Settings
+              </b-nav-item> <br><br><br><br>
+              <b-nav-item href="#" >
+                <img src="../assets/Logout.svg" alt="" class="mr-3 d-inline-block">
+                Log Out
+              </b-nav-item>
             </b-nav>
           </nav>
         </div>
@@ -68,13 +76,13 @@ export default {
 
 <style scoped>
 .sidebar-top {
-background-color: #5ABEFD;
+background-color: #7557D3;
 padding-bottom: 20px;
 }
 p {
   font-size: 20px;
   font-weight: 700;
-  color: #2B3C4E;
+  color: #fff;
   font-family: Lato;
   font-style: normal;
   font-size: 20px;
@@ -104,7 +112,6 @@ a:hover {
   color: #2B3C4E;
   /* background: cadetblue; */
   font-weight: 550;
-  border-left-color: #31D283;
-
+  border-left-color: #7557D3;
 }
 </style>

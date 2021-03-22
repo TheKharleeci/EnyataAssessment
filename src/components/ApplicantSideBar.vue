@@ -1,12 +1,10 @@
 <template>
   <div class="d-flex">
-    <!-- <b-col cols="2"></b-col>
-    <b-col cols="2"></b-col> -->
     <div>
       <b-sidebar id="sidebar-no-header" v-model='visible'
       aria-labelledby="sidebar-no-header-title"
       bg-variant="white"
-      width="19%"
+      width="21%"
       class="border border-dark"
       no-header shadow>
         <div class="sidebar-top">
@@ -24,21 +22,21 @@
               <b-nav-item href="#" active class="admin-menu">
                 <img src="../assets/Dashboard.svg" alt="" class="mr-3 d-inline-block">
                 Dashboard
-                </b-nav-item>
-                <b-nav-item href="#" >
-                  <img src="../assets/compose.svg" alt="" class="mr-3 d-inline-block">
-                  Assessment
-                  </b-nav-item> <br>
+              </b-nav-item>
+              <b-nav-item href="#" >
+                <img src="../assets/compose.svg" alt="" class="mr-3 d-inline-block">
+                Assessment
+              </b-nav-item> <br>
               <b-nav-item href="#" >
                 <img src="../assets/Logout.svg" alt="" class="mr-3 d-inline-block">
                 Log Out
-                </b-nav-item>
+              </b-nav-item>
             </b-nav>
           </nav>
         </div>
       </b-sidebar>
     </div>
-    <div> Body </div>
+    <div class="mainBar"></div>
   </div>
 </template>
 
@@ -58,7 +56,7 @@ export default {
 
 <style scoped>
 .sidebar-top {
-background-color: #2B3C4E;;
+background-color: #7557D3;
 padding-bottom: 20px;
 }
 p {
@@ -88,6 +86,6 @@ a:hover {
   color: #2B3C4E;
   /* background: cadetblue; */
   font-weight: 550;
-  border-left-color: #31D283;
+  border-left-color: #7557D3;
 }
 </style>

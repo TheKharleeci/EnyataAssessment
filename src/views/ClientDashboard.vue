@@ -3,37 +3,57 @@
     <div>
       <b-row no-gutters >
         <b-col cols="3">
-          <h2>test this</h2>
-          <AdminSideBar />
+          <ApplicantSideBar />
         </b-col>
         <b-col cols="9">
            <b-row no-gutters >
             <b-col class="text-left">
               <h2 class="headerText">Dashboard</h2>
+              <p class="intro-text"><i>Your Application is currently being reviewed,
+                you wil be notified if successful</i></p>
             </b-col>
           </b-row>
           <b-row no-gutters >
             <b-col cols="3" class="text-left">
-              <p>Current Applications</p>
-              <h2>233</h2>
-              <span id="spanA"></span>
-              <h6>Academy 2.0</h6>
-            </b-col>
-            <b-col cols="3" class="text-left">
-              <p>Total Applications</p>
-              <h2>4253</h2>
-              <span id="spanB"></span>
-              <h6>All entries so far</h6>
-            </b-col>
-            <b-col cols="3" class="text-left">
-              <p>Academy's</p>
-              <h2>4</h2>
-              <span id="spanC"></span>
-              <h6>So far</h6>
-            </b-col>
-            <b-col cols="3"></b-col>
+                <p>Date of Application</p>
+                <h2>09.09.19</h2>
+                <span id="spanA"></span>
+                <h6>4 days since applied</h6>
+              </b-col>
+              <b-col cols="1"></b-col>
+              <b-col cols="3" class="text-left">
+                <p>Application Status</p>
+                <h2>Pending</h2>
+                <span id="spanB"></span>
+                <h6>We will get back to you</h6>
+              </b-col>
           </b-row>
           <b-row no-gutters class="mt-5">
+              <b-col cols="5" class="text-left">
+                <div class="box">
+                  <p class="boxHeader">Updates</p>
+                  <div class="line"></div>
+                  <div class="line"></div>
+                  <div class="line"></div>
+                  <div class="line"></div>
+                </div>
+              </b-col>
+              <b-col cols="1"></b-col>
+              <b-col cols="4" class="text-left">
+                <div class="box">
+                  <p class="boxHeader">Take Assessment</p>
+                  <div class="note mt-4 text-center ">
+                    <p id="note">We have 4 days left until the next assessment Watch this space</p>
+                    <div>
+                      <b-button type="submit" block variant="secondary" disabled>
+                        Take Assessment
+                      </b-button>
+                    </div>
+                  </div>
+                </div>
+              </b-col>
+            </b-row>
+          <!-- <b-row no-gutters class="mt-5">
             <b-col cols="5">
               <div>
                 <div class="text-left">
@@ -41,27 +61,6 @@
                 <p> <small>Last Update <span>18:24, 22/02/19</span></small> </p>
                 </div>
                 <b-list-group class="text-left">
-                  <b-list-group-item href="#" class="batch">
-                    <b-row no-gutters>
-                      <b-col cols="5">Academy Batch 1</b-col>
-                      <b-col cols="3">15 students</b-col>
-                      <b-col cols="4">started 11/09/15</b-col>
-                    </b-row>
-                  </b-list-group-item>
-                  <b-list-group-item href="#" class="batch">
-                    <b-row no-gutters>
-                      <b-col cols="5">Academy Batch 2</b-col>
-                      <b-col cols="3">15 students</b-col>
-                      <b-col cols="4">started 11/09/15</b-col>
-                    </b-row>
-                  </b-list-group-item>
-                  <b-list-group-item href="#" class="batch">
-                    <b-row no-gutters>
-                      <b-col cols="5">Academy Batch 2</b-col>
-                      <b-col cols="3">15 students</b-col>
-                      <b-col cols="4">started 11/09/15</b-col>
-                    </b-row>
-                  </b-list-group-item>
                 </b-list-group>
               </div>
             </b-col>
@@ -80,7 +79,7 @@
               </div>
             </b-col>
             <b-col cols=""></b-col>
-          </b-row>
+          </b-row> -->
         </b-col>
       </b-row>
     </div>
@@ -88,72 +87,48 @@
 </template>
 
 <script>
-import AdminSideBar from '@/components/AdminSideBar.vue';
+import ApplicantSideBar from '@/components/ApplicantSideBar.vue';
 
 export default {
   name: 'Dashbord',
   components: {
-    AdminSideBar,
+    ApplicantSideBar,
   },
 };
 </script>
 
 <style scoped>
-.box {
-  width: 250px;
-  min-height: 352px;
-  border: 1px solid #ECECF9;
-  box-sizing: border-box;
-  border-radius: 4px;
-  padding: 30px;
-}
+
 .headerText {
-  margin-top: 60px;
-  margin-bottom: 40px ;
+  margin-top: 50px;
+  margin-bottom: 10px ;
 }
 a {
   color: #4f4f4f;
   border: transparent;
   border-left: 4px solid transparent;
-  /* border: none; */
 }
 a:hover {
   color: #2B3C4E;
-  /* background: cadetblue; */
-  /* font-weight: 550; */
-  /* border-left-color: #5ABEFD; */
-  border-color: #7557D3;
+  border-left-color: #5ABEFD;
+  border-color: #5ABEFD;
   box-shadow: 8px 18px 20px rgba(79, 79, 79, 0.3);
   border-radius: 8px;
 }
-/* .bar {
-  width: 21%;
-} */
-/* .wrapper {
-  min-height: 100vh;
-}
-b-container {
-  margin: 0;
-}*/
-.main-page {
-  padding-top: 80px;
-  padding-bottom: 15px;
-  /* margin-left: 0; */
-}
-/*.intro-text {
+
+.intro-text {
   font-style: italic;
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
   color: #2B3C4E;
   margin-top: 14px;
-  margin-bottom: 60px;
-} */
+  margin-bottom: 40px;
+}
 #spanA, #spanB, #spanC {
   display:block;
   width:65%;
   border-top: 4px solid #006DF0;
-  /* background: #006DF0; */
   border-radius: 4px;
 }
 #spanB {
@@ -193,21 +168,7 @@ h6 {
   letter-spacing: -0.02em;
   color: #2B3C4E;
 }
-.batch {
-font-weight: normal;
-font-size: 14px;
-line-height: 22px;
-color: #4F4F4F;
-/* width: 482px; */
-/* height: 66px; */
-}
-/* .batchText {
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 22px;
-  color: #4F4F4F;
-} */
-/*
+
 p {
   font-weight: normal;
   font-size: 14px;
@@ -216,8 +177,8 @@ p {
 }
 .line {
   border-bottom: 1px solid #CECECE;
-  height: 60px;
-} */
+  height: 50px;
+}
 .box {
   width: 400px;
   min-height: 320px;
@@ -225,6 +186,7 @@ p {
   box-sizing: border-box;
   border-radius: 4px;
   padding: 30px;
+  /* margin-bottom: 20px; */
 }
 .note {
   display: flex;
