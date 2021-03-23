@@ -10,7 +10,7 @@
     </div>
     <div class="row no-gutters justify-content-center mt-4">
       <div class="col-lg-4 mb-5">
-      <b-form @submit="onSubmit" @reset="onReset">
+      <b-form @submit.prevent="onSubmit">
         <b-form-group
           id="input-group-1"
           label="Email address"
@@ -34,7 +34,7 @@
         type="password">
           <b-form-input
             id="input-2"
-            v-model="form.name"
+            v-model="form.password"
             placeholder="Enter password"
             type="password"
             data-toggle="password"
@@ -43,7 +43,8 @@
           <br>
         </b-form-group>
         <div class="">
-        <b-button type="submit" class="button" block variant="dark">Sign In</b-button>
+        <b-button type="submit"
+        class="button" block variant="dark">Sign In</b-button>
         <div class="register d-flex justify-content-between">
           <p> <i> <small>Don't have an account yet? <a href=""> Sign Up</a></small></i></p>
           <p> <i><small>Forgot Password?</small></i></p>
@@ -56,30 +57,43 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
+
   data() {
     return {
       form: {
       },
     };
   },
-  // methods: {
-  //   onSubmit(event) {
-  //     event.preventDefault();
-  //     // alert(JSON.stringify(this.form));
-  //   },
-  //   onReset(event) {
-  //     event.preventDefault();
-  //     // Reset our form values
-  //     this.form.email = '';
-  //     this.form.name = '';
-  //     // Trick to reset/clear native browser form validation state
-  //     this.show = false;
-  //     this.$nextTick(() => {
-  //       this.show = true;
-  //     });
-  //   },
-  // },
+  methods: {
+    ...mapActions(['loginUser']),
+    onSubmit() {
+      // const { form } = this;
+      this.loginUser(this.form);
+      this.form = {
+        email: '',
+        password: '',
+      };
+      // if (response.data.status === 'success') {
+      //   this.$router.push('/client');
+      // }
+    },
+  },
+  watch: {
+    loggedInUser: {
+      deep: true,
+      handler() {
+        // this.isLoading = false;
+        console.log('hello');
+        this.$router.push('/client');
+      },
+    },
+  },
+  computed: {
+    ...mapGetters(['loggedInUser']),
+  },
 };
 </script>
 
@@ -123,7 +137,6 @@ h4 {
   color: #4F4F4F;
 }
 .button {
-  /* background-color: ; */
   background: #7557D3;
   border-radius: 4px;
   font-weight: bold;
@@ -131,7 +144,6 @@ h4 {
   height: 45px;
   border: none;
   margin-bottom: 12px;
-  /* line-height: 19px; */
 }
 a {
   text-decoration-line: underline;
@@ -140,7 +152,5 @@ input {
   border: 1.5px solid #BDBDBD;
   box-sizing: border-box;
   border-radius: 4px;
-  /* height: 48px;
-  width: 379px; */
 }
 </style>

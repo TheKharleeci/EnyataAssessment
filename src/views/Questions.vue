@@ -25,7 +25,7 @@
         </b-row>
         <b-row no-gutters class="mb-3">
           <b-col cols="3"></b-col>
-          <b-col cols="5" class="center-block">
+          <b-col cols="5" class="">
             <h6><i>Question 1</i></h6>
             <div>
               <p class="questions"><i>What is the purpose of HDR technology?</i></p>
@@ -62,26 +62,24 @@
           <b-col cols="3"></b-col>
         </b-row>
         <b-row no-gutters>
-          <b-col cols="">
-          <b-button type="" block variant="dark">
-          Previous</b-button>
+          <b-col cols="3">
+          <b-button type="" class="prevBtn" variant="light">
+          Previous
+          </b-button>
           </b-col>
-          <b-col cols="7">
-            <!-- <b-button type="" block variant="dark" disabled>
-          Finish</b-button> -->
-          </b-col>
-          <b-col cols="">
-          <b-button type="" block variant="dark">
+          <b-col cols="6"></b-col>
+          <b-col cols="3">
+          <b-button type="" class="quizBtn" variant="light">
           Next</b-button>
           </b-col>
         </b-row>
         <b-row no-gutters class="mt-5">
-          <b-col></b-col>
-          <b-col cols="7">
+          <b-col cols="3"></b-col>
+          <b-col cols="5">
             <b-button class="finishBtn" type="submit" variant="dark" disabled>
           Finish</b-button>
           </b-col>
-          <b-col></b-col>
+          <b-col cols="3"></b-col>
         </b-row>
       </b-col>
     </b-row>
@@ -106,7 +104,6 @@ export default {
   margin-top: 50px;
   margin-bottom: 10px ;
 }
-
 h2 {
   font-weight: 300;
   font-size: 48px;
@@ -134,7 +131,6 @@ h6 {
   font-size: 12px;
   line-height: 14px;
   color: #4F4F4F;
-  /* margin-bottom: 20px; */
 }
 p {
   font-weight: normal;
@@ -149,7 +145,7 @@ p {
   line-height: 19px;
   color: #2B3C4E;
   margin-top: 14px;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 .check {
   margin-right: 27px;
@@ -173,6 +169,7 @@ li {
 }
 .finishBtn {
   width: 205px;
+  height: 40px;
   background: #CECECE;
   border-radius: 4px;
   border: none;
@@ -186,7 +183,6 @@ h1 {
   letter-spacing: -0.02em;
   color: #2B3C4E;
 }
-
 h6 {
   margin-top: 30px;
   font-family: Lato;
@@ -202,6 +198,18 @@ h6 {
   line-height: 29px;
   color: #2B3C4E;
   margin-bottom: 30px;
+}
+.quizBtn, .prevBtn {
+  width: 125px;
+  height: 40px;
+  border-radius: 4px;
+  background-color: #7557D3;
+  color: #fff;
+}
+.prevBtn {
+  background-color: #fff;
+  color: #211F26;
+  border: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 </style>
