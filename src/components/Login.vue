@@ -10,7 +10,7 @@
     </div>
     <div class="row no-gutters justify-content-center mt-4">
       <div class="col-lg-4 mb-5">
-      <b-form @submit="onSubmit" @reset="onReset">
+      <b-form @submit.prevent = "onSubmit">
         <b-form-group
           id="input-group-1"
           label="Email address"
@@ -34,7 +34,7 @@
         type="password">
           <b-form-input
             id="input-2"
-            v-model="form.name"
+            v-model="form.password"
             placeholder="Enter password"
             type="password"
             data-toggle="password"
@@ -43,7 +43,7 @@
           <br>
         </b-form-group>
         <div class="">
-        <b-button type="submit" class="button" block variant="dark">Sign In</b-button>
+        <b-button type="submit" class="button" block variant="dark" >Sign In</b-button>
         <div class="register d-flex justify-content-between">
           <p> <i> <small>Don't have an account yet? <a href=""> Sign Up</a></small></i></p>
           <p> <i><small>Forgot Password?</small></i></p>
@@ -56,12 +56,25 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   data() {
     return {
       form: {
       },
     };
+  },
+  methods: {
+    ...mapActions(['loginUser']),
+    onSubmit() {
+      // const { form } = this;
+      this.loginUser(this.form);
+      this.form = {
+        email: '',
+        password: '',
+      };
+    },
   },
   // methods: {
   //   onSubmit(event) {
@@ -81,6 +94,7 @@ export default {
   //   },
   // },
 };
+
 </script>
 
 <style scoped>

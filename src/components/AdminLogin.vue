@@ -158,7 +158,5 @@ h4 {
   height: 100%;
   position: relative;
 }
-.form {
-  /* margin-right: 20px; */
-}
+
 </style>
