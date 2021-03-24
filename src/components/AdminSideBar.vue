@@ -12,38 +12,38 @@
           class="mb-2">
           </b-img>
           <div class="text-dark">
-            <p>Josh Doe</p>
-            <p id="email"> <i>j.doe@enyata.com</i> </p>
+            <p>{{ loggedInAdmin["first_name"] }} {{ loggedInAdmin["last_name"] }}</p>
+            <p id="email"> <i>{{ loggedInAdmin["email"] }}</i> </p>
           </div>
         </div>
         <div class="sidebar-body text-left p-3">
           <nav class="mb-3">
             <b-nav vertical>
-              <b-nav-item href="#" active class="admin-menu">
+              <b-nav-item href="#" @click="toDashboard" active class="admin-menu">
                 <img src="../assets/Dashboard.svg" alt="" class="mr-3 d-inline-block">
                 Dashboard
                 </b-nav-item>
-              <b-nav-item href="#" >
+              <b-nav-item href="#" @click="createApplication" >
                 <img src="../assets/create.svg" alt="" class="mr-3 d-inline-block">
                 Create Application
                 </b-nav-item>
-              <b-nav-item href="#" >
+              <b-nav-item href="#" @click="viewEntries" >
                 <img src="../assets/application.svg" alt="" class="mr-3 d-inline-block">
                 Application Entries
               </b-nav-item>
-              <b-nav-item href="#" >
+              <b-nav-item href="#" @click="composeAssessment" >
                 <img src="../assets/compose.svg" alt="" class="mr-3 d-inline-block">
                 Compose Assessment
               </b-nav-item>
-              <b-nav-item href="#" >
+              <b-nav-item href="#" @click="history"  >
                 <img src="../assets/history.svg" alt="" class="mr-3 d-inline-block">
                 Assessment History
               </b-nav-item>
-              <b-nav-item href="#" >
+              <b-nav-item href="#" @click="results" >
                 <img src="../assets/results.svg" alt="" class="mr-3 d-inline-block">
                 Results
               </b-nav-item>
-              <b-nav-item href="#" >
+              <b-nav-item href="#" @click="settings" >
                 <img src="../assets/Setting.svg" alt="" class="mr-3 d-inline-block">
                 Settings
               </b-nav-item> <br><br><br><br>
@@ -61,6 +61,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
   name: 'Sidebar',
   data() {
@@ -70,6 +72,33 @@ export default {
         blank: true, blankColor: '#777', width: 100, height: 100, class: 'mt-4',
       },
     };
+  },
+  methods: {
+    ...mapActions(['loginUser']),
+    toDashboard() {
+      this.$router.push('/dashboard');
+    },
+    createApplication() {
+      this.$router.push('/questions');
+    },
+    viewEntries() {
+      this.$router.push('/entries');
+    },
+    composeAssessment() {
+      this.$router.push('/questions');
+    },
+    history() {
+      this.$router.push('/questions');
+    },
+    results() {
+      this.$router.push('/results');
+    },
+    settings() {
+      this.$router.push('/adminProfile');
+    },
+  },
+  computed: {
+    ...mapGetters(['loggedInAdmin']),
   },
 };
 </script>

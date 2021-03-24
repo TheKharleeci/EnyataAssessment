@@ -45,7 +45,9 @@
                   <div class="note mt-4 text-center ">
                     <p id="note">We have 4 days left until the next assessment Watch this space</p>
                     <div>
-                      <b-button type="submit" block variant="secondary" disabled>
+                      <b-button type="submit"
+                      @click="takeAssessment"
+                      class="btn-color" block variant="secondary" >
                         Take Assessment
                       </b-button>
                     </div>
@@ -88,12 +90,25 @@
 
 <script>
 import ApplicantSideBar from '@/components/ApplicantSideBar.vue';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'Dashbord',
   components: {
     ApplicantSideBar,
   },
+  methods: {
+    ...mapActions(['loginUser']),
+    takeAssessment() {
+      this.$router.push('/questions');
+    },
+  },
+  computed: {
+    ...mapGetters(['loggedInUser', 'currentApplicant']),
+  },
+  // mounted() {
+  //   this.loginUser();
+  // },
 };
 </script>
 
@@ -102,6 +117,10 @@ export default {
 .headerText {
   margin-top: 50px;
   margin-bottom: 10px ;
+}
+.btn-color {
+  background-color: #7557D3;
+  border: none;
 }
 a {
   color: #4f4f4f;
@@ -125,17 +144,14 @@ a:hover {
   margin-top: 14px;
   margin-bottom: 40px;
 }
-#spanA, #spanB, #spanC {
+#spanA, #spanB {
   display:block;
-  width:65%;
+  width:60%;
   border-top: 4px solid #006DF0;
   border-radius: 4px;
 }
 #spanB {
-  border-top: 4px solid #00F026;;
-}
-#spanC {
-  border-top: 4px solid #F09000;;
+  border-top: 4px solid  #F09000;
 }
 h1 {
   font-weight: 300;

@@ -3,14 +3,15 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/questions">Questions</router-link> |
-      <router-link to="/page">Page</router-link> |
+      <router-link to="/admin/login">LoginAdmin</router-link> |
       <router-link to="/dashboard">Dashboard</router-link> |
       <router-link to="/two">Two</router-link> |
       <router-link to="/entries">Entries</router-link> |
       <router-link to="/client">ClientDashboard</router-link> |
       <router-link to="/results">Results</router-link> |
       <router-link to="/adminProfile">Admin</router-link> |
-      <router-link to="/signup">signup</router-link>
+      <router-link to="/signup">signup</router-link> |
+      <router-link to="/timer">timer</router-link>
     </div>
     <router-view/>
   </div>

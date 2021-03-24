@@ -16,7 +16,7 @@
       <!-- </div> -->
       <div class="row justify-content-center mt-4">
         <div class="col-lg-5 form">
-          <b-form @submit="onSubmit" >
+          <b-form @submit.prevent="onSubmit" >
             <b-form-group
               id="input-group-1"
               label="Email address"
@@ -40,7 +40,7 @@
             class="text-left">
               <b-form-input
                 id="input-2"
-                v-model="form.name"
+                v-model="form.password"
                 placeholder="Enter password"
                 class="input"
                 type="password"
@@ -63,35 +63,37 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
       form: {
-        email: '',
-        name: '',
-        food: null,
-        checked: [],
       },
-      foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
-      show: true,
     };
   },
   methods: {
-    onSubmit(event) {
-      event.preventDefault();
-      // alert(JSON.stringify(this.form));
+    ...mapActions(['loginAdmin']),
+    onSubmit() {
+      // const { form } = this;
+      this.loginAdmin(this.form);
+      this.form = {
+        email: '',
+        password: '',
+      };
     },
-    onReset(event) {
-      event.preventDefault();
-      // Reset our form values
-      this.form.email = '';
-      this.form.name = '';
-      // Trick to reset/clear native browser form validation state
-      this.show = false;
-      this.$nextTick(() => {
-        this.show = true;
-      });
+  },
+  watch: {
+    loggedInAdmin: {
+      deep: true,
+      handler() {
+        // this.isLoading = false;
+        this.$router.push('/dashboard');
+      },
     },
+  },
+  computed: {
+    ...mapGetters(['loggedInAdmin']),
   },
 };
 </script>

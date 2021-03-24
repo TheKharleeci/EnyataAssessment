@@ -12,19 +12,20 @@
           class="mb-2">
           </b-img>
           <div class="text-white">
-            <p>Jane Doe</p>
-            <p id="email"> <i>doe@enyata.com</i> </p>
+            <p>{{ currentApplicant["first_name"] }}</p>
+            <p id="email"> <i>{{ currentApplicant["email"] }}</i> </p>
           </div>
         </div>
         <div class="sidebar-body text-left p-3">
           <nav class="mb-3">
             <b-nav vertical>
-              <b-nav-item href="#" active class="admin-menu">
+              <b-nav-item href="#" @click="toDashboard" active class="admin-menu">
                 <img src="../assets/Dashboard.svg" alt="" class="mr-3 d-inline-block">
                 Dashboard
               </b-nav-item>
-              <b-nav-item href="#" >
-                <img src="../assets/compose.svg" alt="" class="mr-3 d-inline-block">
+              <b-nav-item href="#" @click="takeAssessment" >
+                <img src="../assets/compose.svg" alt=""
+                class="mr-3 d-inline-block">
                 Assessment
               </b-nav-item> <br>
               <b-nav-item href="#" >
@@ -41,6 +42,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
   name: 'Sidebar',
   data() {
@@ -50,6 +53,18 @@ export default {
         blank: true, blankColor: '#777', width: 100, height: 100, class: 'mt-4',
       },
     };
+  },
+  methods: {
+    ...mapActions(['loginUser']),
+    takeAssessment() {
+      this.$router.push('/questions');
+    },
+    toDashboard() {
+      this.$router.push('/client');
+    },
+  },
+  computed: {
+    ...mapGetters(['loggedInUser', 'currentApplicant']),
   },
 };
 </script>

@@ -76,9 +76,6 @@ export default {
         email: '',
         password: '',
       };
-      // if (response.data.status === 'success') {
-      //   this.$router.push('/client');
-      // }
     },
   },
   watch: {
@@ -86,13 +83,12 @@ export default {
       deep: true,
       handler() {
         // this.isLoading = false;
-        console.log('hello');
         this.$router.push('/client');
       },
     },
   },
   computed: {
-    ...mapGetters(['loggedInUser']),
+    ...mapGetters(['loggedInUser', 'currentApplicant']),
   },
 };
 </script>
