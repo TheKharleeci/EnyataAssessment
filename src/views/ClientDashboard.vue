@@ -16,7 +16,7 @@
           <b-row no-gutters >
             <b-col cols="3" class="text-left">
                 <p>Date of Application</p>
-                <h2>09.09.19</h2>
+                <h2>{{ applicationDate }} </h2>
                 <span id="spanA"></span>
                 <h6>4 days since applied</h6>
               </b-col>
@@ -55,33 +55,6 @@
                 </div>
               </b-col>
             </b-row>
-          <!-- <b-row no-gutters class="mt-5">
-            <b-col cols="5">
-              <div>
-                <div class="text-left">
-                <p class="boxHeader">History</p>
-                <p> <small>Last Update <span>18:24, 22/02/19</span></small> </p>
-                </div>
-                <b-list-group class="text-left">
-                </b-list-group>
-              </div>
-            </b-col>
-            <b-col cols="1"></b-col>
-            <b-col cols="4">
-              <div class="box">
-                  <p class="boxHeader">Create Assessment</p>
-                  <div class="note mt-4 text-center ">
-                    <p id="note">Create test question for incoming academy students</p>
-                    <div>
-                      <b-button class="btnText" type="submit" block variant="secondary" disabled>
-                        Create Assessment
-                      </b-button>
-                    </div>
-                  </div>
-              </div>
-            </b-col>
-            <b-col cols=""></b-col>
-          </b-row> -->
         </b-col>
       </b-row>
     </div>
@@ -98,13 +71,14 @@ export default {
     ApplicantSideBar,
   },
   methods: {
-    ...mapActions(['loginUser']),
+    ...mapActions(['loginUser', 'getQuestions']),
     takeAssessment() {
+      this.getQuestions();
       this.$router.push('/questions');
     },
   },
   computed: {
-    ...mapGetters(['loggedInUser', 'currentApplicant']),
+    ...mapGetters(['loggedInUser', 'currentApplicant', 'applicationDate', 'getAllQuestions']),
   },
   // mounted() {
   //   this.loginUser();

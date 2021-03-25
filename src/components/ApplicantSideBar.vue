@@ -12,7 +12,7 @@
           class="mb-2">
           </b-img>
           <div class="text-white">
-            <p>{{ currentApplicant["first_name"] }}</p>
+            <p>{{ currentApplicant["first_name"] }} {{ currentApplicant["last_name"] }}</p>
             <p id="email"> <i>{{ currentApplicant["email"] }}</i> </p>
           </div>
         </div>

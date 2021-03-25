@@ -12,6 +12,9 @@ export default new Vuex.Store({
     admin: {},
     adminDetails: {},
     date: [],
+    allQuestions: [],
+    questions: [],
+    questionCount: 0,
   },
   getter: {
 
@@ -24,42 +27,47 @@ export default new Vuex.Store({
     currentDate: (state, payload) => { state.date = payload; },
     currentAdmin: (state, payload) => { state.admin = payload; },
     currentAdminDetails: (state, payload) => { state.adminDetails = payload; },
+    testQuestions: (state, payload) => { state.allQuestions = payload; },
   },
   actions: {
     async loginUser({ commit }, payload) {
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/login', payload);
-      // const date = response.data.data.user.created_at;
-      // console.log(date);
-
-      const date = '2021-03-23T13:36:28.186Z';
-      date.setDate(date.getDate());
-      let newDate = date.toISOString().substr(0, 10);
+      const createdAt = response.data.data.user.created_at;
+      const days = new Date(createdAt);
+      days.setDate(days.getDate());
+      let newDate = days.toISOString().substr(0, 10);
       newDate = newDate.replace(/-/g, '.');
       newDate = newDate.substring(2);
       newDate = newDate.split('.').reverse().join('.');
-      console.log(newDate);
 
       commit('assignUser', response.data.data.user);
-      commit('loggedIn', response.data);
-      // commit('currentDate', response.data.data.user.created_at);
+      commit('loggedIn', response.data.data);
+      commit('currentDate', newDate);
       // commit('regUser', response.data);
-      console.log(response.data.data.user);
+      // console.log(response.data.data.user);
+      console.log(response.data.data);
     },
     async userSignUp({ commit }, payload) {
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/signup', payload);
       commit('signInUser', response.data);
       console.log(response.data);
       commit('assignUser', response.data.data);
-      // commit('currentDate', response.data.data.created_at);
-      // console.log(response.data);
     },
     async loginAdmin({ commit }, payload) {
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/login', payload);
       commit('currentAdminDetails', response.data);
       commit('currentAdmin', response.data.data.admin);
-      // commit('regUser', response.data);
-      // console.log(response.data);
       console.log(response.data);
+    },
+    async getQuestions({ commit, getters }) {
+      console.log(getters.loggedInUser.token);
+      const response = await axios.get('https://enyata-recruitment-portal.herokuapp.com/user/question', {
+        headers: {
+          authorization: `Bearer ${getters.loggedInUser.token}`,
+        },
+      });
+      commit('testQuestions', response.data);
+      console.log(response.data.data);
     },
 
   },
@@ -69,7 +77,8 @@ export default new Vuex.Store({
     registeredUsers: (state) => state.users,
     currentApplicant: (state) => state.currentUser,
     loggedInAdmin: (state) => state.admin,
-    dateNow: (state) => state.date,
+    applicationDate: (state) => state.date,
+    getAllQuestions: (state) => state.allQuestions,
   },
   modules: {
   },

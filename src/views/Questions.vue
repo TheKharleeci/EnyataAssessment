@@ -87,12 +87,24 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 import ApplicantSideBar from '@/components/ApplicantSideBar.vue';
 
 export default {
-  name: 'Dashbord',
+  name: 'Questions',
   components: {
     ApplicantSideBar,
+  },
+  data() {
+    return {
+    };
+  },
+  methods: {
+    ...mapActions(['getQuestions']),
+  },
+  computed: {
+    ...mapGetters(['getAllQuestions', 'loggedInUser']),
   },
 };
 </script>
