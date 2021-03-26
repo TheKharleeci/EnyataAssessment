@@ -55,8 +55,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['loginUser']),
+    ...mapActions(['loginUser', 'getQuestions']),
     takeAssessment() {
+      this.getQuestions();
       this.$router.push('/questions');
     },
     toDashboard() {

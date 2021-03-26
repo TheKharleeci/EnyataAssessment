@@ -37,62 +37,20 @@
             </b-col>
             <b-col cols=""></b-col>
           </b-row>
-          <b-row no-gutters>
+          <b-row no-gutters class="text-left">
             <b-col cols="9">
-              <div class="d-flex justify-content-between">
-                <h4>Profiles Setting</h4>
-                <b-button class="edit-button" variant="outline-primary">Edit</b-button>
+              <div class="">
+                <h4>Timer Setting</h4>
               </div>
               <span></span>
+              <p>Set Time</p>
+              <div class="">
+                <h1>00 <span><small>min</small></span> </h1>
+              </div>
             </b-col>
           </b-row>
           <b-row no-gutters>
-            <div class="d-flex">
-              <div>
-                <b-img v-bind="profileImg" rounded="circle" alt="Profile Image" src=""
-                class="mb-2">
-                </b-img>
-              </div>
-              <button class="  btn-style">
-                Upload new image
-              </button>
-              <button class="button btn-color">x Remove</button>
-            </div>
-          </b-row>
-          <b-row no-gutters class="text-left mb-4">
-            <b-col cols="3" >
-              <div class="form-input">
-                <label for="name">Name</label> <br>
-                <input type="text" id="name" placeholder="Cameron Williamson">
-              </div>
-              </b-col>
-            <b-col cols="3">
-              <div class="form-input">
-                <label for="email">Email</label> <br>
-                <input type="text" id="email" placeholder="debra.holt@example.com">
-              </div>
-            </b-col>
-            <b-col cols="3">
-              <div class="form-input">
-                <label for="phone">Phone number</label> <br>
-                <input type="text" id="phone" placeholder="(303) 555-0105">
-              </div>
-            </b-col>
-          </b-row>
-          <b-row no-gutters class="text-left">
-            <b-col cols="3">
-              <div class="form-input">
-                <label for="country">Country</label> <br>
-                <input type="text" id="country" placeholder="Afghanistan">
-              </div>
-            </b-col>
-            <b-col cols="6">
-              <div class="form-input">
-                <label for="address">Address</label> <br>
-                <input class="addy" type="text" id="address"
-                placeholder="3891 Ranchview Dr. Richardson, California 62639">
-              </div>
-            </b-col>
+            <div></div>
           </b-row>
           <b-row no-gutters >
             <b-col cols="9" class="d-flex justify-content-center">
@@ -196,7 +154,7 @@ export default {
 span {
   display:block;
   margin-top: 12px;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   border-top: 1px solid #F2F2F2;
 }
 label {

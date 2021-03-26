@@ -71,14 +71,24 @@ export default {
     ApplicantSideBar,
   },
   methods: {
-    ...mapActions(['loginUser', 'getQuestions']),
-    takeAssessment() {
-      this.getQuestions();
+    ...mapActions(['loginUser', 'getQuestions', 'selectQuestion', 'nextQuestion']),
+    async takeAssessment() {
+      await this.getQuestions();
+      this.selectQuestion();
       this.$router.push('/questions');
     },
   },
+  // watch: {
+  //   getQuestions: {
+  //     deep: true,
+  //     handler() {
+  //       this.selectQuestion();
+  //       this.$router.push('/questions');
+  //     },
+  //   },
+  // },
   computed: {
-    ...mapGetters(['loggedInUser', 'currentApplicant', 'applicationDate', 'getAllQuestions']),
+    ...mapGetters(['loggedInUser', 'currentApplicant', 'applicationDate', 'getAllQuestions', 'countQuestions']),
   },
   // mounted() {
   //   this.loginUser();
