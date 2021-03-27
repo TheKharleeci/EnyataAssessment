@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     users: [],
+    usersDetail: [],
     currentUser: {},
     loginResponse: {},
     admin: {},
@@ -23,6 +24,9 @@ export default new Vuex.Store({
   },
   mutations: {
     signInUser: (state, payload) => { state.users.push(payload); },
+    setRegister: (state, payload) => {
+      state.usersDetail.push(payload);
+    },
     assignUser: (state, payload) => { state.currentUser = payload; },
     loggedIn: (state, payload) => { state.loginResponse = payload; },
     currentUser: (state, payload) => { state.loggedIn = payload; },
@@ -59,6 +63,12 @@ export default new Vuex.Store({
       commit('signInUser', response.data);
       console.log(response.data);
       commit('assignUser', response.data.data);
+    },
+    async getUserDetail({ commit }, payload) {
+      const formdata = new FormData();
+      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', payload, formdata);
+      commit('setRegister', response.data);
+      console.log(response);
     },
     async loginAdmin({ commit }, payload) {
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/login', payload);

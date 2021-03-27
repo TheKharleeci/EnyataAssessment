@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <div class="sub-header">
-        <!-- <img src="../assets/new_logo.svg" alt="logo"> -->
+        <img src="../assets/logo2.svg" alt="logo">
         <h3>Applicant Sign Up</h3>
       </div>
     </div>
@@ -14,8 +14,8 @@
                   id="inline-form-input-name"
                   class="input"
                   type="text"
-                  v-model="form.firstName"
-                  placeholder="">
+                  v-model.trim="$v.firstName.$model" :class="{
+                'is-invalid': $v.firstName.$error, 'is-valid': !$v.firstName.$invalid }">
               </b-form-input>
           </div>
 
@@ -85,7 +85,7 @@
       </div>
       <div class="signup-bottom">
       <!-- <router-link :to = "{dashboard: '/dashboard'}"> -->
-      <b-button type="submit" block variant="light" id="signup">
+      <b-button type="submit" block variant="light" id="signup" @click="save">
           Sign Up</b-button>
           <!-- </router-link> -->
       <br/>
@@ -99,14 +99,40 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import {
+  required, minLength, maxLength, sameAs, email, numeric,
+} from 'vuelidate/lib/validators';
 
 export default {
+
   name: 'UserSignUp',
   data() {
     return {
       form: {
       },
+      agreement: false,
     };
+  },
+  validations: {
+    firstName: {
+      required, minLength: minLength(3), maxLength: maxLength(100),
+    },
+    lastName: {
+      required, minLength: minLength(3), maxLength: maxLength(100),
+    },
+    email: {
+      required, email,
+    },
+    phoneNumber: {
+      required, numeric, minLength: minLength(11), maxLength: maxLength(11),
+
+    },
+    password: {
+      required, minLength: minLength(7),
+    },
+    confirmPassword: {
+      sameAsPassword: sameAs('password'),
+    },
   },
   methods: {
     ...mapActions(['userSignUp']),
@@ -121,13 +147,21 @@ export default {
         confirmPassword: '',
       };
     },
+    save() {
+      this.agreement = true;
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
+      console.log('form submitted');
+    },
   },
   watch: {
     registeredUsers: {
       deep: true,
       handler() {
         // this.isLoading = false;
-        this.$router.push('/client');
+        this.$router.push('/dashbord1');
       },
     },
   },

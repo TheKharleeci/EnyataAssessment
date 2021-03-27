@@ -26,33 +26,33 @@
         <b-row no-gutters class="mb-3">
           <b-col cols="3"></b-col>
           <b-col cols="5" class="">
-            <h6><i>Question {{ countQuestions }} </i></h6>
+            <h6><i>Question 1</i></h6>
             <div>
-              <p class="questions"><i>{{ showCurrentQuestion['title']}} </i></p>
+              <p class="questions"><i>What is the purpose of HDR technology?</i></p>
               <div class="options text-left">
                 <ul class="list-group">
                   <li class="list-group-item d-flex">
                     <input class="check" id="a" type="radio" name="option" aria-label="">
                     <div class="option">
-                      <label for="a"><i>A. {{ showCurrentQuestion['option_a']}}</i></label>
+                      <label for="a"><i>A. To reduce the file size of images and videos.</i></label>
                     </div>
                   </li>
                   <li class="list-group-item d-flex">
                     <input  class="check" id="b" type="radio" name="option"  aria-label="">
                     <div class="option">
-                      <label for="b"><i>B. hello {{ showCurrentQuestion['option_b']}}</i></label>
+                      <label for="b"><i>B. To speed up 3D rendering performance.</i></label>
                     </div>
                   </li>
                   <li class="list-group-item d-flex">
                     <input class="check" id="c" type="radio" name="option" aria-label="">
                     <div class="option">
-                      <label for="c"><i>C. {{ showCurrentQuestion['option_c']}}</i></label>
+                      <label for="c"><i>C. To support higher resolutions.</i></label>
                     </div>
                   </li>
                   <li class="list-group-item d-flex">
                     <input class="check" id="d" type="radio" name="option" aria-label="">
                     <div class="option d-flex align-middle">
-                      <label for="d"><i>D. {{ showCurrentQuestion['option_d']}}</i></label>
+                      <label for="d"><i>D. To display more colors in images and videos.</i></label>
                     </div>
                   </li>
               </ul>
@@ -63,14 +63,13 @@
         </b-row>
         <b-row no-gutters>
           <b-col cols="3">
-          <b-button type="" @click="prev" class="prevBtn" variant="light">
+          <b-button type="" class="prevBtn" variant="light">
           Previous
           </b-button>
           </b-col>
           <b-col cols="6"></b-col>
           <b-col cols="3">
-          <b-button type="" @click="next"
-            class="quizBtn" variant="light">
+          <b-button type="" class="quizBtn" variant="light">
           Next</b-button>
           </b-col>
         </b-row>
@@ -102,16 +101,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['getQuestions', 'selectQuestion', 'prevQuestion', 'nextQuestion']),
-    next() {
-      this.nextQuestion();
-    },
-    prev() {
-      this.prevQuestion();
-    },
+    ...mapActions(['getQuestions']),
   },
   computed: {
-    ...mapGetters(['getAllQuestions', 'loggedInUser', 'showCurrentQuestion', 'countQuestions', 'currentQuestionIndex']),
+    ...mapGetters(['getAllQuestions', 'loggedInUser']),
   },
 };
 </script>
