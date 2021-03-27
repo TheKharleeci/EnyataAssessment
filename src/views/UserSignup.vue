@@ -127,7 +127,7 @@ export default {
       deep: true,
       handler() {
         // this.isLoading = false;
-        this.$router.push('/client');
+        this.$router.push('/userLogin');
       },
     },
   },

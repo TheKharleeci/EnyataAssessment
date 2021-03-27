@@ -18,8 +18,9 @@
           <b-col cols="3">
             <div class="text-left">
             <p class="timer">Timer</p>
-            <h3 >00 <span>
+            <h3 >{{ timerCount }}<span>
               <small>min</small></span> 010<span> <small>sec</small></span></h3>
+              {{ timerCount }}
             </div>
           </b-col>
         </b-row>
@@ -32,27 +33,35 @@
               <div class="options text-left">
                 <ul class="list-group">
                   <li class="list-group-item d-flex">
-                    <input class="check" id="a" type="radio" name="option" aria-label="">
+                    <input class="check" id="a"
+                    @click="getAnswer"
+                    type="radio" name="option" aria-label="">
                     <div class="option">
-                      <label for="a"><i>A. {{ showCurrentQuestion['option_a']}}</i></label>
+                      <label for="a"
+                      @click="selected = !selected" v-bind:class="{selected: selected}">
+                      <i>A. {{ showCurrentQuestion['option_a']}}</i></label>
                     </div>
                   </li>
                   <li class="list-group-item d-flex">
                     <input  class="check" id="b" type="radio" name="option"  aria-label="">
                     <div class="option">
-                      <label for="b"><i>B. hello {{ showCurrentQuestion['option_b']}}</i></label>
+                      <label for="b"
+                      @click="selected = !selected" v-bind:class="{selected: selected}">
+                        <i>B. hello {{ showCurrentQuestion['option_b']}}</i></label>
                     </div>
                   </li>
                   <li class="list-group-item d-flex">
                     <input class="check" id="c" type="radio" name="option" aria-label="">
                     <div class="option">
-                      <label for="c"><i>C. {{ showCurrentQuestion['option_c']}}</i></label>
+                      <label for="c">
+                      <i>C. {{ showCurrentQuestion['option_c']}}</i></label>
                     </div>
                   </li>
                   <li class="list-group-item d-flex">
                     <input class="check" id="d" type="radio" name="option" aria-label="">
                     <div class="option d-flex align-middle">
-                      <label for="d"><i>D. {{ showCurrentQuestion['option_d']}}</i></label>
+                      <label for="d">
+                      <i>D. {{ showCurrentQuestion['option_d']}}</i></label>
                     </div>
                   </li>
               </ul>
@@ -129,15 +138,34 @@ export default {
   },
   data() {
     return {
+      timerCount: 30,
+      selected: false,
+      selectedAnswer: '',
     };
   },
+  watch: {
+    timerCount: {
+      handler(value) {
+        if (value > 0) {
+          setTimeout(() => {
+            this.timerCount -= 1;
+          }, 1000);
+        }
+      },
+      immediate: true,
+    },
+  },
   methods: {
-    ...mapActions(['getQuestions', 'selectQuestion', 'prevQuestion', 'nextQuestion']),
+    ...mapActions(['getQuestions', 'selectQuestion', 'prevQuestion', 'nextQuestion', 'selectAnswer']),
     next() {
       this.nextQuestion();
     },
     prev() {
       this.prevQuestion();
+    },
+    getAnswer() {
+      this.select = true;
+      // console.log(this.selectedAnswer);
     },
   },
   computed: {
@@ -211,13 +239,21 @@ li {
 }
 .option:hover {
   background-color: #31D283;
+  width: 355px;
+  height: 33px;
 }
-/* .option:checked {
+.selected{
+  background-color:  #31D283;
+}
+/* .option:active {
+  background-color: #31D283;
+}
+.option:checked {
   background-color: #31D283;
 } */
-.option input[type="radio"]:checked + label {
+/* .option input[type="radio"]:checked + label {
   background-color: yellow;
-}
+} */
 .options {
   font-weight: 500;
   font-size: 16px;
@@ -269,6 +305,9 @@ h6 {
   color: #211F26;
   border: 1px solid rgba(0, 0, 0, 0.25);
   outline: none;
+}
+ input.active {
+  color: red;
 }
 
 </style>

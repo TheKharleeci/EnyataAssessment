@@ -16,6 +16,10 @@ export default new Vuex.Store({
     question: [],
     questionCount: 1,
     questionIndex: 0,
+    userAnswers: [],
+    timerMinutes: 0,
+    timerSeconds: 0,
+    applicantCount: 0,
     // nextButtonDisabled: false,
     // previousButtonDisabled: true,
     // assessmentQuestions: [],
@@ -37,6 +41,10 @@ export default new Vuex.Store({
     reduceQuestionCount: (state) => { state.questionCount -= 1; },
     raiseQuestionIndex: (state) => { state.questionIndex += 1; },
     reduceQuestionIndex: (state) => { state.questionIndex -= 1; },
+    collectUserAnswers: (state, payload) => { state.userAnswers.push(payload); },
+    setMinutes: (state, payload) => { state.timerMinutes = payload; },
+    setSeconds: (state, payload) => { state.timerSeconds = payload; },
+    updateApplicantCount: (state) => { state.applicantCount += 1; },
   },
   actions: {
     async loginUser({ commit }, payload) {
@@ -61,6 +69,7 @@ export default new Vuex.Store({
       commit('signInUser', response.data);
       console.log(response.data);
       commit('assignUser', response.data.data);
+      commit('updateApplicantCount');
     },
     async loginAdmin({ commit }, payload) {
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/login', payload);
@@ -91,11 +100,29 @@ export default new Vuex.Store({
       const questions = getters.getAllQuestions;
       if (questions.length !== 0) {
         const currQuestion = questions[index];
-        console.log(index);
+        console.log(currQuestion);
         commit('currentQuestion', currQuestion);
         // dispatch('handleDisableButton');
       }
     },
+    // selectAnswer({ commit, getters }) {
+
+    // },
+    // async getTime({ commit }, payload) {
+    //   const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/createQuestion', payload);
+    //   const startMinutes = response.data;
+    //   let time = startMinutes * 60;
+    //   setInterval(updateCountdown, 1000);
+    //   commit('testTime', time);
+    // },
+    // updateCountdown({ commit }) {
+    //   const minutes = Math.floor(time / 60);
+    //   let seconds = time % 60;
+    //   seconds = seconds < 10 ? '0' + seconds : seconds;
+    //   commit('setMinutes', minutes);
+    //   commit('setSeconds', seconds);
+    // },
+
     nextQuestion({ commit, getters, dispatch }) {
       const index = getters.currentQuestionIndex;
       const questions = getters.getAllQuestions;
@@ -120,29 +147,6 @@ export default new Vuex.Store({
       dispatch('selectQuestion');
       // dispatch('handleDisableButton');
     },
-    // className={"prevBtn" + (this.state.straight ? "active" : "") }
-
-    // handleDisableButton({ getters }) {
-    //   const questions = getters.getAllQuestions;
-    //   if (getters.currentQuestionIndex === 0) {
-    //     this.setState({
-    //       previousButtonDisabled: true,
-    //     });
-    //   } else {
-    //     this.setState({
-    //       previousButtonDisabled: false,
-    //     });
-    //   }
-    //   if (getters.currentQuestionIndex === questions.length - 1) {
-    //     this.setState({
-    //       nextButtonDisabled: true,
-    //     });
-    //   } else {
-    //     this.setState({
-    //       nextButtonDisabled: false,
-    //     });
-    //   }
-    // },
 
     // checkLastQuestion({ getters }) {
     //   const index = getters.currentQuestionIndex;
@@ -165,6 +169,9 @@ export default new Vuex.Store({
     showCurrentQuestion: (state) => state.question,
     countQuestions: (state) => state.questionCount,
     currentQuestionIndex: (state) => state.questionIndex,
+    quizTimeMinutes: (state) => state.setMinutes,
+    quizTimeSeconds: (state) => state.setSeconds,
+    totalApplications: (state) => state.applicantCount,
   },
   modules: {
   },

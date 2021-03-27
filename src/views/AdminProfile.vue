@@ -129,6 +129,7 @@ export default {
 .profileImg{
   margin-right: 32px;
 }
+:focus { outline: none; }
 ::placeholder{
   color:  #333758;
 }
@@ -204,11 +205,11 @@ export default {
   color: #fff;
   background: #7557D3;
   margin-top: 40px;
-};
+}
 .spanD {
   display:block;
   margin-top: 12px;
-  margin-bottom: 900px;
+  margin-bottom: 40px;
   border-top: 1px solid #F2F2F2;
 }
 label {
@@ -217,6 +218,7 @@ label {
   color: #333758;
   opacity: 0.5;
 }
+
 .input-gap {
   margin-right: 20px;
 }

@@ -15,13 +15,13 @@
           <b-row no-gutters >
             <b-col cols="3" class="text-left">
               <p>Current Applications</p>
-              <h2>233</h2>
+              <h2> {{ totalApplications }} </h2>
               <span id="spanA"></span>
               <h6>Academy 2.0</h6>
             </b-col>
             <b-col cols="3" class="text-left">
               <p>Total Applications</p>
-              <h2>4253</h2>
+              <h2>{{ totalApplications }} </h2>
               <span id="spanB"></span>
               <h6>All entries so far</h6>
             </b-col>
@@ -90,10 +90,15 @@
 <script>
 import AdminSideBar from '@/components/AdminSideBar.vue';
 
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Dashbord',
   components: {
     AdminSideBar,
+  },
+  computed: {
+    ...mapGetters(['totalApplications']),
   },
 };
 </script>
