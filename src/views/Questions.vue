@@ -63,22 +63,52 @@
         </b-row>
         <b-row no-gutters>
           <b-col cols="3">
-          <b-button type="" @click="prev" class="prevBtn" variant="light">
-          Previous
-          </b-button>
+            <div>
+              <b-button type=""
+                v-if="countQuestions === 1"
+                @click="prev" disabled
+                class="prevBtn" variant="light">
+                Previous
+                </b-button>
+                <b-button type=""
+                v-else
+                @click="prev"
+                class="prevBtn" variant="light">
+                Previous
+                </b-button>
+            </div>
           </b-col>
           <b-col cols="6"></b-col>
           <b-col cols="3">
-          <b-button type="" @click="next"
-            class="quizBtn" variant="light">
-          Next</b-button>
+            <div>
+              <b-button type=""
+                v-if="countQuestions === getAllQuestions.length"
+                @click="next" disabled
+                class="quizBtn" variant="light">
+                Next
+                </b-button>
+                <b-button type=""
+                v-else
+                @click="next"
+                class="quizBtn" variant="light">
+                Next
+                </b-button>
+            </div>
           </b-col>
         </b-row>
         <b-row no-gutters class="mt-5">
           <b-col cols="3"></b-col>
           <b-col cols="5">
-            <b-button class="finishBtn" type="submit" variant="dark" disabled>
-          Finish</b-button>
+            <div>
+              <b-button  v-if="countQuestions === getAllQuestions.length" class="finishBtn"
+                type="submit" variant="dark">
+                Finish
+              </b-button>
+              <b-button class="finishBtn" v-else
+                type="submit" variant="dark" disabled>
+                Finish
+              </b-button>
+            </div>
           </b-col>
           <b-col cols="3"></b-col>
         </b-row>
@@ -117,6 +147,9 @@ export default {
 </script>
 
 <style scoped>
+/* .endQuiz {
+
+} */
 
 .timer {
   margin-top: 60px;
@@ -173,12 +206,17 @@ label {
   width: 355px;
   height: 33px;
 }
-
 li {
   border: none;
 }
 .option:hover {
   background-color: #31D283;
+}
+/* .option:checked {
+  background-color: #31D283;
+} */
+.option input[type="radio"]:checked + label {
+  background-color: yellow;
 }
 .options {
   font-weight: 500;
@@ -189,7 +227,7 @@ li {
 .finishBtn {
   width: 205px;
   height: 40px;
-  background: #CECECE;
+  background: #7557D3;
   border-radius: 4px;
   border: none;
   font-weight: bold;
@@ -224,11 +262,13 @@ h6 {
   border-radius: 4px;
   background-color: #7557D3;
   color: #fff;
+  outline: none;
 }
 .prevBtn {
   background-color: #fff;
   color: #211F26;
   border: 1px solid rgba(0, 0, 0, 0.25);
+  outline: none;
 }
 
 </style>

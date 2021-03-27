@@ -1,9 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
+import UserLogin from '../views/UserLogin.vue';
 import LoginAdmin from '../views/LoginAdmin.vue';
 import Dashboard from '../views/Dashboard.vue';
-import Two from '../views/Two.vue';
 import Entries from '../views/Entries.vue';
 import Results from '../views/Results.vue';
 import ClientDashboard from '../views/ClientDashboard.vue';
@@ -16,9 +15,9 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home,
+    path: '/userLogin',
+    name: 'UserLogin',
+    component: UserLogin,
   },
   {
     path: '/questions',
@@ -37,11 +36,6 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
-  },
-  {
-    path: '/two',
-    name: 'Two',
-    component: Two,
   },
   {
     path: '/entries',

@@ -16,6 +16,8 @@ export default new Vuex.Store({
     question: [],
     questionCount: 1,
     questionIndex: 0,
+    // nextButtonDisabled: false,
+    // previousButtonDisabled: true,
     // assessmentQuestions: [],
   },
   getter: {
@@ -73,12 +75,14 @@ export default new Vuex.Store({
     },
     async getQuestions({ commit, getters }) {
       // console.log(getters.loggedInUser.token);
-      const response = await axios.get('https://enyata-recruitment-portal.herokuapp.com/user/question', {
+      const quiz = await axios.get('https://enyata-recruitment-portal.herokuapp.com/user/question', {
         headers: {
           authorization: `Bearer ${getters.loggedInUser.token}`,
         },
       });
-      commit('testQuestions', response.data.data);
+      const orderedQuestions = quiz.data.data;
+      const response = orderedQuestions.sort(() => Math.random() - 0.5);
+      commit('testQuestions', response);
     },
     // scoreQuestion({commit}) { },
 
@@ -89,6 +93,7 @@ export default new Vuex.Store({
         const currQuestion = questions[index];
         console.log(index);
         commit('currentQuestion', currQuestion);
+        // dispatch('handleDisableButton');
       }
     },
     nextQuestion({ commit, getters, dispatch }) {
@@ -103,6 +108,7 @@ export default new Vuex.Store({
       commit('raiseQuestionIndex');
       commit('updateQuestionCount');
       dispatch('selectQuestion');
+      // dispatch('handleDisableButton');
     },
     prevQuestion({ commit, dispatch, getters }) {
       const index = getters.currentQuestionIndex;
@@ -112,7 +118,32 @@ export default new Vuex.Store({
       commit('reduceQuestionIndex');
       commit('reduceQuestionCount');
       dispatch('selectQuestion');
+      // dispatch('handleDisableButton');
     },
+    // className={"prevBtn" + (this.state.straight ? "active" : "") }
+
+    // handleDisableButton({ getters }) {
+    //   const questions = getters.getAllQuestions;
+    //   if (getters.currentQuestionIndex === 0) {
+    //     this.setState({
+    //       previousButtonDisabled: true,
+    //     });
+    //   } else {
+    //     this.setState({
+    //       previousButtonDisabled: false,
+    //     });
+    //   }
+    //   if (getters.currentQuestionIndex === questions.length - 1) {
+    //     this.setState({
+    //       nextButtonDisabled: true,
+    //     });
+    //   } else {
+    //     this.setState({
+    //       nextButtonDisabled: false,
+    //     });
+    //   }
+    // },
+
     // checkLastQuestion({ getters }) {
     //   const index = getters.currentQuestionIndex;
     //   const questions = getters.getAllQuestions;

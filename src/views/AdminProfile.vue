@@ -37,12 +37,12 @@
             </div>
           </b-row>
           <b-row no-gutters>
-            <b-col cols="9">
+            <b-col cols="8">
               <div class="d-flex justify-content-between">
                 <h4>Profiles Setting</h4>
                 <button class="edit-button" variant="outline-primary">Edit</button>
               </div>
-              <span></span>
+              <span class="spanD">HELLO</span>
             </b-col>
           </b-row>
           <b-row no-gutters>
@@ -55,9 +55,6 @@
               <button class="imageBtn">
                 Upload new image
               </button>
-              <!-- <button class="button imageBtn btn-style">
-                Upload new image
-              </button> -->
               <button class="btn-color">x Remove</button>
             </div>
           </b-row>
@@ -207,17 +204,11 @@ export default {
   color: #fff;
   background: #7557D3;
   margin-top: 40px;
-}
-.save-button:focus{
-  outline-color: #A75000
-  };
-.button:focus{
-outline-color: #A75000
 };
-span {
+.spanD {
   display:block;
   margin-top: 12px;
-  margin-bottom: 30px;
+  margin-bottom: 900px;
   border-top: 1px solid #F2F2F2;
 }
 label {
