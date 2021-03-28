@@ -64,6 +64,12 @@ export default new Vuex.Store({
       console.log(response.data);
       commit('assignUser', response.data.data);
     },
+
+    // async autoGetDetails({commit }) {
+    // const response = await axios.get('https://enyata-recruitment-portal.herokuapp.com/signup/:id');
+    // const data = response.data;
+    // console.log(data);
+    // },
     async getUserDetail({ commit }, payload) {
       const formdata = new FormData();
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', payload, formdata);

@@ -16,7 +16,7 @@
             <img src="../assets/success.svg" alt="successful">
             <p>We have received you assessment test, we will get back to you soon.<br/>
             <span>Best of luck</span></p>
-            <button>Home</button>
+            <button><a :href="'/'">Home</a></button>
         </div>
         </div>
     </div>
@@ -101,10 +101,15 @@ export default {
     outline: none;
     height: 41px;
     width: 205px;
-    color: #fff;
     background-color: #7557d3;
     border: 1px solid #7557d3;
     border-radius: 4px;
     margin-top: 34px;
+}
+.success a{
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+
 }
 </style>

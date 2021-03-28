@@ -10,10 +10,10 @@
       <b-navbar-nav class="ml-auto">
         <b-nav-form>
           <div class="button-routes" >
-          <a href="#" class="link">Home</a>
-          <a href="#" class="link">Sign in</a>
+          <a :href="'/'" class="link">Home</a>
+          <a :href="'/userlogin'" class="link">Sign in</a>
           <button class="register">
-          <a href="#" class="link2">Register Now</a>
+          <a :href="'/dashboard1'" class="link2">Register Now</a>
           </button>
           </div>
         </b-nav-form>
@@ -28,7 +28,7 @@
           <h2>Ever had a Dream<br/><span>of Becoming a Software</span>
           <br/><span class="engineer">Engineer?</span></h2>
           <p>Join enyata academy today and bring your long<br/> awaiting dream to reality.</p>
-          <button>Register Now</button>
+          <a :href="'/dashboard1'"><button>Register Now</button></a>
         </div>
         <div class="image">
           <img src="../assets/home-image.svg" alt="">
@@ -104,6 +104,7 @@
   color: #7557d3;
   text-align: center;
   margin: auto;
+  font-size: 14px;
 }
 .article{
   margin-top: 100px;

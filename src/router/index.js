@@ -29,7 +29,7 @@ const routes = [
     name: 'Home',
     component: Home,
   },
-    {
+  {
     path: '/userlogin',
     name: 'UserLogin',
     component: UserLogin,

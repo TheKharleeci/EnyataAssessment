@@ -46,8 +46,10 @@
         <b-button type="submit"
         class="button" block variant="dark">Sign In</b-button>
         <div class="register d-flex justify-content-between">
-          <p> <i> <small>Don't have an account yet? <a href=""> Sign Up</a></small></i></p>
-          <p> <i><small>Forgot Password?</small></i></p>
+          <p> <i> <small>Don't have an account yet?
+            <a :href="'/signup'"> Sign Up</a></small></i></p>
+          <p><a :href="'/forget'" class="forget-password">
+          <i><small>Forgot Password?</small></i></a></p>
         </div>
         </div>
       </b-form>
@@ -148,5 +150,9 @@ input {
   border: 1.5px solid #BDBDBD;
   box-sizing: border-box;
   border-radius: 4px;
+}
+.forget-password{
+  text-decoration: none;
+  color: #4F4F4F;
 }
 </style>

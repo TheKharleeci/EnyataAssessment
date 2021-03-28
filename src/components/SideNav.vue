@@ -14,19 +14,24 @@
                 </div>
             </div>
 
-                <div class="side-nav">
-                    <div active class="dashboard">
-                        <img src="../assets/Dashboard.svg" alt="dashboard">
-                        <a href="#" class="sidebaroption">Dashboard</a>
-                    </div>
-                    <div class="assessment">
-                        <img src="../assets/assessment.svg" alt="assessment">
-                        <a href="#" class="sidebaroption">Assessment</a>
-                    </div>
-                    <div class="logout">
-                        <img src="../assets/Logout.svg" alt="logOut">
-                        <a href="#" class="sidebaroption">LogOut</a>
-                    </div>
+            <div class="nav-link">
+                <b-nav vertical>
+                <b-nav-item :href="'/dashboard'" active class="dashboard">
+                <img src="../assets/Dashboard.svg" alt="" class="mr-3 d-inline-block">
+                    Dashboard
+                </b-nav-item>
+
+                <b-nav-item :href="'#'" class="assessment">
+                <img src="../assets/assessment.svg" alt="assessment" class="mr-3 d-inline-block" >
+                    Assessment
+                </b-nav-item>
+
+                <b-nav-item :href="'#'" class="logout">
+                <img src="../assets/Logout.svg" alt="" class="mr-3 d-inline-block" >
+                    LogOut
+                </b-nav-item>
+
+                </b-nav>
                 </div>
             </div>
 </template>
@@ -91,7 +96,21 @@ export default {
     font-style: italic;
     color: #fff;
 }
-.side-nav{
+.nav-link{
+    margin-top: 10px;
+}
+a {
+color: #2b3c4e;
+border-left: 4px solid transparent;
+}
+a:hover {
+color: #7557d3;
+/* background: cadetblue; */
+font-weight: 700;
+border-left-color: #7557d3;
+}
+
+/* .side-nav{
     margin-top: 27px;
 }
 .dashboard img{
@@ -131,5 +150,5 @@ export default {
     margin-left: 43px;
     height: 13.43px;
     width: 14.1px;
-}
+} */
 </style>

@@ -10,8 +10,6 @@
             <b-form enctype="multipart/form-data">
                 <div class="uploads">
                 <div class="body-upload-1">
-                    <!--button class="upload-cv" @click="uploadFiles">
-                    </button-->
                       <VueFileAgent
                         ref="vueFileAgent"
                         :theme="'list'"
@@ -208,15 +206,6 @@ export default {
       // return;
       // }
       this.$router.push('/assessment');
-    },
-    uploadFiles() {
-      // Using the default uploader. You may use another uploader instead.
-      this.$refs.vueFileAgent.upload(this.uploadUrl, this.uploadHeaders, this.fileRecordsForCV);
-      this.fileRecordsForCV = [];
-    },
-    uploadPhoto() {
-      this.$refs.vueFileAgent.upload(this.uploadUrl, this.uploadHeaders, this.fileRecordsForPhoto);
-      this.fileRecordsForPhoto = [];
     },
     filesSelected(fileRecordsNewlySelected) {
       const validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);

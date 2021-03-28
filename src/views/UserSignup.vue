@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <div class="sub-header">
-        <img src="../assets/logo2.svg" alt="logo">
+        <img src="../assets/enyatalogo.svg" alt="logo">
         <h3>Applicant Sign Up</h3>
       </div>
     </div>
@@ -14,8 +14,7 @@
                   id="inline-form-input-name"
                   class="input"
                   type="text"
-                  v-model.trim="$v.firstName.$model" :class="{
-                'is-invalid': $v.firstName.$error, 'is-valid': !$v.firstName.$invalid }">
+                  v-model="form.firstName">
               </b-form-input>
           </div>
 
@@ -25,8 +24,7 @@
                   class="input"
                   id="inline-form-input-lastname"
                   v-model="form.lastName"
-                  type="text"
-                  placeholder="">
+                  type="text">
               </b-form-input>
           </div>
       </div>
@@ -38,8 +36,7 @@
               id="inline-form-input-email"
               class="input"
               type="email"
-              v-model="form.email"
-              placeholder="">
+              v-model="form.email">
               </b-form-input>
               </div>
           <div class="form-child-2">
@@ -47,8 +44,7 @@
               <b-form-input
               id="inline-form-input-phonenumber"
               class="input"
-              v-model="form.phoneNumber"
-              placeholder="">
+              v-model="form.phoneNumber">
               </b-form-input>
           </div>
       </div>
@@ -61,7 +57,6 @@
               class="input"
               v-model="form.password"
               type="password"
-              placeholder=""
               ><b-form-input-append is-text>
               <b-icon icon="eye-fill" aria-hidden="true" style="font-size:24px, color:gray;">
               </b-icon>
@@ -84,13 +79,11 @@
           </div>
       </div>
       <div class="signup-bottom">
-      <!-- <router-link :to = "{dashboard: '/dashboard'}"> -->
-      <b-button type="submit" block variant="light" id="signup" @click="save">
+      <b-button type="submit" block variant="light" id="signup">
           Sign Up</b-button>
-          <!-- </router-link> -->
       <br/>
       <p class="signup-footer">
-          Already have an account? <a href="#">Sign in</a>
+          Already have an account? <a :href="'/userlogin'">Sign in</a>
       </p>
       </div>
     </b-form>
@@ -110,7 +103,7 @@ export default {
     return {
       form: {
       },
-      agreement: false,
+      // agreement: false,
     };
   },
   validations: {
@@ -135,7 +128,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['userSignUp']),
+    ...mapActions(['userSignUp', 'autoGetDetails']),
     onSubmit() {
       this.userSignUp(this.form);
       this.form = {
@@ -146,15 +139,19 @@ export default {
         password: '',
         confirmPassword: '',
       };
+      this.$router.push('/dashbord1');
     },
-    save() {
-      this.agreement = true;
-      this.$v.$touch();
-      if (this.$v.$invalid) {
-        return;
-      }
-      console.log('form submitted');
-    },
+    // onGet(){
+    // this.autoGetDetails(this.form);
+    // }
+    // save() {
+    //   this.agreement = true;
+    //   this.$v.$touch();
+    //   if (this.$v.$invalid) {
+    //     return;
+    //   }
+    //   console.log('form submitted');
+    // },
   },
   watch: {
     registeredUsers: {

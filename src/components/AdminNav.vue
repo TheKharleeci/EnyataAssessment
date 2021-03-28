@@ -16,39 +16,39 @@
 
         <div class="nav-link">
         <b-nav vertical>
-            <b-nav-item href="#" active class="admin-menu">
+            <b-nav-item :href="'/dashboard'" active class="admin-menu">
                 <img src="../assets/Dashboard.svg" alt="" class="mr-3 d-inline-block">
                     Dashboard
             </b-nav-item>
-            <b-nav-item href="#" >
+            <b-nav-item :href="'/application'" >
                 <img src="../assets/create_application.svg" alt="" class="mr-3 d-inline-block">
                     Create Application
             </b-nav-item>
-            <b-nav-item href="#" >
+            <b-nav-item :href="'/entries'" >
                 <img src="../assets/application_entries.svg" alt=""
                     class="mr-3 d-inline-block">
                     Application Entries
             </b-nav-item>
-            <b-nav-item href="#" >
+            <b-nav-item :href="'/compose'" >
                 <img src="../assets/compose_assessment.svg" alt="" class="mr-3 d-inline-block">
                     Compose Assessment
             </b-nav-item>
-            <b-nav-item href="#" >
+            <b-nav-item :href="'/history'" >
                 <img src="../assets/assessment_history.svg" alt="" class="mr-3 d-inline-block">
                     Assessment History
             </b-nav-item>
-            <b-nav-item href="#" >
+            <b-nav-item :href="'/results'" >
                 <img src="../assets/results.svg" alt="" class="mr-3 d-inline-block">
                     Results
             </b-nav-item>
-            <b-nav-item href="#" >
+            <b-nav-item :href="'/adminProfile'" >
                 <img src="../assets/Setting.svg" alt="" class="mr-3 d-inline-block">
                     Settings
             </b-nav-item>
     </b-nav>
         </div>
             <div class="logout">
-            <b-nav-item href="#" >
+            <b-nav-item :href="'/'" >
                 <img src="../assets/Logout.svg" alt="" class="mr-3 d-inline-block">
                     LogOut
             </b-nav-item>
