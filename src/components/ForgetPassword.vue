@@ -59,6 +59,9 @@ export default {
     doThat() {
       alert('This service is not available. Kindly use the reset via email route');
     },
+    // goToButton() {
+    // this.$router.push('/btn');
+    // },
   },
 };
 </script>

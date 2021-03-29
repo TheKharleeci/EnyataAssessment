@@ -35,18 +35,7 @@
                   </b-row>
                 </div>
                 <b-list-group class="">
-                  <!--b-list-group-item href="#" class="batch">
-                      <b-row no-gutters>
-                      <b-col cols="2">Ify Chinke</b-col>
-                      <b-col cols="2">ify@enyata.com</b-col>
-                      <b-col cols="2">12/09/19</b-col>
-                      <b-col cols="3">3 Sabo Ave, Yaba, Lagos</b-col>
-                      <b-col cols="2">University of Nigeria</b-col>
-                      <b-col cols="1">5.0</b-col>
-                    </b-row>
-                  </b-list-group-item-->
                     <EntriesModal/>
-
                   <b-list-group-item href="#" class="batch">
                     <b-row no-gutters>
                       <b-col cols="2">Ify Chinke</b-col>

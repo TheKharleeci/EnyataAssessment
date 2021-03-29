@@ -58,13 +58,13 @@
                     <div class="form-child-1">
                         <label>First Name</label>
                         <b-form-input id="inline-form-input-firstname" class="input"
-                        type="text" v-model="form.firstName">
+                        type="text" v-model="form.firstName">{{users.firstName}}
                         </b-form-input>
                     </div>
                     <div class="form-child-2">
                         <label>Last Name</label>
                         <b-form-input class="input" v-model="form.lastName"
-                            id="inline-form-input-lastname" type="text">
+                            id="inline-form-input-lastname" type="text">{{users.lastName}}
                         </b-form-input>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                     <div class="form-child-1">
                         <label>Email</label>
                         <b-form-input id="inline-form-input-email"
-                            class="input" v-model="form.email" type="email">
+                            class="input" type="email" v-model="form.email"> {{users.email}}
                         </b-form-input>
                     </div>
                     <div class="form-child-2">
@@ -205,6 +205,7 @@ export default {
       },
       error: {},
       valid: true,
+      users: {},
     };
   },
   validations: {
@@ -225,7 +226,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['getUserDetail']),
+    ...mapActions(['getUserDetail', 'autoGetDetails']),
     applicantRegister() {
       console.log(this.form);
       this.getUserDetail(this.form);
@@ -242,6 +243,9 @@ export default {
         photo: '',
         agreement: false,
       };
+    },
+    loadUserDetail(response) {
+      this.autoGetDetail(this.users = response);
     },
     save() {
       this.agreement = true;
@@ -262,7 +266,9 @@ export default {
     },
   },
   computed: {
-
+  },
+  mounted() {
+    this.loadUserDetail();
   },
 };
 </script>

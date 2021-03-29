@@ -4,7 +4,7 @@
             <button>Send Link</button>
             </div>
             <modal name="modal-forgot-password" @append="opened">
-                <b-form class="form-body">
+                <b-form class="form-body" id ="modalForm" method="post" @submit.prevent="sendLink">
                     <p>Kindly input your email address below.</p>
                     <div class="form-group">
                         <label for="email">Email Address</label>
@@ -18,8 +18,8 @@
                         </b-form-input>
                     </div>
                     <div class="d-flex btn-body">
-                        <button class="ok-btn"
-                        @click.prevent="sendLink">OK</button>
+                        <button class="ok-btn" type="submit"
+                        >OK</button>
                     </div>
                 </b-form>
             </modal>
@@ -27,14 +27,28 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
+  data() {
+    return {
+      form: {
+      },
+    };
+  },
   methods: {
-    show() {
-      this.$modal.show('modal-forgot-password');
-    },
+    ...mapActions(['resetPassword']),
     sendLink() {
+      console.log(this.form);
+      this.resetPassword(this.form);
+      this.form = {
+        email: '',
+      };
       // method to send link to mail will be inserted here
       this.$modal.hide('modal-forgot-password');
+    },
+    show() {
+      this.$modal.show('modal-forgot-password');
     },
     opened() {
       this.$refs.email.focus();

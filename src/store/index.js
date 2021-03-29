@@ -17,6 +17,7 @@ export default new Vuex.Store({
     question: [],
     questionCount: 1,
     questionIndex: 0,
+    userPw: [],
     // assessmentQuestions: [],
   },
   getter: {
@@ -39,6 +40,8 @@ export default new Vuex.Store({
     reduceQuestionCount: (state) => { state.questionCount -= 1; },
     raiseQuestionIndex: (state) => { state.questionIndex += 1; },
     reduceQuestionIndex: (state) => { state.questionIndex -= 1; },
+    reset: (state, payload) => { state.user.push(payload); },
+    setNewPassword: (state, payload) => { state.userPw = payload; },
   },
   actions: {
     async loginUser({ commit }, payload) {
@@ -65,14 +68,19 @@ export default new Vuex.Store({
       commit('assignUser', response.data.data);
     },
 
-    // async autoGetDetails({commit }) {
-    // const response = await axios.get('https://enyata-recruitment-portal.herokuapp.com/signup/:id');
-    // const data = response.data;
-    // console.log(data);
-    // },
+    async autoGetDetails() {
+      try {
+        const response = await axios.get('https://enyata-recruitment-portal.herokuapp.com/signup');
+        const { data } = response;
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     async getUserDetail({ commit }, payload) {
       const formdata = new FormData();
-      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', payload, formdata);
+      const response = Promise.all.axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', payload, formdata);
       commit('setRegister', response.data);
       console.log(response);
     },
@@ -138,6 +146,29 @@ export default new Vuex.Store({
     // },
     // {{ "currentQuestionIndex >=getAllQuestions.length"}}
     // :disabled="questionIndex>=quiz.questions.length"
+
+    async resetPassword({ commit }, payload) {
+      const formdata = new FormData();
+      await axios.post('http://localhost:3000/user/reset', payload, formdata)
+        .then((response) => {
+          console.log(response);
+          commit('reset', response.data);
+        }).catch((error) => {
+          console.log(error);
+          console.log(payload);
+        });
+    },
+
+    async newPassword({ commit }, { password, token }) {
+      await axios.put(`http://localhost:3000/resetPassword/${token}`, { password })
+        .then((response) => {
+          console.log(response);
+          commit('setNewPassword', response.data);
+        }).catch((error) => {
+          console.log(error);
+          console.log(password);
+        });
+    },
   },
   getters: {
     // loggedInUser: (state) => console.log(state.loginResponse),

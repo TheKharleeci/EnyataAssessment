@@ -20,6 +20,8 @@ import CreateApplication from '../components/CreateApplication.vue';
 import ComposeAssessment from '../components/ComposeAssessment.vue';
 import ForgetPassword from '../components/ForgetPassword.vue';
 import History from '../components/AssessmentHistory.vue';
+import ModalPassword from '../components/ModalPassword.vue';
+import ResetPassword from '../components/ResetPassword.vue';
 
 Vue.use(VueRouter);
 
@@ -126,6 +128,16 @@ const routes = [
     path: '/history',
     name: 'History',
     component: History,
+  },
+  {
+    path: '/modal',
+    name: 'ModalPassword',
+    component: ModalPassword,
+  },
+  {
+    path: '/resetpassword/:token',
+    name: 'ResetPassword',
+    component: ResetPassword,
   },
 ];
 

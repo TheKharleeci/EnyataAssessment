@@ -2,21 +2,14 @@
     <div class="entire-wrapper">
         <b-list-group-item href="#" class="batch" @click.prevent="show">
         <b-row no-gutters>
-            <b-col cols="2">Ify Chinke</b-col>
-            <b-col cols="2">ify@enyata.com</b-col>
-            <b-col cols="2">12/09/19</b-col>
-            <b-col cols="3">3 Sabo Ave, Yaba, Lagos</b-col>
-            <b-col cols="2">University of Nigeria</b-col>
-            <b-col cols="1">5.0</b-col>
+            <b-col cols="2">{{users.firstName}}{{users.lastName}}</b-col>
+            <b-col cols="2">{{users.email}}</b-col>
+            <b-col cols="2">{{users.dob}}</b-col>
+            <b-col cols="3">{{users.address}}</b-col>
+            <b-col cols="2">{{users.university}}</b-col>
+            <b-col cols="1">{{users.cgpa}}</b-col>
         </b-row>
         </b-list-group-item>
-        <!--transition name="modal-entries" appear>
-            <div class="modal-overlay" v-if="showModal" @click="showModal=false"></div>
-            <transition name="slide" appear>
-                <This is the modal content >
-                <div class="modal" v-if="showModal"></div>
-            </transition>
-        </transition-->
         <modal name="modal-entries" :adaptive="true">
         <div class="modal-container">
             <div class="big-container">
