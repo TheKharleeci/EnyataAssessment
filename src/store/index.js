@@ -1,8 +1,13 @@
 import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
+import VuexPersistence from 'vuex-persist';
 
 Vue.use(Vuex);
+
+const vuexSession = new VuexPersistence({
+  storage: window.sessionStorage,
+});
 
 export default new Vuex.Store({
   state: {
@@ -22,6 +27,7 @@ export default new Vuex.Store({
     timerSeconds: 0,
     applicantCount: 0,
     days: 0,
+    logoutResponse: {},
     // nextButtonDisabled: false,
     // previousButtonDisabled: true,
     // assessmentQuestions: [],
@@ -49,6 +55,7 @@ export default new Vuex.Store({
     updateApplicantCount: (state) => { state.applicantCount += 1; },
     updateRegDaysCount: (state, payload) => { state.days = payload; },
     regDay: (state, payload) => { state.registeredDay = payload; },
+    loggedOut: (state, payload) => { state.logoutResponse = payload; },
   },
   actions: {
     async loginUser({ commit, dispatch }, payload) {
@@ -74,14 +81,14 @@ export default new Vuex.Store({
     },
     regDayCount({ commit, getters }) {
       const start = new Date(getters.dayRegistered);
-      console.log(start);
+      // console.log(start);
       const end = new Date();
-      console.log(end);
+      // console.log(end);
       let diff = 0;
       const days = 1000 * 60 * 60 * 24;
       diff = end - start;
       diff = Math.floor(diff / days);
-      console.log(diff);
+      // console.log(diff);
       commit('updateRegDaysCount', diff);
     },
 
@@ -127,7 +134,9 @@ export default new Vuex.Store({
       const questions = getters.getAllQuestions;
       if (questions.length !== 0) {
         const currQuestion = questions[index];
+        const test = questions[index].id;
         console.log(currQuestion);
+        console.log(test);
         commit('currentQuestion', currQuestion);
         // dispatch('handleDisableButton');
       }
@@ -162,6 +171,15 @@ export default new Vuex.Store({
       // dispatch('handleDisableButton');
     },
 
+    async logout({ commit }) {
+      await axios.post('http://localhost:3000/logout')
+        .then((response) => {
+          console.log(response);
+          commit('loggedIn', '');
+        }).catch((error) => {
+          console.log(error);
+        });
+    },
   },
   getters: {
     // loggedInUser: (state) => console.log(state.loginResponse),
@@ -183,5 +201,6 @@ export default new Vuex.Store({
     userCount: (state) => state.users.length,
   },
   modules: {
+    plugins: [vuexSession.plugin],
   },
 });

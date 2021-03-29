@@ -29,35 +29,47 @@
           <b-col cols="5" class="">
             <h6><i>Question {{ countQuestions }} </i></h6>
             <div>
-              <p class="questions"><i>{{ showCurrentQuestion['title']}} </i></p>
+              <p class="questions">
+                <i>{{ showCurrentQuestion['title']}} </i></p>
               <div class="options text-left">
                 <ul class="list-group">
                   <li class="list-group-item d-flex">
                     <input class="check"
+                    @click="displayRadioValue()"
                     :key="'a_' + `${countQuestions}`"
                     :id="'a_' + `${countQuestions}`"
+                    :value="showCurrentQuestion['option_a']"
                     type="radio" name="option" aria-label="">
                       <label class="option" :for="'a_' + `${countQuestions}`">
                       <i>A. {{ showCurrentQuestion['option_a']}}</i></label>
                   </li>
                   <li class="list-group-item d-flex">
                     <input  class="check"
+                    @click="displayRadioValue()"
                     :key="'b_' + `${countQuestions}`"
                     :id="'b_' + `${countQuestions}`"
+                    :value="showCurrentQuestion['option_b']"
                     type="radio" name="option"  aria-label="">
                       <label class="option" :for="'b_' + `${countQuestions}`">
                         <i>B. {{ showCurrentQuestion['option_b']}}</i></label>
                   </li>
                   <li class="list-group-item d-flex">
                     <input class="check"
+                    @click="displayRadioValue()"
                     :key="'c_' + `${countQuestions}`"
                     :id="'c_' + `${countQuestions}`"
+                    :value="showCurrentQuestion['option_c']"
                     type="radio" name="option" aria-label="">
                       <label class="option" :for="'c_' + `${countQuestions}`">
                       <i>C. {{ showCurrentQuestion['option_c']}}</i></label>
                   </li>
                   <li class="list-group-item d-flex">
-                    <input class="check" id="d" type="radio" name="option" aria-label="">
+                    <input class="check"
+                    @click="displayRadioValue()"
+                    :key="'d_' + `${countQuestions}`"
+                    :id="'d_' + `${countQuestions}`"
+                    :value="showCurrentQuestion['option_d']"
+                    type="radio" name="option" aria-label="">
                       <label class="option" for="d">
                       <i>D. {{ showCurrentQuestion['option_d']}}</i></label>
                   </li>
@@ -136,7 +148,7 @@ export default {
   data() {
     return {
       timerCount: 360,
-      selected: false,
+      // selected: false,
       selectedAnswer: '',
     };
   },
@@ -173,6 +185,15 @@ export default {
     },
     submitTest() {
       this.$router.push('/successfulPage');
+    },
+    displayRadioValue() {
+      const element = document.getElementsByName('option');
+      for (let i = 0; i < element.length; i += 1) {
+        if (element[i].checked) {
+          this.selectedAnswer = element[i].value;
+        }
+      }
+      console.log(this.selectedAnswer);
     },
   },
   computed: {

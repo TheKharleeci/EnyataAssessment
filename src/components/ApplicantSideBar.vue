@@ -28,7 +28,7 @@
                 class="mr-3 d-inline-block">
                 Assessment
               </b-nav-item> <br>
-              <b-nav-item href="#" >
+              <b-nav-item href="#" @click="tologout">
                 <img src="../assets/Logout.svg" alt="" class="mr-3 d-inline-block">
                 Log Out
               </b-nav-item>
@@ -65,6 +65,10 @@ export default {
     // },
     toDashboard() {
       this.$router.push('/client');
+    },
+    tologout() {
+      this.logout();
+      this.$router.push('/');
     },
   },
   computed: {
