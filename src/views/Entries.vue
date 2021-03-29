@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="entire-wrapper">
     <div>
       <b-row no-gutters >
         <b-col cols="3">

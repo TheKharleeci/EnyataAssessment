@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="entire-wrapper">
         <b-list-group-item href="#" class="batch" @click.prevent="show">
         <b-row no-gutters>
             <b-col cols="2">Ify Chinke</b-col>
@@ -10,9 +10,16 @@
             <b-col cols="1">5.0</b-col>
         </b-row>
         </b-list-group-item>
-        <modal name="modal-entries" :adaptive="true" width="50%" height="100%">
+        <!--transition name="modal-entries" appear>
+            <div class="modal-overlay" v-if="showModal" @click="showModal=false"></div>
+            <transition name="slide" appear>
+                <This is the modal content >
+                <div class="modal" v-if="showModal"></div>
+            </transition>
+        </transition-->
+        <modal name="modal-entries" :adaptive="true">
+        <div class="modal-container">
             <div class="big-container">
-
             <div class="image-wrapper">
             <img :src="photo_url" :alt="photo_url">
             </div>
@@ -75,6 +82,7 @@
                 </div>
             </div>
             </div>
+        </div>
         </modal>
     </div>
 </template>
@@ -101,17 +109,24 @@ export default {
 </script>
 
 <style scoped>
-.v--modal-overlay {
-  background: red;
+.modal-container{
+    overflow-y: auto;
+    height: 50vh;
+    width: 50vw;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 99;
 }
-
 .batch {
 font-weight: normal;
 font-size: 14px;
 line-height: 22px;
 color: #4F4F4F;
-/* width: 482px; */
 height: 50px;
+z-index: 98;
 }
 a {
   color: #4f4f4f;

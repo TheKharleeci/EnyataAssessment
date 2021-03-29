@@ -94,6 +94,9 @@ letter-spacing: -0.02em;
     margin-top: 60px;
     justify-content: space-between;
 }
+.right-wrapper-left p{
+    text-align: left;
+}
 .right-wrapper-left button{
     width: 456px;
     height: 108px;
@@ -147,7 +150,7 @@ label{
 }
 .right-wrapper-four{
     display: flex;
-    margin-top: 52px;
+    margin-top: 45px;
     justify-content: space-around;
 }
 .toggle{
@@ -159,8 +162,8 @@ label{
 }
 .btn{
     justify-content: center;
-    margin-top: 55px;
-    margin-bottom: 97px;
+    margin-top: 45px;
+    margin-bottom: 15px;
 }
 #button{
     width: 205px;

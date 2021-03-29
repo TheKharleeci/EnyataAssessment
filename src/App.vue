@@ -11,8 +11,7 @@
       <router-link to="/client">ClientDashboard</router-link> |
       <router-link to="/results">Results</router-link> |
       <router-link to="/adminProfile">Admin</router-link> |
-      <router-link to="/signup">signup</router-link> |
-      <router-link to="/timer">timer</router-link>
+      <router-link to="/timer">timer</router-link>|
       <router-link to="/dashboard1">Dashboard</router-link> |
       <router-link to="/assessment">Assessment</router-link> |
       <router-link to="/successful">Successful</router-link> |

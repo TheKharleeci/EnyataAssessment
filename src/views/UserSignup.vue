@@ -11,10 +11,22 @@
               <div class="form-child-1">
               <label>First Name</label>
               <b-form-input
-                  id="inline-form-input-name"
-                  class="input"
-                  type="text"
-                  v-model="form.firstName">
+                  id="inline-form-input-name" class="input" type="text"
+                  v-model.lazy="$v.firstName.$model"
+                  :class="{ 'is-invalid': $v.firstName.$error,
+                  'is-valid': !$v.firstName.$invalid }">
+                  <div class="valid-feedback">Your first name is valid</div>
+                  <div class="invalid-feedback">
+                    <span v-if="!$v.firstName.required">Your first name is required</span>
+                    <span v-if="!$v.firstName.minLength">
+                    First name must have at least
+                        {{$v.firstName.$params.minLength.min}} letters.
+                  </span>
+                  <span v-if="!$v.firstName.maxLength">
+                    First name must have at most
+                        {{$v.firstName.params.maxLength.max}} letters.
+                    </span>
+                </div>
               </b-form-input>
           </div>
 
@@ -102,8 +114,17 @@ export default {
   data() {
     return {
       form: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        password: '',
+        confirmPassword: '',
       },
-      // agreement: false,
+      agreement: false,
+      // uiState: 'submit not clicked',
+      // errors: false,
+      // empty: true,
     };
   },
   validations: {
@@ -128,6 +149,17 @@ export default {
     },
   },
   methods: {
+    // method for validation
+    save() {
+      this.agreement = true;
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
+      console.log('form submitted');
+      this.$router.push('/dashboard1');
+    },
+    // method from store to post to database
     ...mapActions(['userSignUp', 'autoGetDetails']),
     onSubmit() {
       this.userSignUp(this.form);
@@ -139,25 +171,16 @@ export default {
         password: '',
         confirmPassword: '',
       };
-      this.$router.push('/dashbord1');
+      // this.$router.push('/dashbord1');
     },
     // onGet(){
     // this.autoGetDetails(this.form);
     // }
-    // save() {
-    //   this.agreement = true;
-    //   this.$v.$touch();
-    //   if (this.$v.$invalid) {
-    //     return;
-    //   }
-    //   console.log('form submitted');
-    // },
   },
   watch: {
     registeredUsers: {
       deep: true,
       handler() {
-        // this.isLoading = false;
         this.$router.push('/dashbord1');
       },
     },
@@ -242,5 +265,11 @@ label{
     color: #4F4F4F;
     font-weight: normal;
     font-style: normal;
+}
+.invalid-feedback{
+  color: red;
+}
+.valid-feedback{
+  color: green;
 }
 </style>

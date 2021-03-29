@@ -1,6 +1,8 @@
 <template>
     <div class="body-all">
+        <div>
         <AdminNav/>
+        </div>
         <div class="body-right">
             <h1>Create Application</h1>
             <div class="right-wrapper-one">
@@ -108,6 +110,7 @@ label{
     color: #474747;
     font-weight: 400;
     font-style: italic;
+    opacity: 0.2;
 }
 .right-wrapper-two{
     display: flex;
@@ -127,7 +130,7 @@ label{
 .btn{
     margin-top: 44px;
     justify-content: center;
-    margin-bottom: 278px;
+    margin-bottom: 15pxpx;
 }
 #button{
     width: 379px;

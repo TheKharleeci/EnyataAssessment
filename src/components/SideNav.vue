@@ -8,28 +8,31 @@
                     </b-img>
                 </div>
                 <div class="profile-image-text">
-                    <h6>Jane Doe</h6>
-                    <p>doe@enyata.com</p>
+                <h6>{{ currentApplicant["first_name"] }}
+                        {{ currentApplicant["last_name"] }}</h6>
+                    <p>{{ currentApplicant["email"] }}</p>
                 </div>
                 </div>
             </div>
 
             <div class="nav-link">
-                <b-nav vertical>
-                <b-nav-item :href="'/dashboard'" active class="dashboard">
+                <b-nav>
+                <b-nav-item href="#" @click="toDashboard"  active>
                 <img src="../assets/Dashboard.svg" alt="" class="mr-3 d-inline-block">
                     Dashboard
                 </b-nav-item>
 
-                <b-nav-item :href="'#'" class="assessment">
-                <img src="../assets/assessment.svg" alt="assessment" class="mr-3 d-inline-block" >
+            <b-nav-item href="#" @click="takeAssessment">
+                <img src="../assets/assessment.svg" alt="assessment"
+                class="mr-3 d-inline-block" >
                     Assessment
                 </b-nav-item>
-
-                <b-nav-item :href="'#'" class="logout">
+                <div class="logout">
+                <b-nav-item href="#">
                 <img src="../assets/Logout.svg" alt="" class="mr-3 d-inline-block" >
                     LogOut
                 </b-nav-item>
+                </div>
 
                 </b-nav>
                 </div>
@@ -37,15 +40,30 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
   name: 'SideNav',
   data() {
     return {
       visible: true,
       profileImg: {
-        blank: true, blankColor: '#fff', width: 100, height: 100, class: 'mt-4',
+        blank: true, blankColor: '#777', width: 100, height: 100, class: 'mt-0',
       },
     };
+  },
+  methods: {
+    ...mapActions(['loginUser', 'getQuestions']),
+    takeAssessment() {
+      this.getQuestions();
+      this.$router.push('/questions');
+    },
+    toDashboard() {
+      this.$router.push('/client');
+    },
+  },
+  computed: {
+    ...mapGetters(['loggedInUser', 'currentApplicant']),
   },
 };
 </script>
@@ -59,38 +77,32 @@ export default {
 }
 .side-profile{
     width: 292px;
-    height: 255px;
+    height: 200px;
     background-color: #7557d3;
 }
 .image-and-text{
     padding-top: 75px;
+    text-align: center;
 }
 .profile-image{
-    width: 80px;
-    height: 80px;
-    text-align: center;
-    background: #fff;
-    border-radius: 50%;
-    margin: auto;
-    padding: 20px;
+    margin: -20px auto;
+    width: 100px;
+    height: 100px;
 }
 .profile-image img{
     width: 100%;
     height: 100%;
 }
 .profile-image-text{
-    text-align: center;
     margin-top: 13px;
 }
 .profile-image-text h6{
-    text-align: center;
     font-size: 20px;
     font-weight: 700;
     font-style: normal;
     color: #fff;
 }
 .profile-image-text p{
-    text-align: center;
     font-size: 16px;
     font-weight: 400;
     font-style: italic;
@@ -105,50 +117,11 @@ border-left: 4px solid transparent;
 }
 a:hover {
 color: #7557d3;
-/* background: cadetblue; */
 font-weight: 700;
 border-left-color: #7557d3;
-}
-
-/* .side-nav{
-    margin-top: 27px;
-}
-.dashboard img{
-    margin-left: 43px;
-    height: 12.37px;
-    width: 14.44px;
-}
-.dashboard a, .assessment a, .logout a{
-    text-decoration: none;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 16px;
-    color: #2b3c4e;
-    margin-left: 16.56px;
-}
-.dashboard, .assessment, .logout{
-    border-left: 4px solid transparent;
-    color: #2b3c4e;
-}
-.dashboard:hover, .assessment:hover, .logout:hover{
-    font-weight: 770;
-    border-left-color: #7557d3;
-    color: #7557d3;
-}
-.assessment{
-    margin-top: 28px;
-}
-.assessment img{
-    margin-left: 43px;
-    height: 15.79px;
-    width: 12px;
 }
 .logout{
     margin-top: 57px;
 }
-.logout img{
-    margin-left: 43px;
-    height: 13.43px;
-    width: 14.1px;
-} */
+
 </style>
