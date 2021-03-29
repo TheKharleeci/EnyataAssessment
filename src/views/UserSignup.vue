@@ -1,138 +1,170 @@
 <template>
-  <div class="container">
-    <div class="header">
-      <div class="sub-header">
-        <img src="../assets/enyatalogo.svg" alt="logo">
-        <h3>Applicant Sign Up</h3>
-      </div>
-    </div>
-    <b-form @submit.prevent="onSubmit">
-      <div class="form-wrapper">
-              <div class="form-child-1">
-              <label>First Name</label>
-              <b-form-input
-                  id="inline-form-input-name" class="input" type="text"
-                  v-model.lazy="$v.firstName.$model"
-                  :class="{ 'is-invalid': $v.firstName.$error,
-                  'is-valid': !$v.firstName.$invalid }">
-                  <div class="valid-feedback">Your first name is valid</div>
-                  <div class="invalid-feedback">
-                    <span v-if="!$v.firstName.required">Your first name is required</span>
+    <div class="container">
+        <div class="header">
+            <div class="sub-header">
+            <img src="../assets/new_logo.svg" alt="logo">
+            <h3>Applicant Sign Up</h3>
+            </div>
+        </div>
+        <b-form @submit.prevent="onSubmit">
+        <div class="form-wrapper">
+            <div class="form-child-1">
+                <label>First Name</label>
+                <b-form-input id="inline-form-input-name"
+                class="input" type="text" v-model.lazy="$v.firstName.$model"
+                :class="{ 'is-invalid': $v.firstName.$error,
+                'is-valid': !$v.firstName.$invalid }">
+                </b-form-input>
+                <div class="valid-feedback">Your first name is valid</div>
+                <div class="invalid-feedback">
+                    <span v-if="!$v.firstName.required">
+                      First name is required.</span>
                     <span v-if="!$v.firstName.minLength">
-                    First name must have at least
-                        {{$v.firstName.$params.minLength.min}} letters.
-                  </span>
-                  <span v-if="!$v.firstName.maxLength">
-                    First name must have at most
-                        {{$v.firstName.params.maxLength.max}} letters.
-                    </span>
+                      First name must have at least
+                        {{$v.firstName.$params.minLength.min}} letters.</span>
+                    <span v-if="!$v.firstName.maxLength">
+                      First name must have at most
+                        {{$v.firstName.params.maxLength.max}} letters.</span>
+                      <span v-if="!$v.firstName.alpha">
+                      First name should be alphabet.</span>
                 </div>
-              </b-form-input>
-          </div>
+            </div>
 
-          <div class="form-child-2">
-              <label>Last Name</label>
-              <b-form-input
-                  class="input"
-                  id="inline-form-input-lastname"
-                  v-model="form.lastName"
-                  type="text">
-              </b-form-input>
-          </div>
-      </div>
+            <div class="form-child-2">
+                <label>Last Name</label>
+                <b-form-input class="input" id="inline-form-input-lastname"
+                    type="text" v-model.lazy="$v.lastName.$model" :class="{
+                'is-invalid': $v.lastName.$error, 'is-valid': !$v.lastName.$invalid }">
+                </b-form-input>
+                <div class="valid-feedback">Your last name is valid</div>
+                <div class="invalid-feedback">
+                    <span v-if="!$v.lastName.required">
+                      Last name is required.</span>
+                    <span v-if="!$v.lastName.minLength">
+                      Last name must have at least
+                        {{$v.lastName.$params.minLength.min}} letters.</span>
+                    <span v-if="!$v.lastName.maxLength">
+                      Last name must have at most
+                        {{$v.lastName.params.maxLength.max}} letters.</span>
+                    <span v-if="!$v.lastName.alpha">
+                      Last name should be alphabet.</span>
+                </div>
+            </div>
+        </div>
 
-      <div class="form-wrapper-2">
-          <div class="form-child-1">
-              <label>Email Address</label>
-              <b-form-input
-              id="inline-form-input-email"
-              class="input"
-              type="email"
-              v-model="form.email">
-              </b-form-input>
-              </div>
-          <div class="form-child-2">
-              <label>Phone Number</label>
-              <b-form-input
-              id="inline-form-input-phonenumber"
-              class="input"
-              v-model="form.phoneNumber">
-              </b-form-input>
-          </div>
-      </div>
+        <div class="form-wrapper-2">
+            <div class="form-child-1">
+                <label>Email Address</label>
+                <b-form-input id="inline-form-input-email" class="input"
+                type="email" v-model.lazy="$v.email.$model" :class="{
+                'is-invalid': $v.email.$error, 'is-valid': !$v.email.$invalid }">
+                </b-form-input>
+                <div class="valid-feedback">Your email is valid</div>
+                <div class="invalid-feedback">
+                    <span v-if="!$v.email.required">
+                      Email is required.</span>
+                    <span v-if="!$v.email.email">
+                        Email is not a properly formatted email address</span>
+                </div>
+                </div>
+            <div class="form-child-2">
+                <label>Phone Number</label>
+                <b-form-input id="inline-form-input-phonenumber" class="input"
+                type="text" v-model.lazy="$v.phoneNumber.$model" :class="{
+                'is-invalid': $v.phoneNumber.$error, 'is-valid': !$v.phoneNumber.$invalid }">
+                </b-form-input>
+                <div class="valid-feedback">Your phone number is valid</div>
+                <div class="invalid-feedback">
+                    <span v-if="!$v.phoneNumber.required">
+                      Phone number is required.</span>
+                    <span v-if="!$v.phoneNumber.numeric">
+                      Phone number must be numeric.</span>
+                    <span v-if="!$v.phoneNumber.minLength">
+                      Phone number must have at least
+                        {{$v.phoneNumber.$params.minLength.min}} letters.</span>
+                    <span v-if="!$v.phoneNumber.maxLength">
+                      Phone number must have at most
+                        {{$v.phoneNumber.params.maxLength.max}} letters.</span>
+                </div>
+            </div>
+        </div>
 
-      <div class="form-wrapper-2">
-          <div class="form-child-1">
-              <label>Password</label>
-              <b-form-input
-              id="inline-form-input-password"
-              class="input"
-              v-model="form.password"
-              type="password"
-              ><b-form-input-append is-text>
-              <b-icon icon="eye-fill" aria-hidden="true" style="font-size:24px, color:gray;">
-              </b-icon>
-              </b-form-input-append>
-              </b-form-input>
-          </div>
-          <div class="form-child-2">
-              <label>Confirm Password</label>
-              <b-form-input
-              id="inline-form-input-confirmpassword"
-              class="input"
-              type="password"
-              v-model="form.confirmPassword"
-              placeholder="">
-              <b-input-group-prepend is-text>
-              <b-icon icon="eye-fill" aria-hidden="true" style="font-size:24px, color:gray;">
-              </b-icon>
-              </b-input-group-prepend>
-              </b-form-input>
-          </div>
-      </div>
-      <div class="signup-bottom">
-      <b-button type="submit" block variant="light" id="signup">
-          Sign Up</b-button>
-      <br/>
-      <p class="signup-footer">
-          Already have an account? <a :href="'/userlogin'">Sign in</a>
-      </p>
-      </div>
-    </b-form>
-  </div>
+        <div class="form-wrapper-2">
+            <div class="form-child-1">
+                <label>Password</label>
+                <b-form-input id="inline-form-input-password" class="input"
+                type="password" v-model.lazy="$v.password.$model" :class="{
+                'is-invalid': $v.password.$error, 'is-valid': !$v.password.$invalid }">
+                <b-form-input-append is-text>
+                <b-icon icon="eye-fill" aria-hidden="true" style="font-size:24px, color:gray;">
+                </b-icon>
+                </b-form-input-append>
+                </b-form-input>
+                <div class="valid-feedback">Your password is valid</div>
+                <div class="invalid-feedback">
+                    <span v-if="!$v.password.required">
+                      Password is required.</span>
+                    <span v-if="!$v.password.minLength">
+                      Password must have at least
+                        {{$v.password.$params.minLength.min}}letters.</span>
+                </div>
+            </div>
+            <div class="form-child-2">
+                <label>Confirm Password</label>
+                <b-form-input id="inline-form-input-confirmpassword" class="input"
+                type="password" v-model.lazy="$v.confirmPassword.$model" :class="{
+                'is-invalid': $v.confirmPassword.$error,
+                'is-valid': !$v.confirmPassword.$invalid }">
+                <b-input-group-prepend is-text>
+                <b-icon icon="eye-fill" aria-hidden="true" style="font-size:24px, color:gray;">
+                </b-icon>
+                </b-input-group-prepend>
+                </b-form-input>
+                <div class="valid-feedback">Your password is valid</div>
+                <div class="invalid-feedback">
+                    <span v-if="!$v.confirmPassword.sameAsPassword">
+                      Password must be same.</span>
+                </div>
+            </div>
+        </div>
+        <div class="signup-bottom">
+        <b-button type="submit" block variant="light" id="signup"
+        @click.prevent="save">
+            Sign Up</b-button>
+        <br/>
+        <p class="signup-footer">
+            Already have an account? <a href="#">Sign in</a>
+        </p>
+        </div>
+        </b-form>
+    </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import {
-  required, minLength, maxLength, sameAs, email, numeric,
+  required, minLength, maxLength, sameAs, email, numeric, alpha,
 } from 'vuelidate/lib/validators';
 
 export default {
-
   name: 'UserSignUp',
   data() {
     return {
-      form: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        phoneNumber: '',
-        password: '',
-        confirmPassword: '',
-      },
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: '',
+      password: '',
+      confirmPassword: '',
       agreement: false,
-      // uiState: 'submit not clicked',
-      // errors: false,
-      // empty: true,
     };
   },
   validations: {
     firstName: {
-      required, minLength: minLength(3), maxLength: maxLength(100),
+      required, minLength: minLength(3), maxLength: maxLength(100), alpha,
     },
     lastName: {
-      required, minLength: minLength(3), maxLength: maxLength(100),
+      required, minLength: minLength(3), maxLength: maxLength(100), alpha,
     },
     email: {
       required, email,
@@ -147,9 +179,9 @@ export default {
     confirmPassword: {
       sameAsPassword: sameAs('password'),
     },
+
   },
   methods: {
-    // method for validation
     save() {
       this.agreement = true;
       this.$v.$touch();
@@ -159,7 +191,7 @@ export default {
       console.log('form submitted');
       this.$router.push('/dashboard1');
     },
-    // method from store to post to database
+    // method from store
     ...mapActions(['userSignUp', 'autoGetDetails']),
     onSubmit() {
       this.userSignUp(this.form);
@@ -171,11 +203,8 @@ export default {
         password: '',
         confirmPassword: '',
       };
-      // this.$router.push('/dashbord1');
+      console.log(this.form);
     },
-    // onGet(){
-    // this.autoGetDetails(this.form);
-    // }
   },
   watch: {
     registeredUsers: {
@@ -227,6 +256,7 @@ export default {
     background: #7557d3;
     color: #fff;
     border-radius: 4px;
+    text-decoration: none;
 }
 .form-wrapper {
     margin-top: 78px;

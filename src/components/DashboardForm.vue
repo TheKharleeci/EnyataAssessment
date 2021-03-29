@@ -80,9 +80,18 @@
                         <label>Date of Birth</label>
                         <b-form-input
                             id="inline-form-input-phonenumber"
-                            class="input" v-model="form.dob"
-                            placeholder="">
+                            class="input" type="text" v-model="form.dob">
+                            <!--v-model.lazy="$v.dob.$model"
+                            :class="{ 'is-invalid': $v.dob.$error,
+                            'is-valid': !$v.dob.$invalid }"-->
                         </b-form-input>
+                        <!--div class="valid-feedback">Date of birth is valid</div>
+                        <div class="invalid-feedback">
+                          <span v-if="!$v.dob.required">
+                            Date of birth is required.</span>
+                          <span v-if="!$v.dob.alphaNum">
+                            Date of birth should be format mm-dd-yyyy</span>
+                      </div-->
                     </div>
                 </div>
 
@@ -91,19 +100,39 @@
                         <label>Address</label>
                         <b-form-input
                             id="inline-form-input-address"
-                            class="input" v-model="form.address"
-                            placeholder=""
-                            >
+                            class="input" type="type" v-model="form.address">
+                            <!--v-model.lazy="$v.address.$model"
+                            :class="{ 'is-invalid': $v.address.$error,
+                            'is-valid': !$v.address.$invalid }"-->
                         </b-form-input>
+                        <!--div class="valid-feedback">Address is valid</div>
+                        <div class="invalid-feedback">
+                          <span v-if="!$v.address.required">
+                            Address is required.</span>
+                            <span v-if="!$v.address.minLength">
+                              Address must have at least
+                        {{$v.address.$params.minLength.min}} letters.</span>
+                          <span v-if="!$v.address.maxLength">
+                              Address must have at most
+                        {{$v.address.params.maxLength.max}} letters.</span>
+                          <span v-if="!$v.address.alphaNum">
+                            Address is alphanumeric</span>
+                      </div-->
                     </div>
                     <div class="form-child-2">
                         <label>University</label>
                         <b-form-input
                             id="inline-form-input-university"
-                            class="input" v-model="form.university"
-                            placeholder=""
-                            >
+                            class="input" type="text" v-model="form.university">
+                            <!--v-model.lazy="$v.university.$model"
+                            :class="{ 'is-invalid': $v.university.$error,
+                            'is-valid': !$v.university.$invalid }"-->
                         </b-form-input>
+                        <!--div class="valid-feedback">University is valid</div>
+                        <div class="invalid-feedback">
+                          <span v-if="!$v.university.required">
+                            University is required.</span>
+                        </div-->
                     </div>
                 </div>
 
@@ -112,17 +141,39 @@
                         <label>Course of Study</label>
                         <b-form-input
                             id="inline-form-input-course"
-                            class="input" v-model="form.courseOfStudy"
-                            placeholder="">
+                            class="input" type="text" v-model="form.course">
+                            <!--v-model.lazy="$v.course.$model"
+                            :class="{ 'is-invalid': $v.course.$error,
+                            'is-valid': !$v.course.$invalid }"-->
                         </b-form-input>
+                        <!--div class="valid-feedback">Course of study is valid</div>
+                        <div class="invalid-feedback">
+                          <span v-if="!$v.course.required">
+                            Course of study is required.</span>
+                            <span v-if="!$v.course.minLength">
+                              Course of study must have at least
+                        {{$v.course.$params.minLength.min}} letters.</span>
+                          <span v-if="!$v.course.maxLength">
+                              Course of study must have at most
+                        {{$v.course.params.maxLength.max}} letters.</span>
+                      </div-->
                     </div>
                     <div class="form-child-2">
                         <label>CGPA</label>
                         <b-form-input
                             id="inline-form-input-cgpa"
-                            class="input" v-model="form.cgpa"
-                            placeholder="">
+                            class="input" type="text" v-model="form.cgpa">
+                            <!--v-model.lazy="$v.cgpa.$model"
+                            :class="{ 'is-invalid': $v.cgpa.$error,
+                            'is-valid': !$v.cgpa.$invalid }"-->
                         </b-form-input>
+                        <!--div class="valid-feedback">CGPA is valid</div>
+                        <div class="invalid-feedback">
+                          <span v-if="!$v.cgpa.required">
+                            CGPA is required.</span>
+                          <span v-if="!$v.cgpa.decimal">
+                            CGPA should be format 5.00</span>
+                      </div-->
                     </div>
                 </div>
             <div class="submit-bottom">
@@ -137,7 +188,7 @@
 <script>
 import { mapActions } from 'vuex';
 import {
-  required, minLength, maxLength, decimal, email, alphaNum,
+  required, minLength, maxLength, decimal, alphaNum,
 } from 'vuelidate/lib/validators';
 
 export default {
@@ -157,20 +208,11 @@ export default {
     };
   },
   validations: {
-    firstName: {
-      required, minLength: minLength(3), maxLength: maxLength(100),
-    },
-    lastName: {
-      required, minLength: minLength(3), maxLength: maxLength(100),
-    },
-    email: {
-      required, email,
-    },
     dob: {
       required, alphaNum,
     },
     address: {
-      required, minLength: minLength(3), maxLength: maxLength(100),
+      required, minLength: minLength(3), maxLength: maxLength(100), alphaNum,
     },
     university: {
       required,
@@ -198,14 +240,17 @@ export default {
         cgpa: '',
         cv: '',
         photo: '',
-        // agreement: false,
+        agreement: false,
       };
-      // this.agreement = true;
-      // this.$v.$touch();
-      // if (this.$v.$invalid) {
-      // return;
-      // }
-      this.$router.push('/assessment');
+    },
+    save() {
+      this.agreement = true;
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
+      console.log('form submitted');
+      this.$router.push('/dashboard');
     },
     filesSelected(fileRecordsNewlySelected) {
       const validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
