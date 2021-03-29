@@ -57,9 +57,12 @@ export default {
   methods: {
     ...mapActions(['loginUser', 'getQuestions']),
     takeAssessment() {
-      this.getQuestions();
-      this.$router.push('/questions');
+      this.$router.push('/takeAssess');
     },
+    //  takeAssessment() {
+    //   this.getQuestions();
+    //   this.$router.push('/questions');
+    // },
     toDashboard() {
       this.$router.push('/client');
     },

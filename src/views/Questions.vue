@@ -100,7 +100,7 @@
           <b-col cols="5">
             <div>
               <b-button  v-if="countQuestions === getAllQuestions.length" class="finishBtn"
-                type="submit" variant="dark">
+                type="submit" variant="dark" @click="submitTest">
                 Finish
               </b-button>
               <b-button class="finishBtn" v-else
@@ -167,6 +167,9 @@ export default {
       let seconds = time % 60;
       seconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
       return `${seconds}`;
+    },
+    submitTest() {
+      this.$router.push('/successfulPage');
     },
   },
   computed: {
@@ -243,18 +246,10 @@ li {
   width: 355px;
   height: 33px;
 }
-/* .selected{
-  background-color:  #31D283;
-} */
-/* .option:active {
-  background-color: #31D283;
-}
-.option:checked {
+
+/* input[type="radio"]:checked + label {
   background-color: #31D283;
 } */
-input[type="radio"]:checked + label {
-  background-color: #31D283;
-}
 .options {
   font-weight: 500;
   font-size: 16px;
