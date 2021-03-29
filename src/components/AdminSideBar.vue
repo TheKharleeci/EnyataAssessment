@@ -56,7 +56,7 @@
         </div>
       </b-sidebar>
     </div>
-    <div class="mainBar"></div>
+    <!-- <div class="mainBar"></div> -->
   </div>
 </template>
 
@@ -85,10 +85,10 @@ export default {
       this.$router.push('/entries');
     },
     composeAssessment() {
-      this.$router.push('/questions');
+      this.$router.push('/compose');
     },
     history() {
-      this.$router.push('/questions');
+      this.$router.push('/dashboard');
     },
     results() {
       this.$router.push('/results');
@@ -120,9 +120,9 @@ p {
 .sideBar {
   width: 21vw;
 }
-.mainBar {
+/* .mainBar {
   width: 79vw;
-}
+} */
 #email {
   font-size: 16px;
   font-weight: 400;

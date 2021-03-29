@@ -42,7 +42,7 @@
                 <h4>Profiles Setting</h4>
                 <button class="edit-button" variant="outline-primary">Edit</button>
               </div>
-              <span class="spanD">HELLO</span>
+              <span class="spanD"></span>
             </b-col>
           </b-row>
           <b-row no-gutters>

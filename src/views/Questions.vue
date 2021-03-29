@@ -33,20 +33,27 @@
               <div class="options text-left">
                 <ul class="list-group">
                   <li class="list-group-item d-flex">
-                    <input class="check" id="a"
-                    @click="getAnswer"
+                    <input class="check"
+                    :key="'a_' + `${countQuestions}`"
+                    :id="'a_' + `${countQuestions}`"
                     type="radio" name="option" aria-label="">
-                      <label class="option" for="a">
+                      <label class="option" :for="'a_' + `${countQuestions}`">
                       <i>A. {{ showCurrentQuestion['option_a']}}</i></label>
                   </li>
                   <li class="list-group-item d-flex">
-                    <input  class="check" id="b" type="radio" name="option"  aria-label="">
-                      <label class="option" for="b">
-                        <i>B. hello {{ showCurrentQuestion['option_b']}}</i></label>
+                    <input  class="check"
+                    :key="'b_' + `${countQuestions}`"
+                    :id="'b_' + `${countQuestions}`"
+                    type="radio" name="option"  aria-label="">
+                      <label class="option" :for="'b_' + `${countQuestions}`">
+                        <i>B. {{ showCurrentQuestion['option_b']}}</i></label>
                   </li>
                   <li class="list-group-item d-flex">
-                    <input class="check" id="c" type="radio" name="option" aria-label="">
-                      <label class="option" for="c">
+                    <input class="check"
+                    :key="'c_' + `${countQuestions}`"
+                    :id="'c_' + `${countQuestions}`"
+                    type="radio" name="option" aria-label="">
+                      <label class="option" :for="'c_' + `${countQuestions}`">
                       <i>C. {{ showCurrentQuestion['option_c']}}</i></label>
                   </li>
                   <li class="list-group-item d-flex">
@@ -153,10 +160,6 @@ export default {
     prev() {
       this.prevQuestion();
     },
-    getAnswer() {
-      this.select = true;
-      // console.log(this.selectedAnswer);
-    },
     getMinutes(number) {
       const time = number;
       const minutes = Math.floor(time / 60);
@@ -247,9 +250,9 @@ li {
   height: 33px;
 }
 
-/* input[type="radio"]:checked + label {
+input[type="radio"]:checked + label {
   background-color: #31D283;
-} */
+}
 .options {
   font-weight: 500;
   font-size: 16px;

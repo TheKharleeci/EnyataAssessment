@@ -12,6 +12,7 @@ import LandingPage from '../views/LandingPage.vue';
 import AdminTimer from '../views/AdminTimer.vue';
 import SuccessfulPage from '../views/SuccessfulPage.vue';
 import TakeAssess from '../views/TakeAssess.vue';
+import ComposeAssess from '../views/ComposeAssess.vue';
 
 Vue.use(VueRouter);
 
@@ -83,6 +84,11 @@ const routes = [
     path: '/takeAssess',
     name: 'TakeAssess',
     component: TakeAssess,
+  },
+  {
+    path: '/compose',
+    name: 'ComposeAssess',
+    component: ComposeAssess,
   },
 ];
 

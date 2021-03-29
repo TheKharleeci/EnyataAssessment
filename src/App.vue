@@ -13,6 +13,7 @@
       <router-link to="/timer">timer</router-link> |
       <router-link to="/successfulPage">success</router-link> |
       <router-link to="/takeAssess">Assess</router-link> |
+      <router-link to="/compose">Compose</router-link> |
     </div>
     <router-view/>
   </div>

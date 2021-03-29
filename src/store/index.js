@@ -10,7 +10,7 @@ export default new Vuex.Store({
     currentUser: {},
     loginResponse: {},
     admin: {},
-    adminDetails: {},
+    adminDetails: [],
     date: [],
     registeredDay: [],
     allQuestions: [],
@@ -55,11 +55,10 @@ export default new Vuex.Store({
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/login', payload);
       const createdAt = response.data.data.user.created_at;
       const days = new Date(createdAt);
-      console.log(days);
+      // console.log(days);
       days.setDate(days.getDate());
       let newDate = days.toISOString().substr(0, 10);
-      console.log(newDate);
-      console.log('hello');
+      // console.log(newDate);
       newDate = newDate.replace(/-/g, '.');
       newDate = newDate.substring(2);
       newDate = newDate.split('.').reverse().join('.');
@@ -97,12 +96,18 @@ export default new Vuex.Store({
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/login', payload);
       commit('currentAdminDetails', response.data);
       commit('currentAdmin', response.data.data.admin);
-      console.log(response.data);
-    },
-    async createQuestion({ commit }, payload) {
-      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/createQuestion', payload);
-      commit('testQuestions', response.data);
+      // console.log(response.data.data);
       // console.log(response.data);
+    },
+    async createQuestion({ getters }, payload) {
+      console.log(getters.loggedInAdminDetails.data.token);
+      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/createQuestion', payload, {
+        headers: {
+          authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
+        },
+      });
+      console.log(payload);
+      console.log(response);
     },
     async getQuestions({ commit, getters }) {
       // console.log(getters.loggedInUser.token);
@@ -129,13 +134,6 @@ export default new Vuex.Store({
     },
     // selectAnswer({ commit, getters }) {
 
-    // },
-    // async getTime({ commit }) {
-    //   const response = await axios.get('https://enyata-recruitment-portal.herokuapp.com/admin/timer');
-    //   const startMinutes = response.data;
-    //   let time = startMinutes * 60;
-    //   setInterval(updateCountdown, 1000);
-    //   commit('testTime', time);
     // },
 
     // checkUserCount({ commit, getters }) {},
@@ -171,6 +169,7 @@ export default new Vuex.Store({
     registeredUsers: (state) => state.users,
     currentApplicant: (state) => state.currentUser,
     loggedInAdmin: (state) => state.admin,
+    loggedInAdminDetails: (state) => state.adminDetails,
     applicationDate: (state) => state.date,
     getAllQuestions: (state) => state.allQuestions,
     showCurrentQuestion: (state) => state.question,

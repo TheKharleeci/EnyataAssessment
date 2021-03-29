@@ -73,7 +73,8 @@
                   <div class="note mt-4 text-center ">
                     <p id="note">Create test question for incoming academy students</p>
                     <div>
-                      <b-button class="btnText" type="submit" block variant="secondary" disabled>
+                      <b-button class="btnText" type="submit" @click="createAssessment"
+                      block variant="secondary" >
                         Create Assessment
                       </b-button>
                     </div>
@@ -97,6 +98,11 @@ export default {
   name: 'Dashbord',
   components: {
     AdminSideBar,
+  },
+  methods: {
+    createAssessment() {
+      this.$router.push('/compose');
+    },
   },
   computed: {
     ...mapGetters(['totalApplications', 'userCount']),
@@ -253,5 +259,6 @@ font-weight: bold;
 font-size: 16px;
 line-height: 19px;
 color: #FFFFFF;
+background-color: #7557D3; ;
 }
 </style>
