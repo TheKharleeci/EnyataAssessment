@@ -55,7 +55,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['loginUser', 'getQuestions']),
+    ...mapActions(['loginUser', 'getQuestions', 'logout']),
     takeAssessment() {
       this.$router.push('/takeAssess');
     },

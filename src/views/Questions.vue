@@ -28,6 +28,7 @@
           <b-col cols="3"></b-col>
           <b-col cols="5" class="">
             <h6><i>Question {{ countQuestions }} </i></h6>
+            <h4>{{ picked }}</h4>
             <div>
               <p class="questions">
                 <i>{{ showCurrentQuestion['title']}} </i></p>
@@ -35,40 +36,44 @@
                 <ul class="list-group">
                   <li class="list-group-item d-flex">
                     <input class="check"
-                    @click="displayRadioValue()"
+                    @click="displayRadioValue"
                     :key="'a_' + `${countQuestions}`"
                     :id="'a_' + `${countQuestions}`"
                     :value="showCurrentQuestion['option_a']"
+                    v-model="picked"
                     type="radio" name="option" aria-label="">
                       <label class="option" :for="'a_' + `${countQuestions}`">
                       <i>A. {{ showCurrentQuestion['option_a']}}</i></label>
                   </li>
                   <li class="list-group-item d-flex">
                     <input  class="check"
-                    @click="displayRadioValue()"
+                    @click="displayRadioValue"
                     :key="'b_' + `${countQuestions}`"
                     :id="'b_' + `${countQuestions}`"
                     :value="showCurrentQuestion['option_b']"
+                    v-model="picked"
                     type="radio" name="option"  aria-label="">
                       <label class="option" :for="'b_' + `${countQuestions}`">
                         <i>B. {{ showCurrentQuestion['option_b']}}</i></label>
                   </li>
                   <li class="list-group-item d-flex">
                     <input class="check"
-                    @click="displayRadioValue()"
+                    @click="displayRadioValue"
                     :key="'c_' + `${countQuestions}`"
                     :id="'c_' + `${countQuestions}`"
                     :value="showCurrentQuestion['option_c']"
+                    v-model="picked"
                     type="radio" name="option" aria-label="">
                       <label class="option" :for="'c_' + `${countQuestions}`">
                       <i>C. {{ showCurrentQuestion['option_c']}}</i></label>
                   </li>
                   <li class="list-group-item d-flex">
                     <input class="check"
-                    @click="displayRadioValue()"
+                    @click="displayRadioValue"
                     :key="'d_' + `${countQuestions}`"
                     :id="'d_' + `${countQuestions}`"
                     :value="showCurrentQuestion['option_d']"
+                    v-model="picked"
                     type="radio" name="option" aria-label="">
                       <label class="option" for="d">
                       <i>D. {{ showCurrentQuestion['option_d']}}</i></label>
@@ -123,7 +128,7 @@
                 Finish
               </b-button>
               <b-button class="finishBtn" v-else
-                type="submit" variant="dark" disabled>
+                type="submit" @click="submitTest" variant="dark" disabled>
                 Finish
               </b-button>
             </div>
@@ -149,7 +154,8 @@ export default {
     return {
       timerCount: 360,
       // selected: false,
-      selectedAnswer: '',
+      // selectedAnswer: '',
+      picked: [],
     };
   },
   watch: {
@@ -163,6 +169,9 @@ export default {
       },
       immediate: true,
     },
+    // picked: {
+    //   console.log(this.picked),
+    // },
   },
   methods: {
     ...mapActions(['getQuestions', 'selectQuestion', 'prevQuestion', 'nextQuestion', 'selectAnswer']),
@@ -187,14 +196,17 @@ export default {
       this.$router.push('/successfulPage');
     },
     displayRadioValue() {
-      const element = document.getElementsByName('option');
-      for (let i = 0; i < element.length; i += 1) {
-        if (element[i].checked) {
-          this.selectedAnswer = element[i].value;
-        }
-      }
-      console.log(this.selectedAnswer);
+      console.log(this.picked);
     },
+    //  displayRadioValue() {
+    //   const element = document.getElementsByName('option');
+    //   for (let i = 0; i < element.length; i += 1) {
+    //     if (element[i].checked) {
+    //       this.selectedAnswer = element[i].value;
+    //     }
+    //   }
+    //   console.log(this.selectedAnswer);
+    // },
   },
   computed: {
     ...mapGetters(['getAllQuestions', 'loggedInUser', 'showCurrentQuestion', 'countQuestions', 'currentQuestionIndex']),

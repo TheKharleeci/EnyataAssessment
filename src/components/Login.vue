@@ -46,7 +46,8 @@
         <b-button type="submit"
         class="button" block variant="dark">Sign In</b-button>
         <div class="register d-flex justify-content-between">
-          <p> <i> <small>Don't have an account yet? <a href=""> Sign Up</a></small></i></p>
+          <p> <i> <small>Don't have an account yet? <a href=""
+          @click="toSignUp"> Sign Up</a></small></i></p>
           <p> <i><small>Forgot Password?</small></i></p>
         </div>
         </div>
@@ -76,6 +77,9 @@ export default {
         email: '',
         password: '',
       };
+    },
+    toSignUp() {
+      this.$router.push('/signup');
     },
   },
   watch: {

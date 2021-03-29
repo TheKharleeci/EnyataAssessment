@@ -172,7 +172,7 @@ export default new Vuex.Store({
     },
 
     async logout({ commit }) {
-      await axios.post('http://localhost:3000/logout')
+      await axios.post('https://enyata-recruitment-portal.herokuapp.com/logout')
         .then((response) => {
           console.log(response);
           commit('loggedIn', '');

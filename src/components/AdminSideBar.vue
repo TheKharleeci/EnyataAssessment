@@ -47,8 +47,9 @@
                 <img src="../assets/Setting.svg" alt="" class="mr-3 d-inline-block">
                 Settings
               </b-nav-item> <br><br><br><br>
-              <b-nav-item href="#" >
-                <img src="../assets/Logout.svg" alt="" class="mr-3 d-inline-block">
+              <b-nav-item href="#" @click="tologout">
+                <img src="../assets/Logout.svg" alt=""
+                class="mr-3 d-inline-block">
                 Log Out
               </b-nav-item>
             </b-nav>
@@ -74,7 +75,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['loginUser']),
+    ...mapActions(['loginUser', 'logout']),
     toDashboard() {
       this.$router.push('/dashboard');
     },
@@ -95,6 +96,10 @@ export default {
     },
     settings() {
       this.$router.push('/adminProfile');
+    },
+    tologout() {
+      this.logout();
+      this.$router.push('/admin/login');
     },
   },
   computed: {
