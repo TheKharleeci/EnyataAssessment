@@ -5,52 +5,30 @@
         <img alt="Enyata logo" class="img-fluid" src="../assets/enyatalogo.svg">
       </div>
       <div>
-        <h4><i>Applicant Log In</i></h4>
+        <h4><i>Reset Password</i></h4>
       </div>
     </div>
     <div class="row no-gutters justify-content-center mt-4">
       <div class="col-lg-4 mb-5">
-      <b-form @submit.prevent="onSubmit">
-        <b-form-group
-          id="input-group-1"
-          label="Email address"
-          class="text-left label"
-          label-for="input-1"
-        >
-          <b-form-input
-            id="input-1"
-            v-model="form.email"
-            type="email"
-            placeholder="Enter email"
-            required
-          ></b-form-input>
-        </b-form-group>
-
+      <b-form @submit.prevent = "resetPassword" method= 'put'>
         <b-form-group
         id="input-group-2"
         label="Password"
         label-for="input-2"
         class="text-left label"
-        type="password">
+        >
           <b-form-input
             id="input-2"
-            v-model="form.password"
-            placeholder="Enter password"
+            v-model="password"
+            placeholder="Enter new password"
             type="password"
             data-toggle="password"
             required
           ></b-form-input>
           <br>
         </b-form-group>
-        <div class="">
-        <b-button type="submit"
-        class="button" block variant="dark">Sign In</b-button>
-        <div class="register d-flex justify-content-between">
-          <p> <i> <small>Don't have an account yet? <a href=""
-          @click="toSignUp"> Sign Up</a></small></i></p>
-          <p><a :href="'/forget'" class="forget-password">
-          <i><small>Forgot Password?</small></i></a></p>
-        </div>
+        <div >
+        <b-button type="submit" class="button" block variant="dark" >Change Password</b-button>
         </div>
       </b-form>
       </div>
@@ -59,41 +37,29 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
-
+  name: 'ResetPassword',
   data() {
     return {
-      form: {
-      },
+      password: '',
     };
   },
   methods: {
-    ...mapActions(['loginUser']),
-    onSubmit() {
-      // const { form } = this;
-      this.loginUser(this.form);
-      this.form = {
-        email: '',
-        password: '',
+    ...mapActions(['newPassword']),
+    resetPassword() {
+      console.log(this.password);
+      console.log(this.$route.params.token);
+      const obj = {
+        password: this.password,
+        token: this.$route.params.token,
       };
+      this.newPassword(obj);
+      // this.form = {
+      //   password: '',
+      // };
     },
-    toSignUp() {
-      this.$router.push('/signup');
-    },
-  },
-  watch: {
-    loggedInUser: {
-      deep: true,
-      handler() {
-        // this.isLoading = false;
-        this.$router.push('/app');
-      },
-    },
-  },
-  computed: {
-    ...mapGetters(['loggedInUser', 'currentApplicant']),
   },
 };
 </script>
@@ -138,6 +104,7 @@ h4 {
   color: #4F4F4F;
 }
 .button {
+  /* background-color: ; */
   background: #7557D3;
   border-radius: 4px;
   font-weight: bold;
@@ -145,6 +112,7 @@ h4 {
   height: 45px;
   border: none;
   margin-bottom: 12px;
+  /* line-height: 19px; */
 }
 a {
   text-decoration-line: underline;
@@ -153,5 +121,7 @@ input {
   border: 1.5px solid #BDBDBD;
   box-sizing: border-box;
   border-radius: 4px;
+  /* height: 48px;
+  width: 379px; */
 }
 </style>

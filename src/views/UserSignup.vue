@@ -90,7 +90,7 @@
           <!-- </router-link> -->
       <br/>
       <p class="signup-footer">
-          Already have an account? <a href="#">Sign in</a>
+          Already have an account? <a :href="'/userLogin'">Sign in</a>
       </p>
       </div>
     </b-form>

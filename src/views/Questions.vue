@@ -28,7 +28,7 @@
           <b-col cols="3"></b-col>
           <b-col cols="5" class="">
             <h6><i>Question {{ countQuestions }} </i></h6>
-            <h4>{{ picked }}</h4>
+            <!-- <h4>{{ picked }}</h4> -->
             <div>
               <p class="questions">
                 <i>{{ showCurrentQuestion['title']}} </i></p>

@@ -1,14 +1,14 @@
 import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VuexPersistence from 'vuex-persist';
+// import VuexPersistence from 'vuex-persist';
 
 Vue.use(Vuex);
 
-const vuexLocal = new VuexPersistence({
-  storage: window.localStorage,
-  // key: 'clients',
-});
+// const vuexLocal = new VuexPersistence({
+//   storage: window.localStorage,
+// key: 'clients',
+// });
 
 export default new Vuex.Store({
   state: {
@@ -29,6 +29,8 @@ export default new Vuex.Store({
     applicantCount: 0,
     days: 0,
     logoutResponse: {},
+    usersDetail: [],
+    userPw: [],
     // nextButtonDisabled: false,
     // previousButtonDisabled: true,
     // assessmentQuestions: [],
@@ -57,6 +59,11 @@ export default new Vuex.Store({
     updateRegDaysCount: (state, payload) => { state.days = payload; },
     regDay: (state, payload) => { state.registeredDay = payload; },
     loggedOut: (state, payload) => { state.logoutResponse = payload; },
+    reset: (state, payload) => { state.user.push(payload); },
+    setNewPassword: (state, payload) => { state.userPw = payload; },
+    setRegister: (state, payload) => {
+      state.usersDetail.push(payload);
+    },
   },
   actions: {
     async loginUser({ commit, dispatch }, payload) {
@@ -171,6 +178,35 @@ export default new Vuex.Store({
       dispatch('selectQuestion');
       // dispatch('handleDisableButton');
     },
+    async getUserDetail({ commit }, payload) {
+      const formdata = new FormData();
+      const response = Promise.all.axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', payload, formdata);
+      commit('setRegister', response.data);
+      console.log(response);
+    },
+
+    async resetPassword({ commit }, payload) {
+      const formdata = new FormData();
+      await axios.post('https://enyata-recruitment-portal.herokuapp.com/user/reset', payload, formdata)
+        .then((response) => {
+          console.log(response);
+          commit('reset', response.data);
+        }).catch((error) => {
+          console.log(error);
+          console.log(payload);
+        });
+    },
+
+    async newPassword({ commit }, { password, token }) {
+      await axios.put(`https://enyata-recruitment-portal.herokuapp.com/resetPassword/${token}`, { password })
+        .then((response) => {
+          console.log(response);
+          commit('setNewPassword', response.data);
+        }).catch((error) => {
+          console.log(error);
+          console.log(password);
+        });
+    },
 
     async logout({ commit }) {
       await axios.post('https://enyata-recruitment-portal.herokuapp.com/logout')
@@ -203,5 +239,5 @@ export default new Vuex.Store({
   },
   modules: {
   },
-  plugins: [vuexLocal.plugin],
+  // plugins: [vuexLocal.plugin],
 });

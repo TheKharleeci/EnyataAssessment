@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+
+import Home from '../views/Home.vue';
 import UserLogin from '../views/UserLogin.vue';
 import LoginAdmin from '../views/LoginAdmin.vue';
 import Dashboard from '../views/Dashboard.vue';
@@ -13,6 +15,11 @@ import AdminTimer from '../views/AdminTimer.vue';
 import SuccessfulPage from '../views/SuccessfulPage.vue';
 import TakeAssess from '../views/TakeAssess.vue';
 import ComposeAssess from '../views/ComposeAssess.vue';
+import ForgetPassword from '../components/ForgetPassword.vue';
+import ModalPassword from '../components/ModalPassword.vue';
+import ResetPassword from '../components/ResetPassword.vue';
+import DashboardForm from '../components/DashboardForm.vue';
+import ApplicationDashboard from '../views/ApplicationDashboard.vue';
 
 Vue.use(VueRouter);
 
@@ -21,6 +28,11 @@ const routes = [
     path: '/userLogin',
     name: 'UserLogin',
     component: UserLogin,
+  },
+  {
+    path: '/',
+    name: 'Home',
+    component: Home,
   },
   {
     path: '/questions',
@@ -34,6 +46,16 @@ const routes = [
     path: '/admin/login',
     name: 'LoginAdmin',
     component: LoginAdmin,
+  },
+  {
+    path: '/dashboard1',
+    name: 'DashboardForm',
+    component: DashboardForm,
+  },
+  {
+    path: '/app',
+    name: 'ApplicationDashboard',
+    component: ApplicationDashboard,
   },
   {
     path: '/dashboard',
@@ -89,6 +111,21 @@ const routes = [
     path: '/compose',
     name: 'ComposeAssess',
     component: ComposeAssess,
+  },
+  {
+    path: '/forget',
+    name: 'ForgetPassword',
+    component: ForgetPassword,
+  },
+  {
+    path: '/modal',
+    name: 'ModalPassword',
+    component: ModalPassword,
+  },
+  {
+    path: '/resetpassword/:token',
+    name: 'ResetPassword',
+    component: ResetPassword,
   },
 ];
 
