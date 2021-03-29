@@ -18,7 +18,7 @@
                 <p>Date of Application</p>
                 <h2>{{ applicationDate }} </h2>
                 <span id="spanA"></span>
-                <h6>4 days since applied</h6>
+                <h6>{{ daysSinceReg }} days since applied</h6>
               </b-col>
               <b-col cols="1"></b-col>
               <b-col cols="3" class="text-left">
@@ -71,7 +71,7 @@ export default {
     ApplicantSideBar,
   },
   methods: {
-    ...mapActions(['loginUser', 'getQuestions', 'selectQuestion', 'nextQuestion']),
+    ...mapActions(['loginUser', 'getQuestions', 'selectQuestion', 'nextQuestion', 'regDayCount']),
     async takeAssessment() {
       await this.getQuestions();
       this.selectQuestion();
@@ -88,7 +88,7 @@ export default {
   //   },
   // },
   computed: {
-    ...mapGetters(['loggedInUser', 'currentApplicant', 'applicationDate', 'getAllQuestions', 'countQuestions']),
+    ...mapGetters(['loggedInUser', 'currentApplicant', 'applicationDate', 'getAllQuestions', 'countQuestions', 'daysSinceReg']),
   },
   // mounted() {
   //   this.loginUser();

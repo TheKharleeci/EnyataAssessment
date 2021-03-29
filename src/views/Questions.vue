@@ -18,9 +18,9 @@
           <b-col cols="3">
             <div class="text-left">
             <p class="timer">Timer</p>
-            <h3 >{{ timerCount }}<span>
-              <small>min</small></span> 010<span> <small>sec</small></span></h3>
-              {{ timerCount }}
+            <h3 >{{ getMinutes(timerCount) }}<span>
+              <small>min</small></span> {{ getSeconds(timerCount) }}<span>
+                <small>sec</small></span></h3>
             </div>
           </b-col>
         </b-row>
@@ -36,33 +36,23 @@
                     <input class="check" id="a"
                     @click="getAnswer"
                     type="radio" name="option" aria-label="">
-                    <div class="option">
-                      <label for="a"
-                      @click="selected = !selected" v-bind:class="{selected: selected}">
+                      <label class="option" for="a">
                       <i>A. {{ showCurrentQuestion['option_a']}}</i></label>
-                    </div>
                   </li>
                   <li class="list-group-item d-flex">
                     <input  class="check" id="b" type="radio" name="option"  aria-label="">
-                    <div class="option">
-                      <label for="b"
-                      @click="selected = !selected" v-bind:class="{selected: selected}">
+                      <label class="option" for="b">
                         <i>B. hello {{ showCurrentQuestion['option_b']}}</i></label>
-                    </div>
                   </li>
                   <li class="list-group-item d-flex">
                     <input class="check" id="c" type="radio" name="option" aria-label="">
-                    <div class="option">
-                      <label for="c">
+                      <label class="option" for="c">
                       <i>C. {{ showCurrentQuestion['option_c']}}</i></label>
-                    </div>
                   </li>
                   <li class="list-group-item d-flex">
                     <input class="check" id="d" type="radio" name="option" aria-label="">
-                    <div class="option d-flex align-middle">
-                      <label for="d">
+                      <label class="option" for="d">
                       <i>D. {{ showCurrentQuestion['option_d']}}</i></label>
-                    </div>
                   </li>
               </ul>
               </div>
@@ -138,7 +128,7 @@ export default {
   },
   data() {
     return {
-      timerCount: 30,
+      timerCount: 360,
       selected: false,
       selectedAnswer: '',
     };
@@ -166,6 +156,17 @@ export default {
     getAnswer() {
       this.select = true;
       // console.log(this.selectedAnswer);
+    },
+    getMinutes(number) {
+      const time = number;
+      const minutes = Math.floor(time / 60);
+      return `${minutes}`;
+    },
+    getSeconds(number) {
+      const time = number;
+      let seconds = time % 60;
+      seconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+      return `${seconds}`;
     },
   },
   computed: {
@@ -242,18 +243,18 @@ li {
   width: 355px;
   height: 33px;
 }
-.selected{
+/* .selected{
   background-color:  #31D283;
-}
+} */
 /* .option:active {
   background-color: #31D283;
 }
 .option:checked {
   background-color: #31D283;
 } */
-/* .option input[type="radio"]:checked + label {
-  background-color: yellow;
-} */
+input[type="radio"]:checked + label {
+  background-color: #31D283;
+}
 .options {
   font-weight: 500;
   font-size: 16px;

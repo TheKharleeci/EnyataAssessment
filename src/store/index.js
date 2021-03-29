@@ -12,6 +12,7 @@ export default new Vuex.Store({
     admin: {},
     adminDetails: {},
     date: [],
+    registeredDay: [],
     allQuestions: [],
     question: [],
     questionCount: 1,
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     timerMinutes: 0,
     timerSeconds: 0,
     applicantCount: 0,
+    days: 0,
     // nextButtonDisabled: false,
     // previousButtonDisabled: true,
     // assessmentQuestions: [],
@@ -45,14 +47,19 @@ export default new Vuex.Store({
     setMinutes: (state, payload) => { state.timerMinutes = payload; },
     setSeconds: (state, payload) => { state.timerSeconds = payload; },
     updateApplicantCount: (state) => { state.applicantCount += 1; },
+    updateRegDaysCount: (state, payload) => { state.days = payload; },
+    regDay: (state, payload) => { state.registeredDay = payload; },
   },
   actions: {
-    async loginUser({ commit }, payload) {
+    async loginUser({ commit, dispatch }, payload) {
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/login', payload);
       const createdAt = response.data.data.user.created_at;
       const days = new Date(createdAt);
+      console.log(days);
       days.setDate(days.getDate());
       let newDate = days.toISOString().substr(0, 10);
+      console.log(newDate);
+      console.log('hello');
       newDate = newDate.replace(/-/g, '.');
       newDate = newDate.substring(2);
       newDate = newDate.split('.').reverse().join('.');
@@ -60,10 +67,25 @@ export default new Vuex.Store({
       commit('assignUser', response.data.data.user);
       commit('loggedIn', response.data.data);
       commit('currentDate', newDate);
+      commit('regDay', days);
+      dispatch('regDayCount');
       // commit('regUser', response.data);
       // console.log(response.data.data.user);
       // console.log(response.data.data);
     },
+    regDayCount({ commit, getters }) {
+      const start = new Date(getters.dayRegistered);
+      console.log(start);
+      const end = new Date();
+      console.log(end);
+      let diff = 0;
+      const days = 1000 * 60 * 60 * 24;
+      diff = end - start;
+      diff = Math.floor(diff / days);
+      console.log(diff);
+      commit('updateRegDaysCount', diff);
+    },
+
     async userSignUp({ commit }, payload) {
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/signup', payload);
       commit('signInUser', response.data);
@@ -108,20 +130,15 @@ export default new Vuex.Store({
     // selectAnswer({ commit, getters }) {
 
     // },
-    // async getTime({ commit }, payload) {
-    //   const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/createQuestion', payload);
+    // async getTime({ commit }) {
+    //   const response = await axios.get('https://enyata-recruitment-portal.herokuapp.com/admin/timer');
     //   const startMinutes = response.data;
     //   let time = startMinutes * 60;
     //   setInterval(updateCountdown, 1000);
     //   commit('testTime', time);
     // },
-    // updateCountdown({ commit }) {
-    //   const minutes = Math.floor(time / 60);
-    //   let seconds = time % 60;
-    //   seconds = seconds < 10 ? '0' + seconds : seconds;
-    //   commit('setMinutes', minutes);
-    //   commit('setSeconds', seconds);
-    // },
+
+    // checkUserCount({ commit, getters }) {},
 
     nextQuestion({ commit, getters, dispatch }) {
       const index = getters.currentQuestionIndex;
@@ -135,7 +152,6 @@ export default new Vuex.Store({
       commit('raiseQuestionIndex');
       commit('updateQuestionCount');
       dispatch('selectQuestion');
-      // dispatch('handleDisableButton');
     },
     prevQuestion({ commit, dispatch, getters }) {
       const index = getters.currentQuestionIndex;
@@ -148,15 +164,6 @@ export default new Vuex.Store({
       // dispatch('handleDisableButton');
     },
 
-    // checkLastQuestion({ getters }) {
-    //   const index = getters.currentQuestionIndex;
-    //   const questions = getters.getAllQuestions;
-    //   if (index >= questions.length) {
-    //     console.log('End of quiz');
-    //   }
-    // },
-    // {{ "currentQuestionIndex >=getAllQuestions.length"}}
-    // :disabled="questionIndex>=quiz.questions.length"
   },
   getters: {
     // loggedInUser: (state) => console.log(state.loginResponse),
@@ -172,6 +179,9 @@ export default new Vuex.Store({
     quizTimeMinutes: (state) => state.setMinutes,
     quizTimeSeconds: (state) => state.setSeconds,
     totalApplications: (state) => state.applicantCount,
+    daysSinceReg: (state) => state.days,
+    dayRegistered: (state) => state.registeredDay,
+    userCount: (state) => state.users.length,
   },
   modules: {
   },
