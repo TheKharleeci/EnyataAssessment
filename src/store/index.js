@@ -5,8 +5,9 @@ import VuexPersistence from 'vuex-persist';
 
 Vue.use(Vuex);
 
-const vuexSession = new VuexPersistence({
-  storage: window.sessionStorage,
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage,
+  // key: 'clients',
 });
 
 export default new Vuex.Store({
@@ -201,6 +202,6 @@ export default new Vuex.Store({
     userCount: (state) => state.users.length,
   },
   modules: {
-    plugins: [vuexSession.plugin],
   },
+  plugins: [vuexLocal.plugin],
 });
