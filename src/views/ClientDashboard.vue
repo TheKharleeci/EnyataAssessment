@@ -72,10 +72,8 @@ export default {
   },
   methods: {
     ...mapActions(['loginUser', 'getQuestions', 'selectQuestion', 'nextQuestion', 'regDayCount']),
-    async takeAssessment() {
-      await this.getQuestions();
-      this.selectQuestion();
-      this.$router.push('/questions');
+    takeAssessment() {
+      this.$router.push('/takeAssess');
     },
   },
   // watch: {
