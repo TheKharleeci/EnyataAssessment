@@ -101,38 +101,14 @@
                         <b-form-input
                             id="inline-form-input-address"
                             class="input" type="text" v-model="form.address">
-                            <!--v-model.lazy="$v.address.$model"
-                            :class="{ 'is-invalid': $v.address.$error,
-                            'is-valid': !$v.address.$invalid }"-->
                         </b-form-input>
-                        <!--div class="valid-feedback">Address is valid</div>
-                        <div class="invalid-feedback">
-                          <span v-if="!$v.address.required">
-                            Address is required.</span>
-                            <span v-if="!$v.address.minLength">
-                              Address must have at least
-                        {{$v.address.$params.minLength.min}} letters.</span>
-                          <span v-if="!$v.address.maxLength">
-                              Address must have at most
-                        {{$v.address.params.maxLength.max}} letters.</span>
-                          <span v-if="!$v.address.alphaNum">
-                            Address is alphanumeric</span>
-                      </div-->
                     </div>
                     <div class="form-child-2">
                         <label>University</label>
                         <b-form-input
                             id="inline-form-input-university"
                             class="input" type="text" v-model="form.university">
-                            <!--v-model.lazy="$v.university.$model"
-                            :class="{ 'is-invalid': $v.university.$error,
-                            'is-valid': !$v.university.$invalid }"-->
                         </b-form-input>
-                        <!--div class="valid-feedback">University is valid</div>
-                        <div class="invalid-feedback">
-                          <span v-if="!$v.university.required">
-                            University is required.</span>
-                        </div-->
                     </div>
                 </div>
 
@@ -142,9 +118,6 @@
                         <b-form-input
                             id="inline-form-input-course"
                             class="input" type="text" v-model="form.course">
-                            <!--v-model.lazy="$v.course.$model"
-                            :class="{ 'is-invalid': $v.course.$error,
-                            'is-valid': !$v.course.$invalid }"-->
                         </b-form-input>
                         <!--div class="valid-feedback">Course of study is valid</div>
                         <div class="invalid-feedback">
@@ -197,7 +170,7 @@ export default {
     return {
       fileRecordsCV: [],
       fileRecordsPhoto: [],
-      uploadUrl: 'https://enyata-recruitment-portal.herokuapp.com/upload', // change this to the backend endpoint on heroku
+      uploadUrl: 'http://localhost:3000/upload', // change this to the backend endpoint on heroku
       uploadHeaders: { 'X-Test-Header': 'vue-file-agent' },
       fileRecordsForCV: [],
       fileRecordsForPhoto: [],
@@ -267,12 +240,15 @@ export default {
       this.$router.push('/dashboard');
     },
     filesSelected(fileRecordsNewlySelected) {
+      console.log(fileRecordsNewlySelected);
       const validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
-      this.form.fileRecordsForCV = this.fileRecordsForCV.concat(validFileRecords);
+      this.form.cv = validFileRecords[0].file;
+      console.log(validFileRecords);
+      console.log(this.form.cv);
     },
     photosSelected(fileRecordsNewlySelected) {
       const validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
-      this.form.fileRecordsForPhoto = this.fileRecordsForPhoto.concat(validFileRecords);
+      this.form.photo = validFileRecords[0].file;
     },
   },
   computed: {

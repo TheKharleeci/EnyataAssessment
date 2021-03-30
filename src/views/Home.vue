@@ -1,5 +1,6 @@
 <template>
-    <div>
+  <div>
+      <div>
         <b-container>
       <div>
         <b-navbar toggleable="lg" type="light">
@@ -78,6 +79,7 @@
       </div>
         </b-container-fluid>
     </div>
+  </div>
 </template>
 
 <style scoped>

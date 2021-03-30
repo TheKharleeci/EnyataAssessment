@@ -12,9 +12,9 @@
                         id="inline-form-input-email"
                         class="input"
                         name="email"
-                        type="email"
-                        ref="email"
-                        @keydown.shift.tab.prevent="">
+                        type="text"
+                        v-model="form.email"
+                        >
                         </b-form-input>
                     </div>
                     <div class="d-flex btn-body">
@@ -30,6 +30,7 @@
 import { mapActions } from 'vuex';
 
 export default {
+  name: 'ModalPassword',
   data() {
     return {
       form: {
@@ -44,7 +45,6 @@ export default {
       this.form = {
         email: '',
       };
-      // method to send link to mail will be inserted here
       this.$modal.hide('modal-forgot-password');
     },
     show() {
