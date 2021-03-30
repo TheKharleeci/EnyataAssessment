@@ -114,17 +114,7 @@ export default new Vuex.Store({
       // console.log(response.data.data);
       // console.log(response.data);
     },
-    async createQuestion({ getters }, payload) {
-      console.log(getters.loggedInAdminDetails.data.token);
-      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/createQuestion', payload, {
-        headers: {
-          authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
-        },
-      });
-      console.log(payload);
-      console.log(response);
-    },
-    async getQuestions({ commit, getters }) {
+    async createQuestion({ commit, getters }) {
       // console.log(getters.loggedInUser.token);
       const quiz = await axios.get('https://enyata-recruitment-portal.herokuapp.com/user/question', {
         headers: {
@@ -135,25 +125,42 @@ export default new Vuex.Store({
       const response = orderedQuestions.sort(() => Math.random() - 0.5);
       commit('testQuestions', response);
     },
-    // scoreQuestion({commit}) { },
+
+    async getQuestions({ commit, getters }) {
+      // console.log(getters.loggedInUser.token);
+      const quiz = await axios.get('https://enyata-recruitment-portal.herokuapp.com/apply', {
+        headers: {
+          authorization: `Bearer ${getters.loggedInUser.token}`,
+        },
+      });
+      const orderedQuestions = quiz.data.data;
+      const response = orderedQuestions.sort(() => Math.random() - 0.5);
+      commit('testQuestions', response);
+    },
 
     selectQuestion({ commit, getters }) {
       const index = getters.currentQuestionIndex;
       const questions = getters.getAllQuestions;
       if (questions.length !== 0) {
         const currQuestion = questions[index];
-        const test = questions[index].id;
-        console.log(currQuestion);
-        console.log(test);
+        // const test = questions[index].id;
+        // console.log(currQuestion);
+        // console.log(test);
         commit('currentQuestion', currQuestion);
         // dispatch('handleDisableButton');
       }
     },
-    // selectAnswer({ commit, getters }) {
-
-    // },
-
-    // checkUserCount({ commit, getters }) {},
+    // CHECK THIS
+    async submitAnswers({ getters }, payload) {
+      console.log(payload);
+      console.log(getters.loggedInUser);
+      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/user/answers', payload, {
+        headers: {
+          authorization: `Bearer ${getters.loggedInUser.token}`,
+        },
+      });
+      console.log(response);
+    },
 
     nextQuestion({ commit, getters, dispatch }) {
       const index = getters.currentQuestionIndex;
@@ -178,9 +185,12 @@ export default new Vuex.Store({
       dispatch('selectQuestion');
       // dispatch('handleDisableButton');
     },
-    async getUserDetail({ commit }, payload) {
-      const formdata = new FormData();
-      const response = Promise.all.axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', payload, formdata);
+    async getUserDetail({ commit, getters }, payload) {
+      const response = axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', payload, {
+        headers: {
+          authorization: `Bearer ${getters.loggedInUser.token}`,
+        },
+      });
       commit('setRegister', response.data);
       console.log(response);
     },

@@ -10,7 +10,6 @@ import Results from '../views/Results.vue';
 import ClientDashboard from '../views/ClientDashboard.vue';
 import AdminProfile from '../views/AdminProfile.vue';
 import UserSignup from '../views/UserSignup.vue';
-import LandingPage from '../views/LandingPage.vue';
 import AdminTimer from '../views/AdminTimer.vue';
 import SuccessfulPage from '../views/SuccessfulPage.vue';
 import TakeAssess from '../views/TakeAssess.vue';
@@ -86,11 +85,6 @@ const routes = [
     path: '/signup',
     name: 'UserSignup',
     component: UserSignup,
-  },
-  {
-    path: '/landing',
-    name: 'LandingPage',
-    component: LandingPage,
   },
   {
     path: '/timer',
