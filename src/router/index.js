@@ -49,6 +49,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Questions.vue'),
+    beforeEnter: ifAuthenticated,
   },
   {
     path: '/admin/login',
@@ -108,10 +109,10 @@ const routes = [
     name: 'SuccessfulPage',
     component: SuccessfulPage,
   },
-  {
-    path: '/takeAssess',
+  { path: '/takeAssess',
     name: 'TakeAssess',
     component: TakeAssess,
+    beforeEnter: ifAuthenticated,
   },
   {
     path: '/compose',
