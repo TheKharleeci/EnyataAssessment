@@ -139,13 +139,9 @@ export default new Vuex.Store({
       commit('testQuestions', response);
     },
 
-    async getQuestions({ commit, getters }) {
+    async getQuestions({ commit }) {
       // console.log(getters.loggedInUser.token);
-      const quiz = await axios.get('https://enyata-recruitment-portal.herokuapp.com/apply', {
-        headers: {
-          authorization: `Bearer ${getters.loggedInUser.token}`,
-        },
-      });
+      const quiz = await axios.get('https://enyata-recruitment-portal.herokuapp.com/user/question');
       const orderedQuestions = quiz.data.data;
       const response = orderedQuestions.sort(() => Math.random() - 0.5);
       commit('testQuestions', response);
