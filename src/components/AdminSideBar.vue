@@ -80,7 +80,7 @@ export default {
       this.$router.push('/dashboard');
     },
     createApplication() {
-      this.$router.push('/questions');
+      this.$router.push('/create');
     },
     viewEntries() {
       this.$router.push('/entries');
@@ -89,7 +89,7 @@ export default {
       this.$router.push('/compose');
     },
     history() {
-      this.$router.push('/dashboard');
+      this.$router.push('/history');
     },
     results() {
       this.$router.push('/results');

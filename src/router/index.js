@@ -19,9 +19,12 @@ import ModalPassword from '../components/ModalPassword.vue';
 import ResetPassword from '../components/ResetPassword.vue';
 import DashboardForm from '../components/DashboardForm.vue';
 import ApplicationDashboard from '../views/ApplicationDashboard.vue';
+import AssessmentHistory from '../views/AssessmentHistory.vue';
+import CreateApplication from '../views/CreateApplication.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
+
 const ifAuthenticated = (to, from, next) => {
   if (store.getters.isAuthenticated) {
     next();
@@ -135,11 +138,16 @@ const routes = [
     component: ResetPassword,
   },
   {
-    path: '/404',
-    redirect: {
-      name: 'LandingPage',
-    },
+
+    path: '/history',
+    name: 'AssessmentHistory',
+    component: AssessmentHistory,
   },
+  {
+    path: '/create',
+    name: 'CreateApplication',
+    component: CreateApplication,
+  }
 ];
 
 const router = new VueRouter({

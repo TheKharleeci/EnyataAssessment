@@ -120,6 +120,17 @@ export default new Vuex.Store({
       commit('assignUser', response.data.data);
       commit('updateApplicantCount');
     },
+
+    // async getSignupDetails() {
+    //   try {
+    //     const response = await axios.get('https://enyata-recruitment-portal.herokuapp.com/user/signup');
+    //     console.log(response);
+    //     localStorage.getItem('userDetails');
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
+
     async loginAdmin({ commit }, payload) {
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/login', payload);
       commit('currentAdminDetails', response.data);
