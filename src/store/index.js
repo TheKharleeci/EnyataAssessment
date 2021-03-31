@@ -31,6 +31,7 @@ export default new Vuex.Store({
     logoutResponse: {},
     usersDetail: [],
     userPw: [],
+    userProfilePicture: [],
     // nextButtonDisabled: false,
     // previousButtonDisabled: true,
     // assessmentQuestions: [],
@@ -64,6 +65,7 @@ export default new Vuex.Store({
     setRegister: (state, payload) => {
       state.usersDetail.push(payload);
     },
+    setAvi: (state, payload) => { state.userProfilePicture = payload; },
   },
   actions: {
     async loginUser({ commit, dispatch }, payload) {
@@ -107,23 +109,45 @@ export default new Vuex.Store({
       commit('assignUser', response.data.data);
       commit('updateApplicantCount');
     },
+    async updateAdmin({ commit, getters }, payload) {
+      console.log(payload);
+      const response = await axios.put('https://enyata-recruitment-portal.herokuapp.com/update', payload, {
+        headers: {
+          authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
+        },
+      });
+      commit('currentAdmin', response.data);
+      console.log(response.data);
+      // commit('', response.data.data);
+      // commit('');
+    },
+
     async loginAdmin({ commit }, payload) {
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/login', payload);
       commit('currentAdminDetails', response.data);
       commit('currentAdmin', response.data.data.admin);
-      // console.log(response.data.data);
-      // console.log(response.data);
+      console.log(response.data.data);
+      console.log(response.data);
     },
-    async createQuestion({ commit, getters }) {
-      // console.log(getters.loggedInUser.token);
-      const quiz = await axios.get('https://enyata-recruitment-portal.herokuapp.com/user/question', {
+    async userAvi({ commit, getters }) {
+      const response = await axios.get('https://enyata-recruitment-portal.herokuapp.com/singleUser', {
         headers: {
           authorization: `Bearer ${getters.loggedInUser.token}`,
         },
       });
-      const orderedQuestions = quiz.data.data;
-      const response = orderedQuestions.sort(() => Math.random() - 0.5);
-      commit('testQuestions', response);
+      console.log(response);
+      commit('setAvi', response);
+    },
+
+    async createQuestion({ getters }, payload) {
+      console.log(getters.loggedInAdminDetails.data.token);
+      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/createQuestion', payload, {
+        headers: {
+          authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
+        },
+      });
+      console.log(payload);
+      console.log(response);
     },
 
     async getQuestions({ commit, getters }) {
@@ -185,12 +209,29 @@ export default new Vuex.Store({
       dispatch('selectQuestion');
       // dispatch('handleDisableButton');
     },
+    // async getUserDetail({ commit, getters }, payload) {
+    //   const response = axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', payload, {
+    //     headers: {
+    //       authorization: `Bearer ${getters.loggedInUser.token}`,
+    //     },
+    //   });
+    //   commit('setRegister', response.data);
+    //   console.log(response);
+    // },
+
     async getUserDetail({ commit, getters }, payload) {
-      const response = axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', payload, {
+      let formdata = new FormData();
+      Object.keys(payload).forEach((key) => (
+        formdata.append(key, payload[key])
+      ));
+      // console.log('formdata', formdata.getAll('cv'));
+      // console.log(payload);
+      const response = await axios.post('http://localhost:3000/apply', formdata, {
         headers: {
           authorization: `Bearer ${getters.loggedInUser.token}`,
         },
       });
+      formdata = {};
       commit('setRegister', response.data);
       console.log(response);
     },
@@ -246,6 +287,7 @@ export default new Vuex.Store({
     daysSinceReg: (state) => state.days,
     dayRegistered: (state) => state.registeredDay,
     userCount: (state) => state.users.length,
+    displayUserDp: (state) => state.userProfilePicture,
   },
   modules: {
   },

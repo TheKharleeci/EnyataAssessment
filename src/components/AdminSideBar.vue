@@ -13,6 +13,7 @@
           </b-img>
           <div class="text-dark">
             <p>{{ loggedInAdmin["first_name"] }} {{ loggedInAdmin["last_name"] }}</p>
+            <!-- <p>{{ loggedInAdmin["name"] }}</p> -->
             <p id="email"> <i>{{ loggedInAdmin["email"] }}</i> </p>
           </div>
         </div>

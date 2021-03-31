@@ -23,83 +23,24 @@
           <b-row no-gutters>
             <div cols="2" class="text-left">
               <div>
-                <b-button class="button button-selected ">
+                <button class="button" @click="component = 'profile'">
                   Admin Profile
-                </b-button>
+                </button>
               </div>
             </div>
-            <div cols="2" class="text-left">
+            <div cols="2"  class="text-left">
               <div>
-                <button class="button">
+                <button class="button" @click="component = 'timer'">
                   Timer Settings
                 </button>
               </div>
             </div>
           </b-row>
-          <b-row no-gutters>
-            <b-col cols="8">
-              <div class="d-flex justify-content-between">
-                <h4>Profiles Setting</h4>
-                <button class="edit-button" variant="outline-primary">Edit</button>
-              </div>
-              <span class="spanD"></span>
-            </b-col>
-          </b-row>
-          <b-row no-gutters>
-            <div class="d-flex">
-              <div>
-                <b-img v-bind="profileImg" rounded="circle" alt="Profile Image" src=""
-                class="profileImg">
-                </b-img>
-              </div>
-              <button class="imageBtn">
-                Upload new image
-              </button>
-              <button class="btn-color">x Remove</button>
-            </div>
-          </b-row>
-          <b-row no-gutters class="text-left mt-3 mb-4">
-            <div class="" >
-              <div class="">
-                <label for="name">Name</label> <br>
-                <input type="text"  class="form-input" id="name" placeholder="Cameron Williamson">
-              </div>
-            </div>
-            <div cols="" class="">
-              <div class="">
-                <label for="email">Email</label> <br>
-                <input type="text"
-                class="form-input"
-                id="email" placeholder="debra.holt@example.com">
-              </div>
-            </div>
-            <div cols="">
-              <div class="">
-                <label for="phone">Phone number</label> <br>
-                <input type="text"  class="form-input" id="phone" placeholder="(303) 555-0105">
-              </div>
-            </div>
-          </b-row>
-          <b-row no-gutters class="text-left">
-            <div class="">
-              <div class="">
-                <label for="country">Country</label> <br>
-                <input type="text" class="form-input" id="country" placeholder="Afghanistan">
-              </div>
-            </div>
-            <div>
-              <div class="">
-                <label for="address">Address</label> <br>
-                <input class="addy form-input" type="text" id="address"
-                placeholder="3891 Ranchview Dr. Richardson, California 62639">
-              </div>
-            </div>
-          </b-row>
-          <b-row no-gutters >
-            <b-col cols="9" class="d-flex justify-content-center">
-              <b-button class="save-button">Save</b-button>
-            </b-col>
-          </b-row>
+          <div>
+            <keep-alive>
+              <component v-bind:is="component"></component>
+            </keep-alive>
+          </div>
         </b-col>
       </b-row>
     </div>
@@ -108,6 +49,8 @@
 
 <script>
 import AdminSideBar from '@/components/AdminSideBar.vue';
+import Profile from '@/components/Profile.vue';
+import Timer from '@/components/Timer.vue';
 
 export default {
   name: 'Admin',
@@ -116,10 +59,13 @@ export default {
       profileImg: {
         blank: true, blankColor: '#777', width: 54, height: 54, class: '',
       },
+      component: Profile,
     };
   },
   components: {
     AdminSideBar,
+    profile: Profile,
+    timer: Timer,
   },
 };
 
@@ -166,6 +112,9 @@ export default {
   border: none;
   margin-bottom: 50px;
   outline: none;
+}
+.button:hover {
+  background: rgba(117, 87, 211, 0.1);
 }
 .btn-color {
   font-weight: normal;

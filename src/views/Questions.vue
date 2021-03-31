@@ -152,7 +152,7 @@ export default {
   },
   data() {
     return {
-      timerCount: 360,
+      timerCount: 369,
       picked: '',
       answers: {
       },
