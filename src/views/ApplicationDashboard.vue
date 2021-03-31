@@ -305,10 +305,30 @@ export default {
         cv: this.cv,
         photo: this.photo,
       };
-      this.getUserDetail(form);
-      console.log(this.form);
-      this.$router.push('/client');
+
     },
+    watch: {
+      getUserDetail: {
+        deep: true,
+        handler() {
+          // this.isLoading = false;
+          this.$router.push('/client');
+        },
+      },
+    },
+    loadUserDetail(response) {
+      this.autoGetDetail(this.users = response);
+    },
+    save() {
+      this.agreement = true;
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
+      console.log('form submitted');
+      this.$router.push('/dashboard');
+    },
+
     filesSelected(fileRecordsNewlySelected) {
       // console.log(fileRecordsNewlySelected);
       const validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);

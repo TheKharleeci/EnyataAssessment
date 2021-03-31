@@ -26,7 +26,8 @@
                 <b-form-input
                     v-model="form.optionA"
                     id="inline-form-input-optiona"
-                    class="input">
+                    class="input"
+                    @dblclick="makeCorrect(form.optionA)">
                 </b-form-input>
                 </div>
                 <div class="right-wrapper-two-right">
@@ -34,7 +35,8 @@
                 <b-form-input
                     v-model="form.optionB"
                     id="inline-form-input-optionb"
-                    class="input">
+                    class="input"
+                    @dblclick="makeCorrect(form.optionB)">
                 </b-form-input>
                 </div>
             </div>
@@ -45,15 +47,17 @@
                 <b-form-input
                     v-model="form.optionC"
                     id="inline-form-input-closuredate"
-                    class="input">
+                    class="input"
+                    @dblclick="makeCorrect(form.optionC)">
                 </b-form-input>
                 </div>
                 <div class="right-wrapper-three-right">
                     <label>Option D</label>
                 <b-form-input
-                    v-model="form.correctAnswer"
+                    v-model="form.optionD"
                     id="inline-form-input-batchid"
-                    class="input">
+                    class="input"
+                    @dblclick="makeCorrect(form.optionD)">
                 </b-form-input>
                 </div>
             </div>
@@ -83,18 +87,31 @@ export default {
     return {
       form: {
       },
+      correctAnswer: '',
+      selectedAnswer: false,
+      deleteClicked: false,
     };
   },
   methods: {
     ...mapActions(['createQuestion']),
+    addClass() {
+      this.selectedAnswer = !this.selectedAnswer;
+    },
+    makeCorrect(selected) {
+      this.correctAnswer = selected;
+      this.selectedAnswer = true;
+      console.log(this.correctAnswer);
+    },
     onSubmit() {
-      // const { form } = this;
-      this.createQuestion(this.form);
+      console.log(this.correctAnswer);
+      const payload = { ...this.form, correctAnswer: this.correctAnswer };
+      this.createQuestion(payload);
       this.form = {
         title: '',
         optionA: '',
         optionB: '',
         optionC: '',
+        optionD: '',
         correctAnswer: '',
       };
     },
@@ -103,6 +120,16 @@ export default {
 </script>
 
 <style scoped>
+.red {
+  background-color: red;
+}
+.green {
+    background-color: #31D283;;
+}
+/* .green input[type=text] {
+  background-color: #3CBC8D;
+  color: white;
+} */
 .body-all{
     display: flex;
     min-height: 100vh;
@@ -162,9 +189,9 @@ label{
     border-radius: 4px;
     /* margin-right: 80px; */
 }
-.input:hover{
+/* .input:hover{
     background: #31d282;
-}
+} */
 .instruction-input{
     width: 976px;
     height: 166px;

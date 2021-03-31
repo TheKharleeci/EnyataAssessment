@@ -1,6 +1,8 @@
 <template>
     <div class="body">
+
         <AdminSideBar/>
+
         <div class="body-right">
             <h1>Assessment History</h1>
             <div class="table-wrapper">
@@ -51,12 +53,16 @@
 </template>
 
 <script>
+
 import AdminSideBar from '@/components/AdminSideBar.vue';
+
 
 export default {
   name: 'AssessmentHistory',
   components: {
+
     AdminSideBar,
+
   },
 };
 </script>

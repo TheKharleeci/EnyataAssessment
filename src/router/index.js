@@ -10,7 +10,6 @@ import Results from '../views/Results.vue';
 import ClientDashboard from '../views/ClientDashboard.vue';
 import AdminProfile from '../views/AdminProfile.vue';
 import UserSignup from '../views/UserSignup.vue';
-import LandingPage from '../views/LandingPage.vue';
 import AdminTimer from '../views/AdminTimer.vue';
 import SuccessfulPage from '../views/SuccessfulPage.vue';
 import TakeAssess from '../views/TakeAssess.vue';
@@ -22,8 +21,18 @@ import DashboardForm from '../components/DashboardForm.vue';
 import ApplicationDashboard from '../views/ApplicationDashboard.vue';
 import AssessmentHistory from '../views/AssessmentHistory.vue';
 import CreateApplication from '../views/CreateApplication.vue';
+import store from '../store';
 
 Vue.use(VueRouter);
+
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    next();
+    console.log(store.getters.isAuthenticated);
+    return;
+  }
+  next('/UserLogin');
+};
 
 const routes = [
   {
@@ -43,6 +52,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Questions.vue'),
+    beforeEnter: ifAuthenticated,
   },
   {
     path: '/admin/login',
@@ -58,6 +68,7 @@ const routes = [
     path: '/app',
     name: 'ApplicationDashboard',
     component: ApplicationDashboard,
+    beforeEnter: ifAuthenticated,
   },
   {
     path: '/dashboard',
@@ -78,6 +89,8 @@ const routes = [
     path: '/client',
     name: 'ClientDashboard',
     component: ClientDashboard,
+    beforeEnter: ifAuthenticated,
+    // meta: { requiresAuth: true },
   },
   {
     path: '/adminProfile',
@@ -90,11 +103,6 @@ const routes = [
     component: UserSignup,
   },
   {
-    path: '/landing',
-    name: 'LandingPage',
-    component: LandingPage,
-  },
-  {
     path: '/timer',
     name: 'AdminTimer',
     component: AdminTimer,
@@ -104,10 +112,10 @@ const routes = [
     name: 'SuccessfulPage',
     component: SuccessfulPage,
   },
-  {
-    path: '/takeAssess',
+  { path: '/takeAssess',
     name: 'TakeAssess',
     component: TakeAssess,
+    beforeEnter: ifAuthenticated,
   },
   {
     path: '/compose',
@@ -130,6 +138,7 @@ const routes = [
     component: ResetPassword,
   },
   {
+
     path: '/history',
     name: 'AssessmentHistory',
     component: AssessmentHistory,
@@ -138,7 +147,7 @@ const routes = [
     path: '/create',
     name: 'CreateApplication',
     component: CreateApplication,
-  },
+  }
 ];
 
 const router = new VueRouter({
@@ -147,4 +156,11 @@ const router = new VueRouter({
   routes,
 });
 
+// const ifNotAuthenticated = (to, from, next) => {
+//   if (!store.getters.isAuthenticated) {
+//     next();
+//     return;
+//   }
+//   next('/');
+// };
 export default router;
