@@ -114,7 +114,7 @@ export default new Vuex.Store({
     },
 
     async userSignUp({ commit }, payload) {
-      const response = await axios.post('http://localhost:3000/signup', payload);
+      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/signup', payload);
       commit('signInUser', response.data);
       console.log(response.data);
       commit('assignUser', response.data.data);
@@ -198,7 +198,7 @@ export default new Vuex.Store({
       ));
       // console.log('formdata', formdata.getAll('cv'));
       // console.log(payload);
-      const response = await axios.post('http://localhost:3000/apply', formdata, {
+      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', formdata, {
         headers: {
           authorization: `Bearer ${getters.loggedInUser.token}`,
         },
@@ -210,7 +210,7 @@ export default new Vuex.Store({
 
     async resetPassword({ commit }, payload) {
       const formdata = new FormData();
-      await axios.post('http://localhost:3000/user/reset', payload, formdata)
+      await axios.post('https://enyata-recruitment-portal.herokuapp.com/user/reset', payload, formdata)
         .then((response) => {
           console.log(response);
           commit('reset', response.data);
@@ -221,7 +221,7 @@ export default new Vuex.Store({
     },
 
     async newPassword({ commit }, { password, token }) {
-      await axios.put(`http://localhost:3000/resetPassword/${token}`, { password })
+      await axios.put(`https://enyata-recruitment-portal.herokuapp.com/resetPassword/${token}`, { password })
         .then((response) => {
           console.log(response);
           commit('setNewPassword', response.data);
