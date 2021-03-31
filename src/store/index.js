@@ -101,12 +101,27 @@ export default new Vuex.Store({
     },
 
     async userSignUp({ commit }, payload) {
-      const response = await axios.post('http://localhost:3000/signup', payload);
-      commit('signInUser', response.data);
-      console.log(response.data);
-      commit('assignUser', response.data.data);
-      commit('updateApplicantCount');
+      try {
+        const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/signup', payload);
+        commit('signInUser', response.data);
+        localStorage.setItem('userDetails', JSON.stringify(response.data.data));
+        commit('assignUser', response.data.data);
+        commit('updateApplicantCount');
+      } catch (error) {
+        console.log(error);
+      }
     },
+
+    // async getSignupDetails() {
+    //   try {
+    //     const response = await axios.get('https://enyata-recruitment-portal.herokuapp.com/user/signup');
+    //     console.log(response);
+    //     localStorage.getItem('userDetails');
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
+
     async loginAdmin({ commit }, payload) {
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/login', payload);
       commit('currentAdminDetails', response.data);

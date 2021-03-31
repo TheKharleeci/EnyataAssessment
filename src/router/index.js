@@ -20,6 +20,8 @@ import ModalPassword from '../components/ModalPassword.vue';
 import ResetPassword from '../components/ResetPassword.vue';
 import DashboardForm from '../components/DashboardForm.vue';
 import ApplicationDashboard from '../views/ApplicationDashboard.vue';
+import AssessmentHistory from '../views/AssessmentHistory.vue';
+import CreateApplication from '../views/CreateApplication.vue';
 
 Vue.use(VueRouter);
 
@@ -126,6 +128,16 @@ const routes = [
     path: '/resetpassword/:token',
     name: 'ResetPassword',
     component: ResetPassword,
+  },
+  {
+    path: '/history',
+    name: 'AssessmentHistory',
+    component: AssessmentHistory,
+  },
+  {
+    path: '/create',
+    name: 'CreateApplication',
+    component: CreateApplication,
   },
 ];
 
