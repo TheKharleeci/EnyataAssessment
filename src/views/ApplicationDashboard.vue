@@ -216,20 +216,19 @@ export default {
         photo: '',
         agreement: false,
       };
-      this.$router.push('/client');
     },
-    // watch: {
-    //   getUserDetail: {
-    //     deep: true,
-    //     handler() {
-    //       // this.isLoading = false;
-    //       this.$router.push('/client');
-    //     },
-    //   },
-    // },
-    // loadUserDetail(response) {
-    //   this.autoGetDetail(this.users = response);
-    // },
+    watch: {
+      getUserDetail: {
+        deep: true,
+        handler() {
+          // this.isLoading = false;
+          this.$router.push('/client');
+        },
+      },
+    },
+    loadUserDetail(response) {
+      this.autoGetDetail(this.users = response);
+    },
     save() {
       this.agreement = true;
       this.$v.$touch();

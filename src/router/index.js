@@ -20,8 +20,17 @@ import ModalPassword from '../components/ModalPassword.vue';
 import ResetPassword from '../components/ResetPassword.vue';
 import DashboardForm from '../components/DashboardForm.vue';
 import ApplicationDashboard from '../views/ApplicationDashboard.vue';
+import store from '../store';
 
 Vue.use(VueRouter);
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    next();
+    console.log(store.getters.isAuthenticated);
+    return;
+  }
+  next('/UserLogin');
+};
 
 const routes = [
   {
@@ -56,6 +65,7 @@ const routes = [
     path: '/app',
     name: 'ApplicationDashboard',
     component: ApplicationDashboard,
+    beforeEnter: ifAuthenticated,
   },
   {
     path: '/dashboard',
@@ -76,6 +86,8 @@ const routes = [
     path: '/client',
     name: 'ClientDashboard',
     component: ClientDashboard,
+    beforeEnter: ifAuthenticated,
+    // meta: { requiresAuth: true },
   },
   {
     path: '/adminProfile',
@@ -127,6 +139,12 @@ const routes = [
     name: 'ResetPassword',
     component: ResetPassword,
   },
+  {
+    path: '/404',
+    redirect: {
+      name: 'LandingPage',
+    },
+  },
 ];
 
 const router = new VueRouter({
@@ -135,4 +153,11 @@ const router = new VueRouter({
   routes,
 });
 
+// const ifNotAuthenticated = (to, from, next) => {
+//   if (!store.getters.isAuthenticated) {
+//     next();
+//     return;
+//   }
+//   next('/');
+// };
 export default router;
