@@ -14,7 +14,6 @@
           <div class="text-white">
             <p>{{ currentApplicant["first_name"] }} {{ currentApplicant["last_name"] }}</p>
             <p id="email"> <i>{{ currentApplicant["email"] }}</i> </p>
-            <button @click="getPhoto">Hello</button>
           </div>
         </div>
         <div class="sidebar-body text-left p-3">
@@ -52,7 +51,7 @@ export default {
     return {
       visible: true,
       profileImg: {
-        blank: true, blankColor: '#777', width: 100, height: 100, class: 'mt-4',
+        blankColor: '#777', width: 100, height: 100, class: 'mt-4',
       },
     };
   },

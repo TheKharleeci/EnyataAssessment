@@ -12,8 +12,7 @@
           class="mb-2">
           </b-img>
           <div class="text-dark">
-            <p>{{ loggedInAdmin["first_name"] }} {{ loggedInAdmin["last_name"] }}</p>
-            <!-- <p>{{ loggedInAdmin["name"] }}</p> -->
+            <p>{{ loggedInAdmin["name"] }}</p>
             <p id="email"> <i>{{ loggedInAdmin["email"] }}</i> </p>
           </div>
         </div>
@@ -76,7 +75,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['loginUser', 'logout']),
+    ...mapActions(['loginUser', 'logout', 'updateAdmin']),
     toDashboard() {
       this.$router.push('/dashboard');
     },

@@ -152,7 +152,7 @@ export default {
   },
   data() {
     return {
-      timerCount: 369,
+      timerCount: 360,
       picked: '',
       answers: {
       },
@@ -210,7 +210,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getAllQuestions', 'loggedInUser', 'showCurrentQuestion', 'countQuestions', 'currentQuestionIndex']),
+    ...mapGetters(['getAllQuestions', 'quizTime', 'loggedInUser', 'showCurrentQuestion', 'countQuestions', 'currentQuestionIndex']),
   },
 };
 </script>

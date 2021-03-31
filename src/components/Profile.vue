@@ -120,6 +120,14 @@ export default {
       // };
     },
   },
+  watch: {
+    updateAdmin: {
+      deep: true,
+      handler() {
+        this.$router.push('/adminProfile');
+      },
+    },
+  },
   components: {
   },
   computed: {

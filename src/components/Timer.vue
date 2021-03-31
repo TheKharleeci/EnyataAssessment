@@ -22,7 +22,7 @@
                   v-model="time.sec"
                   class="sec" placeholder="000"><span>
                     <small>sec</small></span> <br>
-                  <b-button class="save-button" @click="getTime">Save</b-button>
+                  <b-button class="save-button" @click="setTestTime">Save</b-button>
               </div>
             </b-col>
           </b-row>
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'Time',
   data() {
@@ -44,16 +46,27 @@ export default {
     };
   },
   methods: {
-    getTime() {
+    ...mapActions(['setTime']),
+    setTestTime() {
       const minutes = parseInt(this.time.min, 10) * 60;
       const seconds = parseInt(this.time.sec, 10);
       this.testTime = minutes + seconds;
       console.log(this.testTime);
+      const payload = { time: this.testTime };
+      this.setTime(payload);
     },
-    convertMinutes(minutes) {
-      const modifiedMin = (minutes * 60);
-      return `${modifiedMin}`;
-    },
+
+    // onSubmit() {
+    //   console.log(this.testTime);
+    //   const payload = { time: this.testTime };
+    //   this.createQuestion(payload);
+    // },
+
+    // convertMinutes(minutes) {
+    // const payload = { ...this.form, correctAnswer: this.correctAnswer };
+    // const modifiedMin = (minutes * 60);
+    // return `${modifiedMin}`;
+    // },
     // getSeconds(seconds) {
     //   const time = seconds;
     //   return `${seconds}`;
