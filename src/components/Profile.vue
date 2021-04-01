@@ -121,6 +121,10 @@ export default {
     },
   },
   watch: {
+    loggedInAdmin: {
+      immediate: true,
+      handler() {},
+    },
     updateAdmin: {
       deep: true,
       handler() {

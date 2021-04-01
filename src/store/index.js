@@ -183,7 +183,7 @@ export default new Vuex.Store({
     //   commit('setTimer', response.data);
     //   console.log(response.data);
     // },
-    },
+    // },
 
     async createQuestion({ getters }, payload) {
       console.log(payload);
@@ -213,7 +213,7 @@ export default new Vuex.Store({
     async setApplicants({ commit, getters }) {
       delete axios.defaults.headers.common.Authorization;
       // console.log(getters.loggedInUser.token);
-      await axios.get('http://localhost:3000/applicants', {
+      await axios.get('https://enyata-recruitment-portal.herokuapp.com/applicants', {
         headers: {
           authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
         },
@@ -277,19 +277,18 @@ export default new Vuex.Store({
       let formdata = new FormData();
       Object.keys(payload).forEach((key) => (
         formdata.append(key, payload[key])
-      ));/*  */
+      ));
       delete axios.defaults.headers.common.Authorization;
       // console.log('formdata', formdata.getAll('cv'));
       // console.log(payload);
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', formdata, {
-        
         headers: {
           authorization: `Bearer ${getters.loggedInUser.token}`,
         },
       });
       formdata = {};
       commit('setRegister', response.data);
-      await axios.put('http://localhost:3000/merge');
+      axios.put('https://enyata-recruitment-portal.herokuapp.com/merge');
       console.log(response);
     },
 
@@ -315,7 +314,6 @@ export default new Vuex.Store({
           console.log(password);
         });
     },
-
     async logout({ commit }) {
       await axios.post('https://enyata-recruitment-portal.herokuapp.com/logout')
         .then((response) => {

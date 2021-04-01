@@ -7,7 +7,7 @@
             <h1>Compose Assessment</h1>
             <div class="right-wrapper-one">
                 <div class="right-wrapper-left">
-                    <p>15/30</p>
+                    <p>1/5</p>
                     <button>+ Choose file</button>
                 </div>
             </div>

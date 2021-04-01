@@ -242,7 +242,7 @@ export default {
     return {
       fileRecordsCV: [],
       fileRecordsPhoto: [],
-      uploadUrl: 'http://localhost:3000/upload', // change this to the backend endpoint on heroku
+      uploadUrl: 'https://enyata-recruitment-portal.herokuapp.com/upload', // change this to the backend endpoint on heroku
       uploadHeaders: { 'X-Test-Header': 'vue-file-agent' },
       fileRecordsForCV: [],
       fileRecordsForPhoto: [],
