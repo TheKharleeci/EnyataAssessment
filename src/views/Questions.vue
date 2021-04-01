@@ -36,47 +36,51 @@
                 <ul class="list-group">
                   <li class="list-group-item d-flex">
                     <input class="check"
-                    @click="displayRadioValue"
+                    @change="displayRadioValue"
                     :key="'a_' + `${countQuestions}`"
                     :id="'a_' + `${countQuestions}`"
                     :value="showCurrentQuestion['option_a']"
                     v-model="picked"
                     type="radio" name="option" aria-label="">
                       <label class="option" :for="'a_' + `${countQuestions}`">
-                      <i>A. {{ showCurrentQuestion['option_a']}}</i></label>
+                      <i>A. <span class="ml-3">{{ showCurrentQuestion['option_a']}}
+                        </span></i></label>
                   </li>
                   <li class="list-group-item d-flex">
                     <input  class="check"
-                    @click="displayRadioValue"
+                    @change="displayRadioValue"
                     :key="'b_' + `${countQuestions}`"
                     :id="'b_' + `${countQuestions}`"
                     :value="showCurrentQuestion['option_b']"
                     v-model="picked"
                     type="radio" name="option"  aria-label="">
                       <label class="option" :for="'b_' + `${countQuestions}`">
-                        <i>B. {{ showCurrentQuestion['option_b']}}</i></label>
+                        <i>B. <span class="ml-3">{{ showCurrentQuestion['option_b']}}
+                          </span></i></label>
                   </li>
                   <li class="list-group-item d-flex">
                     <input class="check"
-                    @click="displayRadioValue"
+                    @change="displayRadioValue"
                     :key="'c_' + `${countQuestions}`"
                     :id="'c_' + `${countQuestions}`"
                     :value="showCurrentQuestion['option_c']"
                     v-model="picked"
                     type="radio" name="option" aria-label="">
                       <label class="option" :for="'c_' + `${countQuestions}`">
-                      <i>C. {{ showCurrentQuestion['option_c']}}</i></label>
+                      <i>C. <span class="ml-3">{{ showCurrentQuestion['option_c']}}
+                        </span></i></label>
                   </li>
                   <li class="list-group-item d-flex">
                     <input class="check"
-                    @click="displayRadioValue"
+                    @change="displayRadioValue"
                     :key="'d_' + `${countQuestions}`"
                     :id="'d_' + `${countQuestions}`"
                     :value="showCurrentQuestion['option_d']"
                     v-model="picked"
                     type="radio" name="option" aria-label="">
-                      <label class="option" for="d">
-                      <i>D. {{ showCurrentQuestion['option_d']}}</i></label>
+                      <label class="option" :for="'d_' + `${countQuestions}`">
+                      <i>D. <span class="ml-3">{{ showCurrentQuestion['option_d']}}
+                        </span></i></label>
                   </li>
               </ul>
               </div>
@@ -152,19 +156,35 @@ export default {
   },
   data() {
     return {
-      timerCount: 360,
-      // selected: false,
-      // selectedAnswer: '',
-      picked: [],
+      timerCount: 360, // this.quizTime
+      picked: '',
+      answers: {
+      },
     };
   },
+  // for timer use else and call the finish function
   watch: {
+    quizTime: {
+      immediate: true,
+      handler() {
+        console.log(this.quizTime);
+        console.log(this.timerCount);
+        if (!Number.isNaN(this.quizTime)) {
+          console.log(this.quizTime);
+          console.log(this.timerCount);
+          this.timerCount = this.quizTime;
+        }
+      },
+    },
     timerCount: {
       handler(value) {
         if (value > 0) {
           setTimeout(() => {
             this.timerCount -= 1;
           }, 1000);
+        } else {
+          alert('Time Up!');
+          this.submitTest();
         }
       },
       immediate: true,
@@ -174,7 +194,7 @@ export default {
     // },
   },
   methods: {
-    ...mapActions(['getQuestions', 'selectQuestion', 'prevQuestion', 'nextQuestion', 'selectAnswer']),
+    ...mapActions(['getQuestions', 'selectQuestion', 'prevQuestion', 'submitAnswers', 'nextQuestion', 'selectAnswer']),
     next() {
       this.nextQuestion();
     },
@@ -192,24 +212,22 @@ export default {
       seconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
       return `${seconds}`;
     },
+    displayRadioValue() {
+      const { id } = this.showCurrentQuestion;
+      const answer = this.picked;
+      // console.log(id, answer);
+      this.answers[id] = answer;
+      console.log(this.answers);
+      // console.log(this.picked);
+    },
     submitTest() {
+      console.log(this.answers);
+      this.submitAnswers(this.answers);
       this.$router.push('/successfulPage');
     },
-    displayRadioValue() {
-      console.log(this.picked);
-    },
-    //  displayRadioValue() {
-    //   const element = document.getElementsByName('option');
-    //   for (let i = 0; i < element.length; i += 1) {
-    //     if (element[i].checked) {
-    //       this.selectedAnswer = element[i].value;
-    //     }
-    //   }
-    //   console.log(this.selectedAnswer);
-    // },
   },
   computed: {
-    ...mapGetters(['getAllQuestions', 'loggedInUser', 'showCurrentQuestion', 'countQuestions', 'currentQuestionIndex']),
+    ...mapGetters(['getAllQuestions', 'quizTime', 'loggedInUser', 'showCurrentQuestion', 'countQuestions', 'currentQuestionIndex']),
   },
 };
 </script>

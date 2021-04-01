@@ -47,7 +47,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['loggedInUser', 'currentApplicant', 'applicationDate', 'getAllQuestions', 'countQuestions', 'daysSinceReg']),
+    ...mapGetters(['loggedInUser', 'quizTime', 'currentApplicant', 'applicationDate', 'getAllQuestions', 'countQuestions', 'daysSinceReg']),
   },
 };
 </script>
