@@ -273,11 +273,14 @@ export default new Vuex.Store({
       dispatch('selectQuestion');
       // dispatch('handleDisableButton');
     },
+    async merge() {
+      await axios.put('http://localhost:3000/merge');
+    },
     async getUserDetail({ commit, getters }, payload) {
       let formdata = new FormData();
       Object.keys(payload).forEach((key) => (
         formdata.append(key, payload[key])
-      ));/*  */
+      ));
       delete axios.defaults.headers.common.Authorization;
       // console.log('formdata', formdata.getAll('cv'));
       // console.log(payload);
@@ -289,7 +292,7 @@ export default new Vuex.Store({
       });
       formdata = {};
       commit('setRegister', response.data);
-      await axios.put('http://localhost:3000/merge');
+      axios.put('http://localhost:3000/merge');
       console.log(response);
     },
 
@@ -333,11 +336,7 @@ export default new Vuex.Store({
     // loggedInUser: (state) => console.log(state.loginResponse),
     loggedInUser: (state) => state.loginResponse,
     registeredUsers: (state) => state.users,
-    currentApplicant: (state) => {
-      const current = state.currentUser;
-      console.log(current);
-      return current;
-    },
+    currentApplicant: (state) => state.currentUser,
     loggedInAdmin: (state) => state.admin,
     loggedInAdminDetails: (state) => state.adminDetails,
     applicationDate: (state) => state.date,

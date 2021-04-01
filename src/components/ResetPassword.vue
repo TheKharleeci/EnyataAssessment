@@ -49,16 +49,13 @@ export default {
   methods: {
     ...mapActions(['newPassword']),
     resetPassword() {
-      console.log(this.password);
       console.log(this.$route.params.token);
       const obj = {
         password: this.password,
         token: this.$route.params.token,
       };
       this.newPassword(obj);
-      // this.form = {
-      //   password: '',
-      // };
+      this.$router.push('/resetSuccessful');
     },
   },
 };

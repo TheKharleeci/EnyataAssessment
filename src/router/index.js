@@ -19,27 +19,29 @@ import ModalPassword from '../components/ModalPassword.vue';
 import ResetPassword from '../components/ResetPassword.vue';
 import DashboardForm from '../components/DashboardForm.vue';
 import ApplicationDashboard from '../views/ApplicationDashboard.vue';
+import ResetSuccessful from '../components/ResetSuccessful.vue';
+import SuccessfulApplication from '../components/SuccessfulApplication.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
 const ifAuthenticated = (to, from, next) => {
   if (store.getters.isAuthenticated) {
     next();
-    console.log(store.getters.isAuthenticated);
+    // console.log(store.getters.isAuthenticated);
     return;
   }
   next('/UserLogin');
 };
 // const ifAuthenticatedRegistered = (to, from, next) => {
 //   console.log(store.getters.currentApplicant.application_status);
-//   if (store.getters.isAuthenticated &&
-// store.getters.currentApplicant.application_status !== 'Pending') {
-//     next();
-//   } else if (store.getters.isAuthenticated
-// && store.getters.currentApplicant.application_status === 'Pending') {
+//   if (store.getters.isAuthenticated
+//     && store.getters.currentApplicant.application_status === 'Pending') {
 //     next('/dashboard');
+//   } else if (store.getters.isAuthenticated
+// && store.getters.currentApplicant.application_status !== 'Pending') {
+//     next();
 //   }
-//   next('/UserLogin');
+//   next('/');
 // };
 
 // const checkChanges = (to, from, next) => {
@@ -53,7 +55,7 @@ const ifAuthenticated = (to, from, next) => {
 const ifAdminAuthenticated = (to, from, next) => {
   if (store.getters.isAdminAuthenticated) {
     next();
-    console.log(store.getters.isAdminAuthenticated);
+    // console.log(store.getters.isAdminAuthenticated);
     return;
   }
   next('/');
@@ -64,6 +66,7 @@ const routes = [
     path: '/userLogin',
     name: 'UserLogin',
     component: UserLogin,
+    // beforeRouteLeave: ifAuthenticatedRegistered,
   },
   {
     path: '/',
@@ -169,6 +172,16 @@ const routes = [
     path: '/resetpassword/:token',
     name: 'ResetPassword',
     component: ResetPassword,
+  },
+  {
+    path: '/resetSuccessful',
+    name: 'ResetSuccessful',
+    component: ResetSuccessful,
+  },
+  {
+    path: '/SuccessfulApplication',
+    name: 'SuccessfulApplication',
+    component: SuccessfulApplication,
   },
   {
     path: '/404',
