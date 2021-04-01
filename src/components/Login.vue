@@ -17,6 +17,7 @@
           class="text-left label"
           label-for="input-1"
         >
+
           <b-form-input
             id="input-1"
             v-model="form.email"
@@ -62,22 +63,50 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
-
   data() {
     return {
       form: {
       },
+      submitStatus: null,
     };
   },
   methods: {
+    /*
+    submit() {
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        this.submitStatus = 'ERROR'
+        } else {
+          this.onSubmit();
+          this.submitStatus = 'PENDING'
+          setTimeout(() => {
+            this.submitStatus = 'OK'
+            }, 500)
+            }
+            }
+            }
+            } */
     ...mapActions(['loginUser']),
     onSubmit() {
-      // const { form } = this;
+      let attempt;
       this.loginUser(this.form);
       this.form = {
         email: '',
         password: '',
       };
+      if (this.form.email === 'currentApplicant[email]' && this.form.password === 'currentApplicant[password]') {
+        console.log('Login successfully');
+        this.toSignUp();
+      } else {
+        attempt -= 3;
+        if (attempt === 0) {
+          this.form.email.disable = true;
+          console.log('try again');
+        }
+      //     return false;
+      }
+      // }
+      // return false;
     },
     toSignUp() {
       this.$router.push('/signup');

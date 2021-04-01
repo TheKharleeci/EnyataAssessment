@@ -31,6 +31,34 @@ const ifAuthenticated = (to, from, next) => {
   }
   next('/UserLogin');
 };
+// const ifAuthenticatedRegistered = (to, from, next) => {
+//   console.log(store.getters.currentApplicant.application_status);
+//   if (store.getters.isAuthenticated &&
+// store.getters.currentApplicant.application_status !== 'Pending') {
+//     next();
+//   } else if (store.getters.isAuthenticated
+// && store.getters.currentApplicant.application_status === 'Pending') {
+//     next('/dashboard');
+//   }
+//   next('/UserLogin');
+// };
+
+// const checkChanges = (to, from, next) => {
+//   const answer = window.confirm('Do you really want to leave? you have unsaved changes!');
+//   if (answer) {
+//     next();
+//   } else {
+//     next(false);
+//   }
+// };
+const ifAdminAuthenticated = (to, from, next) => {
+  if (store.getters.isAdminAuthenticated) {
+    next();
+    console.log(store.getters.isAdminAuthenticated);
+    return;
+  }
+  next('/');
+};
 
 const routes = [
   {
@@ -50,6 +78,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Questions.vue'),
+    beforeEnter: ifAuthenticated,
   },
   {
     path: '/admin/login',
@@ -71,16 +100,19 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+    beforeEnter: ifAdminAuthenticated,
   },
   {
     path: '/entries',
     name: 'Entries',
     component: Entries,
+    beforeEnter: ifAdminAuthenticated,
   },
   {
     path: '/results',
     name: 'Results',
     component: Results,
+    beforeEnter: ifAdminAuthenticated,
   },
   {
     path: '/client',
@@ -93,6 +125,7 @@ const routes = [
     path: '/adminProfile',
     name: 'AdminProfile',
     component: AdminProfile,
+    beforeEnter: ifAdminAuthenticated,
   },
   {
     path: '/signup',
@@ -108,21 +141,25 @@ const routes = [
     path: '/timer',
     name: 'AdminTimer',
     component: AdminTimer,
+    beforeEnter: ifAdminAuthenticated,
   },
   {
     path: '/successfulPage',
     name: 'SuccessfulPage',
     component: SuccessfulPage,
+    beforeEnter: ifAuthenticated,
   },
   {
     path: '/takeAssess',
     name: 'TakeAssess',
     component: TakeAssess,
+    beforeEnter: ifAuthenticated,
   },
   {
     path: '/compose',
     name: 'ComposeAssess',
     component: ComposeAssess,
+    beforeEnter: ifAdminAuthenticated,
   },
   {
     path: '/forget',

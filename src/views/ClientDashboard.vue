@@ -23,7 +23,7 @@
               <b-col cols="1"></b-col>
               <b-col cols="3" class="text-left">
                 <p>Application Status</p>
-                <h2>Pending</h2>
+                <h2>{{ currentApplicant ["application_status"] }}</h2>
                 <span id="spanB"></span>
                 <h6>We will get back to you</h6>
               </b-col>
@@ -71,7 +71,7 @@ export default {
     ApplicantSideBar,
   },
   methods: {
-    ...mapActions(['loginUser', 'getQuestions', 'selectQuestion', 'nextQuestion', 'regDayCount']),
+    ...mapActions(['loginUser', 'getQuestions', 'selectQuestion', 'nextQuestion', 'regDayCount', 'currentApplicant']),
     takeAssessment() {
       this.$router.push('/takeAssess');
     },

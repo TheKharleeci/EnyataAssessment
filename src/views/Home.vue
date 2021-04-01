@@ -73,11 +73,11 @@
       </div>
         </b-container>
 
-        <b-container-fluid>
+        <b-container fluid>
       <div id="footer">
           <p>Copyright © Enyata 2021</p>
       </div>
-        </b-container-fluid>
+        </b-container>
     </div>
   </div>
 </template>
@@ -202,7 +202,8 @@ color: #211F26;
 #footer{
   background: #7557d3;
   width:100%;
-  height: 150px;
+  height: 100px;
+  margin-top: 100px;
 }
 #footer p{
   text-align: center;

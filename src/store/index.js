@@ -13,6 +13,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     toks: [], // added
+    adminToks: [],
     status: '', // added
     users: [],
     currentUser: {},
@@ -33,6 +34,7 @@ export default new Vuex.Store({
     logoutResponse: {},
     usersDetail: [],
     userPw: [],
+    applicants: [],
     // nextButtonDisabled: false,
     // previousButtonDisabled: true,
     // assessmentQuestions: [],
@@ -60,6 +62,7 @@ export default new Vuex.Store({
     regDay: (state, payload) => { state.registeredDay = payload; },
     loggedOut: (state, payload) => { state.logoutResponse = payload; },
     reset: (state, payload) => { state.user.push(payload); },
+    allApplicants: (state, payload) => { state.applicants = payload; },
     setNewPassword: (state, payload) => { state.userPw = payload; },
     setRegister: (state, payload) => {
       state.usersDetail.push(payload);
@@ -67,6 +70,10 @@ export default new Vuex.Store({
     authSuccess: (state, payload) => {
       state.status = 'success';
       state.toks.push(payload);
+    },
+    authAdminSuccess: (state, payload) => {
+      state.status = 'success';
+      state.adminToks.push(payload);
     },
     authError: (state) => {
       state.status = 'error';
@@ -114,7 +121,7 @@ export default new Vuex.Store({
     },
 
     async userSignUp({ commit }, payload) {
-      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/signup', payload);
+      const response = await axios.post('http://localhost:3000/signup', payload);
       commit('signInUser', response.data);
       console.log(response.data);
       commit('assignUser', response.data.data);
@@ -122,8 +129,13 @@ export default new Vuex.Store({
     },
     async loginAdmin({ commit }, payload) {
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/login', payload);
+      const tokens = response.data.data.token;
+      console.log(response.data);
+      localStorage.setItem('admin-token', tokens);
+      axios.defaults.headers.common.Authorization = tokens;
       commit('currentAdminDetails', response.data);
       commit('currentAdmin', response.data.data.admin);
+      commit('authAdminSuccess', tokens);
       // console.log(response.data.data);
       // console.log(response.data);
     },
@@ -138,6 +150,7 @@ export default new Vuex.Store({
       console.log(response);
     },
     async getQuestions({ commit, getters }) {
+      delete axios.defaults.headers.common.Authorization;
       // console.log(getters.loggedInUser.token);
       const quiz = await axios.get('https://enyata-recruitment-portal.herokuapp.com/user/question', {
         headers: {
@@ -148,7 +161,21 @@ export default new Vuex.Store({
       const response = orderedQuestions.sort(() => Math.random() - 0.5);
       commit('testQuestions', response);
     },
-    // scoreQuestion({commit}) { },
+    async setApplicants({ commit, getters }) {
+      delete axios.defaults.headers.common.Authorization;
+      // console.log(getters.loggedInUser.token);
+      await axios.get('http://localhost:3000/applicants', {
+        headers: {
+          authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
+        },
+      })
+        .then((response) => {
+          console.log(response.data.data);
+          commit('allApplicants', response.data.data);
+        }).catch((error) => {
+          console.log(error);
+        });
+    },
 
     selectQuestion({ commit, getters }) {
       const index = getters.currentQuestionIndex;
@@ -195,16 +222,18 @@ export default new Vuex.Store({
       let formdata = new FormData();
       Object.keys(payload).forEach((key) => (
         formdata.append(key, payload[key])
-      ));
+      ));/*  */
+      delete axios.defaults.headers.common.Authorization;
       // console.log('formdata', formdata.getAll('cv'));
       // console.log(payload);
-      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', formdata, {
+      const response = await axios.post('http://localhost:3000/apply', formdata, {
         headers: {
           authorization: `Bearer ${getters.loggedInUser.token}`,
         },
       });
       formdata = {};
       commit('setRegister', response.data);
+      await axios.put('http://localhost:3000/merge');
       console.log(response);
     },
 
@@ -267,7 +296,13 @@ export default new Vuex.Store({
     dayRegistered: (state) => state.registeredDay,
     userCount: (state) => state.users.length,
     isAuthenticated: (state) => state.toks.length, // added
+    isAdminAuthenticated: (state) => state.adminToks.length,
     authStatus: (state) => state.status, // added
+    getApplicants: (state) => {
+      const item = state.applicants;
+      console.log(item);
+      return item;
+    },
   },
   modules: {
   },
