@@ -8,7 +8,9 @@
       class="border border-dark"
       no-header shadow>
         <div class="sidebar-top">
-          <b-img v-bind="profileImg" rounded="circle" alt="Profile Image"
+          <b-img v-bind="profileImg" rounded="circle"
+          alt="Profile Image" :src= currentApplicant.picture
+
           class="mb-2">
           </b-img>
           <div class="text-white">
@@ -51,7 +53,7 @@ export default {
     return {
       visible: true,
       profileImg: {
-        blankColor: '#777', width: 100, height: 100, class: 'mt-4',
+        width: 100, height: 100, class: 'mt-4',
       },
     };
   },

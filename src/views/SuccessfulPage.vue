@@ -6,7 +6,7 @@
         <div class="body-right">
         <div class="body-right-top">
             <div class="body-right-top-left">
-                <h1>Take Assessment</h1>
+                <h1>Assessment Taken!</h1>
                 <p><small>Thank you!</small></p>
             </div>
             <div class="body-right-top-right">

@@ -12,6 +12,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    toks: [], // added
+    adminToks: [],
+    status: '', // added
     users: [],
     currentUser: {},
     loginResponse: {},
@@ -30,15 +33,13 @@ export default new Vuex.Store({
     logoutResponse: {},
     usersDetail: [],
     userPw: [],
-    userProfilePicture: [],
+    applicants: [],
     loginError: '',
     // nextButtonDisabled: false,
     // previousButtonDisabled: true,
     // assessmentQuestions: [],
   },
-  getter: {
 
-  },
   mutations: {
     signInUser: (state, payload) => { state.users.push(payload); },
     assignUser: (state, payload) => { state.currentUser = payload; },
@@ -60,11 +61,25 @@ export default new Vuex.Store({
     regDay: (state, payload) => { state.registeredDay = payload; },
     loggedOut: (state, payload) => { state.logoutResponse = payload; },
     reset: (state, payload) => { state.user.push(payload); },
+    allApplicants: (state, payload) => { state.applicants = payload; },
     setNewPassword: (state, payload) => { state.userPw = payload; },
     setRegister: (state, payload) => {
       state.usersDetail.push(payload);
     },
-    setAvi: (state, payload) => { state.userProfilePicture = payload; },
+    authSuccess: (state, payload) => {
+      state.status = 'success';
+      state.toks.push(payload);
+    },
+    authAdminSuccess: (state, payload) => {
+      state.status = 'success';
+      state.adminToks.push(payload);
+    },
+    authError: (state) => {
+      state.status = 'error';
+      state.toks = [];
+    },
+    authRequest: (state) => { state.status = 'loading'; },
+
     setLoginError: (state, payload) => { state.loginError = payload; },
   },
   actions: {
@@ -78,6 +93,9 @@ export default new Vuex.Store({
         return;
       }
       const createdAt = response.data.data.user.created_at;
+      const tokens = response.data.data.token;
+      console.log(response.data);
+      localStorage.setItem('user-token', tokens);
       const days = new Date(createdAt);
       // console.log(days);
       days.setDate(days.getDate());
@@ -86,7 +104,8 @@ export default new Vuex.Store({
       newDate = newDate.replace(/-/g, '.');
       newDate = newDate.substring(2);
       newDate = newDate.split('.').reverse().join('.');
-
+      axios.defaults.headers.common.Authorization = tokens;
+      commit('authSuccess', tokens);
       commit('assignUser', response.data.data.user);
       commit('loggedIn', response.data.data);
       commit('currentDate', newDate);
@@ -131,8 +150,15 @@ export default new Vuex.Store({
 
     async loginAdmin({ commit }, payload) {
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/login', payload);
+      const tokens = response.data.data.token;
+      console.log(response.data);
+      localStorage.setItem('admin-token', tokens);
+      axios.defaults.headers.common.Authorization = tokens;
       commit('currentAdminDetails', response.data);
       commit('currentAdmin', response.data.data.admin);
+      commit('authAdminSuccess', tokens);
+      // console.log(response.data.data);
+      // console.log(response.data);
       console.log(response.data.data);
       console.log(response.data);
     },
@@ -157,15 +183,6 @@ export default new Vuex.Store({
     //   commit('setTimer', response.data);
     //   console.log(response.data);
     // },
-
-    async userAvi({ commit, getters }) {
-      const response = await axios.get('https://enyata-recruitment-portal.herokuapp.com/singleUser', {
-        headers: {
-          authorization: `Bearer ${getters.loggedInUser.token}`,
-        },
-      });
-      console.log(response);
-      commit('setAvi', response);
     },
 
     async createQuestion({ getters }, payload) {
@@ -181,6 +198,7 @@ export default new Vuex.Store({
     },
 
     async getQuestions({ commit, getters }) {
+      delete axios.defaults.headers.common.Authorization;
       // console.log(getters.loggedInUser.token);
       const quiz = await axios.get('https://enyata-recruitment-portal.herokuapp.com/user/question', {
         headers: {
@@ -191,6 +209,21 @@ export default new Vuex.Store({
       const response = orderedQuestions.sort(() => Math.random() - 0.5);
       console.log(response);
       commit('testQuestions', response);
+    },
+    async setApplicants({ commit, getters }) {
+      delete axios.defaults.headers.common.Authorization;
+      // console.log(getters.loggedInUser.token);
+      await axios.get('http://localhost:3000/applicants', {
+        headers: {
+          authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
+        },
+      })
+        .then((response) => {
+          console.log(response.data.data);
+          commit('allApplicants', response.data.data);
+        }).catch((error) => {
+          console.log(error);
+        });
     },
 
     selectQuestion({ commit, getters }) {
@@ -240,30 +273,23 @@ export default new Vuex.Store({
       dispatch('selectQuestion');
       // dispatch('handleDisableButton');
     },
-    // async getUserDetail({ commit, getters }, payload) {
-    //   const response = axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', payload, {
-    //     headers: {
-    //       authorization: `Bearer ${getters.loggedInUser.token}`,
-    //     },
-    //   });
-    //   commit('setRegister', response.data);
-    //   console.log(response);
-    // },
-
     async getUserDetail({ commit, getters }, payload) {
       let formdata = new FormData();
       Object.keys(payload).forEach((key) => (
         formdata.append(key, payload[key])
-      ));
+      ));/*  */
+      delete axios.defaults.headers.common.Authorization;
       // console.log('formdata', formdata.getAll('cv'));
       // console.log(payload);
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', formdata, {
+        
         headers: {
           authorization: `Bearer ${getters.loggedInUser.token}`,
         },
       });
       formdata = {};
       commit('setRegister', response.data);
+      await axios.put('http://localhost:3000/merge');
       console.log(response);
     },
 
@@ -294,7 +320,10 @@ export default new Vuex.Store({
       await axios.post('https://enyata-recruitment-portal.herokuapp.com/logout')
         .then((response) => {
           console.log(response);
+          commit('authError');
           commit('loggedIn', '');
+          localStorage.removeItem('user-token');
+          delete axios.defaults.headers.common.Authorization;
         }).catch((error) => {
           console.log(error);
         });
@@ -304,7 +333,11 @@ export default new Vuex.Store({
     // loggedInUser: (state) => console.log(state.loginResponse),
     loggedInUser: (state) => state.loginResponse,
     registeredUsers: (state) => state.users,
-    currentApplicant: (state) => state.currentUser,
+    currentApplicant: (state) => {
+      const current = state.currentUser;
+      console.log(current);
+      return current;
+    },
     loggedInAdmin: (state) => state.admin,
     loggedInAdminDetails: (state) => state.adminDetails,
     applicationDate: (state) => state.date,
@@ -317,7 +350,14 @@ export default new Vuex.Store({
     daysSinceReg: (state) => state.days,
     dayRegistered: (state) => state.registeredDay,
     userCount: (state) => state.users.length,
-    displayUserDp: (state) => state.userProfilePicture,
+    isAuthenticated: (state) => state.toks.length, // added
+    isAdminAuthenticated: (state) => state.adminToks.length,
+    authStatus: (state) => state.status, // added
+    getApplicants: (state) => {
+      const item = state.applicants;
+      console.log(item);
+      return item;
+    },
     error: (state) => state.loginError,
   },
   modules: {

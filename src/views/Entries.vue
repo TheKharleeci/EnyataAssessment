@@ -9,8 +9,8 @@
         <b-col cols="9">
            <b-row no-gutters >
             <b-col class="text-left">
-              <h2 class="headerText">Entries - Batch 2</h2>
-              <p> <small> <i>Comprises all that applied for batch 2</i> </small> </p>
+              <h2 class="headerText">Entries - Batch 1</h2>
+              <p> <small> <i>Comprises all that applied for batch 1</i> </small> </p>
             </b-col>
           </b-row>
           <b-row no-gutters class="mt-5">
@@ -19,13 +19,13 @@
                 <div class="table-header">
                   <b-row no-gutters class="align-items-center">
                     <b-col cols="2">Name</b-col>
-                      <b-col cols="2">Email</b-col>
+                      <b-col cols="3">Email</b-col>
                       <b-col cols="2">DOB-Age <span>
                         <button class="btn">
                           <img src="../assets/age-arrow.svg" alt="sort button">
                         </button> </span>
                       </b-col>
-                      <b-col cols="3">Address</b-col>
+                      <b-col cols="2" class="d-flex justify-content-center">Address</b-col>
                       <b-col cols="2">University</b-col>
                       <b-col cols="1">CGPA
                         <button class="btn">
@@ -35,7 +35,20 @@
                   </b-row>
                 </div>
                 <b-list-group class="">
-                  <b-list-group-item href="#" class="batch">
+                  <b-list-group-item href="#" class="batch"
+                    v-for="applicant in applicants" :key="applicant.index">
+                    <b-row no-gutters>
+                      <b-col cols="2">
+                        {{ applicant.name }}</b-col>
+                      <b-col cols="3">
+                        {{ applicant.email }}</b-col>
+                      <b-col cols="2">{{ applicant.date_of_birth }}</b-col>
+                      <b-col cols="2">{{ applicant.address }}</b-col>
+                      <b-col cols="2">{{ applicant.university }}</b-col>
+                      <b-col cols="1">{{ applicant.cgpa }}</b-col>
+                    </b-row>
+                  </b-list-group-item>
+                  <!-- <b-list-group-item href="#" class="batch">
                     <b-row no-gutters>
                       <b-col cols="2">Ify Chinke</b-col>
                       <b-col cols="2">ify@enyata.com</b-col>
@@ -44,8 +57,8 @@
                       <b-col cols="2">University of Nigeria</b-col>
                       <b-col cols="1">5.0</b-col>
                     </b-row>
-                  </b-list-group-item>
-                  <b-list-group-item href="#" class="batch">
+                  </b-list-group-item> -->
+                  <!-- <b-list-group-item href="#" class="batch">
                     <b-row no-gutters>
                       <b-col cols="2">Ify Chinke</b-col>
                       <b-col cols="2">ify@enyata.com</b-col>
@@ -54,17 +67,7 @@
                       <b-col cols="2">University of Nigeria</b-col>
                       <b-col cols="1">5.0</b-col>
                     </b-row>
-                  </b-list-group-item>
-                  <b-list-group-item href="#" class="batch">
-                    <b-row no-gutters>
-                      <b-col cols="2">Ify Chinke</b-col>
-                      <b-col cols="2">ify@enyata.com</b-col>
-                      <b-col cols="2">12/09/19</b-col>
-                      <b-col cols="3">3 Sabo Ave, Yaba, Lagos</b-col>
-                      <b-col cols="2">University of Nigeria</b-col>
-                      <b-col cols="1">5.0</b-col>
-                    </b-row>
-                  </b-list-group-item>
+                  </b-list-group-item> -->
                 </b-list-group>
               </div>
             </b-col>
@@ -79,10 +82,22 @@
 <script>
 import AdminSideBar from '@/components/AdminSideBar.vue';
 
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Dashbord',
   components: {
     AdminSideBar,
+  },
+
+  computed: {
+    ...mapGetters({
+      applicants: 'getApplicants',
+    }),
+  },
+
+  mounted() {
+    this.$store.dispatch('setApplicants');
   },
 };
 </script>
