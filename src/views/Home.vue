@@ -73,11 +73,11 @@
       </div>
         </b-container>
 
-        <b-container-fluid>
+        <b-container fluid no-gutters>
       <div id="footer">
           <p>Copyright © Enyata 2021</p>
       </div>
-        </b-container-fluid>
+        </b-container>
     </div>
   </div>
 </template>

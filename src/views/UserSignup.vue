@@ -12,10 +12,9 @@
 <label>First Name</label>
 <b-form-input id="inline-form-input-name"
 class="input" type="text" v-model.lazy="$v.firstName.$model"
-:class="{ 'is-invalid': $v.firstName.$error,
-'is-valid': !$v.firstName.$invalid }">
+:class="{ 'is-invalid': $v.firstName.$error}">
 </b-form-input>
-<div class="valid-feedback">Your first name is valid</div>
+<!--div class="valid-feedback">Your first name is valid</div-->
 <div class="invalid-feedback">
 <span v-if="!$v.firstName.required">
 First name is required.</span>
@@ -34,9 +33,9 @@ First name should be alphabet.</span>
 <label>Last Name</label>
 <b-form-input class="input" id="inline-form-input-lastname"
 type="text" v-model.lazy="$v.lastName.$model" :class="{
-'is-invalid': $v.lastName.$error, 'is-valid': !$v.lastName.$invalid }">
+'is-invalid': $v.lastName.$error }">
 </b-form-input>
-<div class="valid-feedback">Your last name is valid</div>
+<!--div class="valid-feedback">Your last name is valid</div-->
 <div class="invalid-feedback">
 <span v-if="!$v.lastName.required">
 Last name is required.</span>
@@ -57,9 +56,9 @@ Last name should be alphabet.</span>
 <label>Email Address</label>
 <b-form-input id="inline-form-input-email" class="input"
 type="email" v-model.lazy="$v.email.$model" :class="{
-'is-invalid': $v.email.$error, 'is-valid': !$v.email.$invalid }">
+'is-invalid': $v.email.$error}">
 </b-form-input>
-<div class="valid-feedback">Your email is valid</div>
+<!--div class="valid-feedback">Your email is valid</div-->
 <div class="invalid-feedback">
 <span v-if="!$v.email.required">
 Email is required.</span>
@@ -71,9 +70,9 @@ Email is not a properly formatted email address</span>
 <label>Phone Number</label>
 <b-form-input id="inline-form-input-phonenumber" class="input"
 type="text" v-model.lazy="$v.phoneNumber.$model" :class="{
-'is-invalid': $v.phoneNumber.$error, 'is-valid': !$v.phoneNumber.$invalid }">
+'is-invalid': $v.phoneNumber.$error}">
 </b-form-input>
-<div class="valid-feedback">Your phone number is valid</div>
+<!--div class="valid-feedback">Your phone number is valid</div-->
 <div class="invalid-feedback">
 <span v-if="!$v.phoneNumber.required">
 Phone number is required.</span>
@@ -81,10 +80,10 @@ Phone number is required.</span>
 Phone number must be numeric.</span>
 <span v-if="!$v.phoneNumber.minLength">
 Phone number must have at least
-{{$v.phoneNumber.$params.minLength.min}} letters.</span>
+{{$v.phoneNumber.$params.minLength.min}} characters.</span>
 <span v-if="!$v.phoneNumber.maxLength">
 Phone number must have at most
-{{$v.phoneNumber.params.maxLength.max}} letters.</span>
+{{$v.phoneNumber.params.maxLength.max}} characters.</span>
 </div>
 </div>
 </div>
@@ -93,16 +92,15 @@ Phone number must have at most
 <div class="form-child-1">
 <label>Password</label>
 <b-form-input id="inline-form-input-password" class="input"
- :type="showPassword ? 'text' : 'password'" v-model.lazy="$v.password.$model" :class="{
-'is-invalid': $v.password.$error, 'is-valid': !$v.password.$invalid }">
+ :type="[showPassword ? 'text' : 'password']" v-model.lazy="$v.password.$model" :class="{
+'is-invalid': $v.password.$error }">
 </b-form-input>
-<span @click="togglePassword" v-show='showPassword'>
-<i class="fas fa-eye-slash"></i>
+<div class="input-group-append"></div>
+<span class="input-group-text" @click="showPassword = !showPassword">
+  <i class="fa" :class="[showPassword ? 'fa-eye' : 'fa-eye-slash']" aria-hidden="true"></i>
 </span>
-<span @click="togglePassword" v-show="!showPassword">
-<i class="fas fa-eye"></i>
-</span>
-<div class="valid-feedback">Your password is valid</div>
+
+<!--div class="valid-feedback">Your password is valid</div-->
 <div class="invalid-feedback">
 <span v-if="!$v.password.required">
 Password is required.</span>
@@ -115,10 +113,9 @@ Password must have at least
 <label>Confirm Password</label>
 <b-form-input id="inline-form-input-confirmpassword" class="input"
 type="password" v-model.lazy="$v.confirmPassword.$model" :class="{
-'is-invalid': $v.confirmPassword.$error,
-'is-valid': !$v.confirmPassword.$invalid }">
+'is-invalid': $v.confirmPassword.$error}">
 </b-form-input>
-<div class="valid-feedback">Your password is valid</div>
+<!--div class="valid-feedback">Your password is valid</div-->
 <div class="invalid-feedback">
 <span v-if="!$v.confirmPassword.sameAsPassword">
 Password must be same.</span>

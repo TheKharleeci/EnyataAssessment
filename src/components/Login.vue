@@ -54,6 +54,7 @@
         </div>
         </div>
       </b-form>
+          <p>hello{{ currentApplicant.email }}</p>
       </div>
   </div>
 </div>
@@ -63,52 +64,41 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
-
   data() {
     return {
       form: {
       },
-      submitStatus: null,
     };
   },
   methods: {
-    /*
-    submit() {
-      this.$v.$touch()
-      if (this.$v.$invalid) {
-        this.submitStatus = 'ERROR'
-        } else {
-          this.onSubmit();
-          this.submitStatus = 'PENDING'
-          setTimeout(() => {
-            this.submitStatus = 'OK'
-            }, 500)
-            }
-            }
-            }
-            } */
     ...mapActions(['loginUser']),
     onSubmit() {
-      let attempt;
+      console.log('hello');
+      // let attempt;
       this.loginUser(this.form);
       this.form = {
         email: '',
         password: '',
       };
-      if (this.form.email === 'currentApplicant[email]' && this.form.password === 'currentApplicant[password]') {
+      console.log(this.form.currentApplicant.email);
+      console.log(this.form.email);
+      console.log(this.form.password);
+      console.log(this.form.currentApplicant.password);
+
+      if (this.form.email === this.currentApplicant.email
+      && this.form.password === this.currentApplicant.password) {
         console.log('Login successfully');
-        this.toSignUp();
+        this.$router.push('/app');
       } else {
-        attempt -= 3;
-        if (attempt === 0) {
-          this.form.email.disable = true;
-          console.log('try again');
-        }
-      //     return false;
+        // attempt -= 3;
+        // if (attempt === 0) {
+        // this.form.email.disable = true;
+        console.log('try again');
       }
-      // }
-      // return false;
+      //     return false;
     },
+    // }
+    // return false;
     toSignUp() {
       this.$router.push('/signup');
     },

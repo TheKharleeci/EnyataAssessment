@@ -56,7 +56,6 @@
 
 import AdminSideBar from '@/components/AdminSideBar.vue';
 
-
 export default {
   name: 'AssessmentHistory',
   components: {

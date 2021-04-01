@@ -24,7 +24,6 @@ import CreateApplication from '../views/CreateApplication.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
-
 const ifAuthenticated = (to, from, next) => {
   if (store.getters.isAuthenticated) {
     next();
@@ -112,7 +111,8 @@ const routes = [
     name: 'SuccessfulPage',
     component: SuccessfulPage,
   },
-  { path: '/takeAssess',
+  {
+    path: '/takeAssess',
     name: 'TakeAssess',
     component: TakeAssess,
     beforeEnter: ifAuthenticated,
@@ -147,7 +147,7 @@ const routes = [
     path: '/create',
     name: 'CreateApplication',
     component: CreateApplication,
-  }
+  },
 ];
 
 const router = new VueRouter({

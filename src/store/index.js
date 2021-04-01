@@ -205,24 +205,22 @@ export default new Vuex.Store({
       dispatch('selectQuestion');
       // dispatch('handleDisableButton');
     },
-    async getUserDetail({ commit, getters }, payload) {
-
-      let formdata = new FormData();
-      Object.keys(payload).forEach((key) => (
-        formdata.append(key, payload[key])
-      ));
-      // console.log('formdata', formdata.getAll('cv'));
-      // console.log(payload);
-      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', formdata, {
-        headers: {
-          authorization: `Bearer ${getters.loggedInUser.token}`,
-        },
-      });
-      
-      formdata = {};
-      commit('setRegister', response.data);
-      console.log(response);
-    },
+    // async getUserDetail({ commit, getters }, payload) {
+    //   let formdata = new FormData();
+    //   Object.keys(payload).forEach((key) => (
+    //     formdata.append(key, payload[key])
+    //   ));
+    //   // console.log('formdata', formdata.getAll('cv'));
+    //   // console.log(payload);
+    //   const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', formdata, {
+    //     headers: {
+    //       authorization: `Bearer ${getters.loggedInUser.token}`,
+    //     },
+    //   });
+    //   formdata = {};
+    //   commit('setRegister', response.data);
+    //   console.log(response);
+    // },
 
     async resetPassword({ commit }, payload) {
       const formdata = new FormData();
@@ -259,16 +257,35 @@ export default new Vuex.Store({
           console.log(error);
         });
     },
+    async getUserDetail({ commit, getters }, payload) {
+      let formdata = new FormData();
+      Object.keys(payload).forEach((key) => (
+        formdata.append(key, payload[key])
+      ));
+      delete axios.defaults.headers.common.Authorization;
+      // console.log('formdata', formdata.getAll('cv'));
+      // console.log(payload);
+      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/apply', formdata, {
+        headers: {
+          authorization: `Bearer ${getters.loggedInUser.token}`,
+        },
+      });
+      formdata = {};
+      commit('setRegister', response.data);
+      await axios.put('https://enyata-recruitment-portal.herokuapp.com/merge');
+      console.log(response);
+    },
+
   },
   getters: {
     // loggedInUser: (state) => console.log(state.loginResponse),
     loggedInUser: (state) => state.loginResponse,
     registeredUsers: (state) => state.users,
-    currentApplicant: (state) => {
-      const current = state.currentUser;
+    currentApplicant: (state) => state.currentUser,
+    /* const current = state.currentUser;
+
       console.log(current);
-      return current;
-    },
+      return current; */
     loggedInAdmin: (state) => state.admin,
     loggedInAdminDetails: (state) => state.adminDetails,
     applicationDate: (state) => state.date,

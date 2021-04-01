@@ -59,12 +59,11 @@
                   <label>First Name</label>
                   <b-form-input id="inline-form-input-firstname" class="input"
                     type="text" :placeholder="currentApplicant['first_name']"
-                    value="currentApplicant['first_name']" v-model= 'form.firstName'>
-                    <!--v-model.lazy="$v.firstName.$model"
-                    :class="{ 'is-invalid': $v.firstName.$error,
-                    'is-valid': !$v.firstName.$invalid }"-->
+                    value="currentApplicant['first_name']" disabled
+                    v-model.lazy="$v.form.firstName.$model"
+                    :class="{ 'is-invalid': $v.firstName.$error }">
                   </b-form-input>
-                  <!--div class="valid-feedback">Your first name is valid</div>
+                  <!--div class="valid-feedback">Your first name is valid</div-->
                   <div class="invalid-feedback">
                     <span v-if="!$v.firstName.required">
                       First name is required.</span>
@@ -76,18 +75,16 @@
                         {{$v.firstName.params.maxLength.max}} characters.</span>
                     <span v-if="!$v.firstName.alpha">
                       First name should be alphabet.</span>
-                  </div-->
+                  </div>
                 </div>
                 <div class="form-child-2">
                   <label>Last Name</label>
                   <b-form-input id="inline-form-input-lastname" class="input"
                     type="text" :placeholder="currentApplicant['last_name']"
-                    value="currentApplicant['last_name']" v-model= 'form.lastName'>
-                    <!--v-model.lazy="$v.lastName.$model"
-                    :class="{ 'is-invalid': $v.lastName.$error,
-                    'is-valid': !$v.lastName.$invalid }"-->
+                    value="currentApplicant['last_name']" v-model.lazy="$v.form.lastName.$model"
+                    :class="{ 'is-invalid': $v.lastName.$error }">
                   </b-form-input>
-                  <!--div class="valid-feedback">Your last name is valid</div>
+                  <!--div class="valid-feedback">Your last name is valid</div-->
                   <div class="invalid-feedback">
                     <span v-if="!$v.lastName.required">
                       Last name is required.</span>
@@ -99,7 +96,7 @@
                         {{$v.lastName.params.maxLength.max}} characters.</span>
                     <span v-if="!$v.lastName.alpha">
                       Last name should be alphabet.</span>
-                  </div-->
+                  </div>
                 </div>
             </div>
 
@@ -108,7 +105,7 @@
                 <label>Email</label>
                 <b-form-input id="inline-form-input-email" class="input"
                     type="text" :placeholder="currentApplicant['email']"
-                    value="currentApplicant['email']" v-model= 'form.email'>
+                    value="currentApplicant['email']" v-model= 'form.email' disabled>
                     <!--v-model.lazy="$v.email.$model"
                     :class="{ 'is-invalid': $v.email.$error,
                     'is-valid': !$v.email.$invalid }"-->
@@ -305,7 +302,7 @@ export default {
         cv: this.cv,
         photo: this.photo,
       };
-
+      console.log(form);
     },
     watch: {
       getUserDetail: {
@@ -328,7 +325,6 @@ export default {
       console.log('form submitted');
       this.$router.push('/dashboard');
     },
-
     filesSelected(fileRecordsNewlySelected) {
       // console.log(fileRecordsNewlySelected);
       const validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);

@@ -8,7 +8,8 @@
       class="border border-dark"
       no-header shadow>
         <div class="sidebar-top">
-          <b-img v-bind="profileImg" rounded="circle" alt="Profile Image" :src= currentApplicant.picture
+          <b-img v-bind="profileImg" rounded="circle" alt="Profile Image"
+          :src= currentApplicant.picture
           class="mb-2">
           </b-img>
           <div class="text-white">
