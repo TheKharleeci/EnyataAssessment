@@ -43,7 +43,8 @@
                     v-model="picked"
                     type="radio" name="option" aria-label="">
                       <label class="option" :for="'a_' + `${countQuestions}`">
-                      <i>A. {{ showCurrentQuestion['option_a']}}</i></label>
+                      <i>A. <span class="ml-3">{{ showCurrentQuestion['option_a']}}
+                        </span></i></label>
                   </li>
                   <li class="list-group-item d-flex">
                     <input  class="check"
@@ -54,7 +55,8 @@
                     v-model="picked"
                     type="radio" name="option"  aria-label="">
                       <label class="option" :for="'b_' + `${countQuestions}`">
-                        <i>B. {{ showCurrentQuestion['option_b']}}</i></label>
+                        <i>B. <span class="ml-3">{{ showCurrentQuestion['option_b']}}
+                          </span></i></label>
                   </li>
                   <li class="list-group-item d-flex">
                     <input class="check"
@@ -65,7 +67,8 @@
                     v-model="picked"
                     type="radio" name="option" aria-label="">
                       <label class="option" :for="'c_' + `${countQuestions}`">
-                      <i>C. {{ showCurrentQuestion['option_c']}}</i></label>
+                      <i>C. <span class="ml-3">{{ showCurrentQuestion['option_c']}}
+                        </span></i></label>
                   </li>
                   <li class="list-group-item d-flex">
                     <input class="check"
@@ -76,7 +79,8 @@
                     v-model="picked"
                     type="radio" name="option" aria-label="">
                       <label class="option" :for="'d_' + `${countQuestions}`">
-                      <i>D. {{ showCurrentQuestion['option_d']}}</i></label>
+                      <i>D. <span class="ml-3">{{ showCurrentQuestion['option_d']}}
+                        </span></i></label>
                   </li>
               </ul>
               </div>
@@ -152,7 +156,7 @@ export default {
   },
   data() {
     return {
-      timerCount: 360,
+      timerCount: 360, // this.quizTime
       picked: '',
       answers: {
       },
@@ -160,6 +164,18 @@ export default {
   },
   // for timer use else and call the finish function
   watch: {
+    quizTime: {
+      immediate: true,
+      handler() {
+        console.log(this.quizTime);
+        console.log(this.timerCount);
+        if (!Number.isNaN(this.quizTime)) {
+          console.log(this.quizTime);
+          console.log(this.timerCount);
+          this.timerCount = this.quizTime;
+        }
+      },
+    },
     timerCount: {
       handler(value) {
         if (value > 0) {
@@ -167,6 +183,7 @@ export default {
             this.timerCount -= 1;
           }, 1000);
         } else {
+          alert('Time Up!');
           this.submitTest();
         }
       },
@@ -200,7 +217,7 @@ export default {
       const answer = this.picked;
       // console.log(id, answer);
       this.answers[id] = answer;
-      // console.log(this.answers);
+      console.log(this.answers);
       // console.log(this.picked);
     },
     submitTest() {

@@ -43,6 +43,7 @@
           <br>
         </b-form-group>
         <div class="">
+        <p class="invalid" v-show="error"> {{ error }}</p>
         <b-button type="submit"
         class="button" block variant="dark">Sign In</b-button>
         <div class="register d-flex justify-content-between">
@@ -93,12 +94,18 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['loggedInUser', 'currentApplicant']),
+    ...mapGetters(['loggedInUser', 'currentApplicant', 'error']),
   },
 };
 </script>
 
 <style scoped>
+.invalid {
+  font-size: 20px;
+  color: red;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .wrapper {
   max-width: 500px;
   text-align: center;

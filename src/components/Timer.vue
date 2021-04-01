@@ -56,21 +56,6 @@ export default {
       this.setTime(payload);
     },
 
-    // onSubmit() {
-    //   console.log(this.testTime);
-    //   const payload = { time: this.testTime };
-    //   this.createQuestion(payload);
-    // },
-
-    // convertMinutes(minutes) {
-    // const payload = { ...this.form, correctAnswer: this.correctAnswer };
-    // const modifiedMin = (minutes * 60);
-    // return `${modifiedMin}`;
-    // },
-    // getSeconds(seconds) {
-    //   const time = seconds;
-    //   return `${seconds}`;
-    // },
   },
   components: {
   },
