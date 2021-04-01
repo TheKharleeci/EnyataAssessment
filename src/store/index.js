@@ -32,6 +32,7 @@ export default new Vuex.Store({
     days: 0,
     logoutResponse: {},
     usersDetail: [],
+    user: [],
     userPw: [],
     applicants: [],
     loginError: '',
@@ -273,6 +274,9 @@ export default new Vuex.Store({
       dispatch('selectQuestion');
       // dispatch('handleDisableButton');
     },
+    async merge() {
+      await axios.put('https://enyata-recruitment-portal.herokuapp.com/merge');
+    },
     async getUserDetail({ commit, getters }, payload) {
       let formdata = new FormData();
       Object.keys(payload).forEach((key) => (
@@ -331,11 +335,7 @@ export default new Vuex.Store({
     // loggedInUser: (state) => console.log(state.loginResponse),
     loggedInUser: (state) => state.loginResponse,
     registeredUsers: (state) => state.users,
-    currentApplicant: (state) => {
-      const current = state.currentUser;
-      console.log(current);
-      return current;
-    },
+    currentApplicant: (state) => state.currentUser,
     loggedInAdmin: (state) => state.admin,
     loggedInAdminDetails: (state) => state.adminDetails,
     applicationDate: (state) => state.date,
@@ -353,6 +353,11 @@ export default new Vuex.Store({
     authStatus: (state) => state.status, // added
     getApplicants: (state) => {
       const item = state.applicants;
+      console.log(item);
+      return item;
+    },
+    getNumberOfApplicants: (state) => {
+      const item = state.applicants.length;
       console.log(item);
       return item;
     },

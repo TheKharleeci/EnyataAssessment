@@ -11,8 +11,6 @@
               <span class="spanD"></span>
               <div class="text-left">
                 <p class="timer">Set Time</p>
-                <h2 >00 <span>
-                  <small>min</small></span> 010 <span> <small>sec</small></span></h2>
                   <input type="number" min="0" max = "99"
                   class="time"
                   v-model="time.min"

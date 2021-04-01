@@ -36,7 +36,7 @@
                 </div>
                 <b-list-group class="">
                   <b-list-group-item href="#" class="batch"
-                    v-for="applicant in applicants" :key="applicant.index">
+                    v-for="applicant in applicants" :key="applicant.id">
                     <b-row no-gutters>
                       <b-col cols="2">
                         {{ applicant.name }}</b-col>

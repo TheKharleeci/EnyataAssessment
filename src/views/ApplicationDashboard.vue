@@ -287,7 +287,7 @@ export default {
         photo: '',
         agreement: false,
       };
-      this.$router.push('/client');
+      this.$router.push('/SuccessfulApplication');
     },
     // watch: {
     //   getUserDetail: {
@@ -338,6 +338,9 @@ export default {
 }
 .sub-header{
     text-align: center;
+}
+input[type="text"]:disabled, input[type="email"]:disabled {
+  background: #fff;
 }
 .sub-header h3{
     font-style: italic ;
