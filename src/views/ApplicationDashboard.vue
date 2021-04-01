@@ -287,7 +287,7 @@ export default {
         photo: '',
         agreement: false,
       };
-      this.$router.push('/client');
+      this.$router.push('/SuccessfulApplication');
     },
     // watch: {
     //   getUserDetail: {
