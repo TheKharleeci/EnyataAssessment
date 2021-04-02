@@ -113,7 +113,6 @@ export default {
     loggedInUser: {
       deep: true,
       handler() {
-        // this.isLoading = false;
         this.$router.push('/app');
       },
     },

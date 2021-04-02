@@ -6,8 +6,8 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 // const vuexLocal = new VuexPersistence({
-//   storage: window.localStorage,
-// key: 'clients',
+//   storage: window.SessionStorage,
+//   // key: 'clients',
 // });
 
 export default new Vuex.Store({
@@ -70,11 +70,11 @@ export default new Vuex.Store({
     },
     authSuccess: (state, payload) => {
       state.status = 'success';
-      state.toks.push(payload);
+      state.toks = payload;
     },
     authAdminSuccess: (state, payload) => {
       state.status = 'success';
-      state.adminToks.push(payload);
+      state.adminToks = payload;
     },
     authError: (state) => {
       state.status = 'error';
@@ -277,9 +277,9 @@ export default new Vuex.Store({
       dispatch('selectQuestion');
       // dispatch('handleDisableButton');
     },
-    async merge() {
-      await axios.put('https://enyata-recruitment-portal.herokuapp.com/merge');
-    },
+    // async merge() {
+    //   await axios.put('https://enyata-recruitment-portal.herokuapp.com/merge');
+    // },
     async getUserDetail({ commit, getters }, payload) {
       let formdata = new FormData();
       Object.keys(payload).forEach((key) => (
@@ -295,7 +295,7 @@ export default new Vuex.Store({
       });
       formdata = {};
       commit('setRegister', response.data);
-      axios.put('https://enyata-recruitment-portal.herokuapp.com/merge');
+      // axios.put('https://enyata-recruitment-portal.herokuapp.com/merge');
       console.log(response);
     },
 
@@ -333,6 +333,20 @@ export default new Vuex.Store({
           console.log(error);
         });
     },
+
+    // added
+    async logoutAdmin({ commit }) {
+      await axios.post('http://localhost:3000/admin/logout')
+        .then((response) => {
+          console.log(response);
+          // commit('authError');
+          commit('authAdminSuccess', '');
+          localStorage.removeItem('admin-token');
+          delete axios.defaults.headers.common.Authorization;
+        }).catch((error) => {
+          console.log(error);
+        });
+    },
   },
   getters: {
     // loggedInUser: (state) => console.log(state.loginResponse),
@@ -352,7 +366,11 @@ export default new Vuex.Store({
     dayRegistered: (state) => state.registeredDay,
     userCount: (state) => state.users.length,
     isAuthenticated: (state) => state.toks.length, // added
-    isAdminAuthenticated: (state) => state.adminToks.length,
+    isAdminAuthenticated: (state) => {
+      const admin = state.adminToks.length;
+      console.log(admin);
+      return admin;
+    },
     authStatus: (state) => state.status, // added
     getApplicants: (state) => {
       const item = state.applicants;
