@@ -1,14 +1,14 @@
 import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
-// import VuexPersistence from 'vuex-persist';
+import VuexPersistence from 'vuex-persist';
 
 Vue.use(Vuex);
 
-// const vuexLocal = new VuexPersistence({
-//   storage: window.localStorage,
-// key: 'clients',
-// });
+const vuexLocal = new VuexPersistence({
+  storage: window.SessionStorage,
+  // key: 'clients',
+});
 
 export default new Vuex.Store({
   state: {
@@ -274,9 +274,9 @@ export default new Vuex.Store({
       dispatch('selectQuestion');
       // dispatch('handleDisableButton');
     },
-    async merge() {
-      await axios.put('https://enyata-recruitment-portal.herokuapp.com/merge');
-    },
+    // async merge() {
+    //   await axios.put('https://enyata-recruitment-portal.herokuapp.com/merge');
+    // },
     async getUserDetail({ commit, getters }, payload) {
       let formdata = new FormData();
       Object.keys(payload).forEach((key) => (
@@ -292,7 +292,7 @@ export default new Vuex.Store({
       });
       formdata = {};
       commit('setRegister', response.data);
-      axios.put('https://enyata-recruitment-portal.herokuapp.com/merge');
+      // axios.put('https://enyata-recruitment-portal.herokuapp.com/merge');
       console.log(response);
     },
 
@@ -365,5 +365,5 @@ export default new Vuex.Store({
   },
   modules: {
   },
-  // plugins: [vuexLocal.plugin],
+  plugins: [vuexLocal.plugin],
 });

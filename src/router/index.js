@@ -32,17 +32,22 @@ const ifAuthenticated = (to, from, next) => {
   }
   next('/UserLogin');
 };
-// const ifAuthenticatedRegistered = (to, from, next) => {
-//   console.log(store.getters.currentApplicant.application_status);
-//   if (store.getters.isAuthenticated
-//     && store.getters.currentApplicant.application_status === 'Pending') {
-//     next('/dashboard');
-//   } else if (store.getters.isAuthenticated
-// && store.getters.currentApplicant.application_status !== 'Pending') {
-//     next();
-//   }
-//   next('/');
-// };
+const ifAuthenticatedRegistered = (to, from, next) => {
+  // console.log(store.getters.currentApplicant.application_status);
+  // console.log(store.getters.currentApplicant.application_status === null);
+  // console.log(store.getters.isAuthenticated);
+  if (store.getters.isAuthenticated
+    && store.getters.currentApplicant.application_status) {
+    // console.log(store.getters.isAuthenticated);
+    // console.log(store.getters.currentApplicant.application_status === null);
+    next('/client');
+  } else if (store.getters.isAuthenticated
+&& !store.getters.currentApplicant.application_status) {
+    next();
+  } else {
+    next('/');
+  }
+};
 
 // const checkChanges = (to, from, next) => {
 //   const answer = window.confirm('Do you really want to leave? you have unsaved changes!');
@@ -96,7 +101,7 @@ const routes = [
     path: '/app',
     name: 'ApplicationDashboard',
     component: ApplicationDashboard,
-    beforeEnter: ifAuthenticated,
+    beforeEnter: ifAuthenticatedRegistered,
   },
   {
     path: '/dashboard',

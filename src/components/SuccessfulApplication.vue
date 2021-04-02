@@ -12,20 +12,20 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+// import { mapActions } from 'vuex';
 
 export default {
   name: 'SuccessfulApplication',
   methods: {
-    ...mapActions(['merge']),
+    // ...mapActions(['merge']),
     toDashboard() {
-      this.merge();
+      // this.merge();
       this.$router.push('/client');
     },
   },
-  mounted() {
-    this.$store.dispatch('merge');
-  },
+  // mounted() {
+  //   this.$store.dispatch('merge');
+  // },
 };
 </script>
 <style scoped>

@@ -72,21 +72,6 @@ export default {
     };
   },
   methods: {
-    /*
-    submit() {
-      this.$v.$touch()
-      if (this.$v.$invalid) {
-        this.submitStatus = 'ERROR'
-        } else {
-          this.onSubmit();
-          this.submitStatus = 'PENDING'
-          setTimeout(() => {
-            this.submitStatus = 'OK'
-            }, 500)
-            }
-            }
-            }
-            } */
     ...mapActions(['loginUser']),
     onSubmit() {
       let attempt;
@@ -117,7 +102,6 @@ export default {
     loggedInUser: {
       deep: true,
       handler() {
-        // this.isLoading = false;
         this.$router.push('/app');
       },
     },
