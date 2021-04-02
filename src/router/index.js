@@ -60,7 +60,7 @@ const ifAuthenticatedRegistered = (to, from, next) => {
 const ifAdminAuthenticated = (to, from, next) => {
   if (store.getters.isAdminAuthenticated) {
     next();
-    // console.log(store.getters.isAdminAuthenticated);
+    console.log(store.getters.isAdminAuthenticated);
     return;
   }
   next('/');

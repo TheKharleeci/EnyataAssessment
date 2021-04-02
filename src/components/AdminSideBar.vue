@@ -75,7 +75,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['loginUser', 'logout', 'updateAdmin']),
+    ...mapActions(['loginUser', 'logoutAdmin', 'updateAdmin']),
     toDashboard() {
       this.$router.push('/dashboard');
     },
@@ -98,7 +98,7 @@ export default {
       this.$router.push('/adminProfile');
     },
     tologout() {
-      this.logout();
+      this.logoutAdmin();
       this.$router.push('/admin/login');
     },
   },
