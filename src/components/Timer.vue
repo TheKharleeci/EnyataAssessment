@@ -50,10 +50,10 @@ export default {
       const seconds = parseInt(this.time.sec, 10);
       this.testTime = minutes + seconds;
       console.log(this.testTime);
+
       const payload = { time: this.testTime };
       this.setTime(payload);
     },
-
   },
   components: {
   },

@@ -165,26 +165,28 @@ export default new Vuex.Store({
       console.log(response.data);
     },
 
-    // async setTime({ commit, getters }, payload) {
-    //   console.log(payload);
-    //   const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/time', payload, {
-    //     headers: {
-    //       authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
-    //     },
-    //   });
-    //   console.log(response.data);
-    // },
+    async setTime({ getters }, payload) {
+      console.log(payload);
+      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/setTime', payload, {
+        headers: {
+          authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
+        },
+      });
+      console.log(response.data);
+    },
 
-    // async getTime({ commit, getters }) {
-    //   console.log(payload);
-    //   const response = await axios.get('https://enyata-recruitment-portal.herokuapp.com/gettime' {
-    //     headers: {
-    //       authorization: `Bearer ${getters.loggedInUser.token}`,
-    //     },
-    //   });
-    //   commit('setTimer', response.data);
-    //   console.log(response.data);
-    // },
+    async getTime({ commit, getters }) {
+      const response = await axios.get('https://enyata-recruitment-portal.herokuapp.com/timer', {
+        headers: {
+          authorization: `Bearer ${getters.loggedInUser.token}`,
+        },
+      });
+      console.log(response);
+      console.log(response.data, 'this is it');
+      console.log(response.data.data);
+      console.log(response.data.data.time);
+      commit('setTimer', response.data.data.time);
+    },
     // },
 
     async createQuestion({ getters }, payload) {
@@ -241,16 +243,16 @@ export default new Vuex.Store({
       }
     },
     // CHECK THIS
-    async submitAnswers({ getters }, payload) {
-      console.log(payload);
-      console.log(getters.loggedInUser);
-      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/user/answers', payload, {
-        headers: {
-          authorization: `Bearer ${getters.loggedInUser.token}`,
-        },
-      });
-      console.log(response);
-    },
+    // async submitAnswers({ getters }, payload) {
+    //   console.log(payload);
+    //   console.log(getters.loggedInUser);
+    //   const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/user/answers', payload, {
+    //     headers: {
+    //       authorization: `Bearer ${getters.loggedInUser.token}`,
+    //     },
+    //   });
+    //   console.log(response);
+    // },
 
     nextQuestion({ commit, getters, dispatch }) {
       const index = getters.currentQuestionIndex;

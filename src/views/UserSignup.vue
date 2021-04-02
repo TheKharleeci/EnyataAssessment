@@ -137,7 +137,6 @@ export default {
       }
       if (this.form.firstName === undefined) {
         this.firstNameError = 'First name is required';
-        console.log(this.form.firstName);
       }
       if (this.form.lastName === undefined) {
         this.lastNameError = 'Last name is required';

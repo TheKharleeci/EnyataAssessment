@@ -39,9 +39,10 @@ export default {
     ApplicantSideBar,
   },
   methods: {
-    ...mapActions(['loginUser', 'getQuestions', 'selectQuestion', 'nextQuestion', 'regDayCount']),
+    ...mapActions(['loginUser', 'getQuestions', 'getTime', 'selectQuestion', 'nextQuestion', 'regDayCount']),
     async showQuestions() {
       await this.getQuestions();
+      await this.getTime();
       this.selectQuestion();
       this.$router.push('/questions');
     },

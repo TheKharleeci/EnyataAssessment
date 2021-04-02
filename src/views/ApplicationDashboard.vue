@@ -29,6 +29,7 @@
                         @delete="fileDeleted($event)"
                         v-model="fileRecordsCV">
                       </VueFileAgent>
+                      <p class="invalid" > {{ cvError }}</p>
                 </div>
 
                 <div class="body-upload-2">
@@ -51,6 +52,7 @@
                         @delete="fileDeleted($event)"
                         v-model="fileRecordsPhoto">
                       </VueFileAgent>
+                      <p class="invalid" > {{ photoError }}</p>
                 </div>
                 </div>
 
@@ -129,6 +131,7 @@
                 <!--v-model.lazy="$v.dob.$model" :class="{ 'is-invalid': $v.dob.$error,
                 'is-valid': !$v.dob.$invalid }"-->
               </b-form-input>
+              <p class="invalid" > {{ dobError }}</p>
               <!--div class="valid-feedback">Date of birth is valid</div>
               <div class="invalid-feedback">
                 <span v-if="!$v.dob.required">
@@ -149,6 +152,7 @@
                             :class="{ 'is-invalid': $v.address.$error,
                             'is-valid': !$v.address.$invalid }"-->
                         </b-form-input>
+                        <p class="invalid" > {{ addressError }}</p>
                         <!--div class="valid-feedback">Address is valid</div>
                         <div class="invalid-feedback">
                           <span v-if="!$v.address.required">
@@ -172,6 +176,7 @@
                             :class="{ 'is-invalid': $v.university.$error,
                             'is-valid': !$v.university.$invalid }"-->
                         </b-form-input>
+                        <p class="invalid" > {{ universityError }}</p>
                         <!--div class="valid-feedback">University is valid</div>
                         <div class="invalid-feedback">
                           <span v-if="!$v.university.required">
@@ -190,6 +195,7 @@
                             :class="{ 'is-invalid': $v.dob.$error,
                             'is-valid': !$v.dob.$invalid }"-->
                         </b-form-input>
+                        <p class="invalid" > {{ courseError }}</p>
                         <!--div class="valid-feedback">Course of study is valid</div>
                         <div class="invalid-feedback">
                           <span v-if="!$v.course.required">
@@ -211,6 +217,7 @@
                             :class="{ 'is-invalid': $v.cgpa.$error,
                             'is-valid': !$v.cgpa.$invalid }"-->
                         </b-form-input>
+                        <p class="invalid" > {{ cgpaError }}</p>
                         <!--div class="valid-feedback">CGPA is valid</div>
                         <div class="invalid-feedback">
                           <span v-if="!$v.cgpa.required">
@@ -250,6 +257,13 @@ export default {
       error: {},
       valid: true,
       users: {},
+      dobError: '',
+      addressError: '',
+      universityError: '',
+      courseError: '',
+      cgpaError: '',
+      cvError: '',
+      photoError: '',
     };
   },
   validations: {
@@ -273,6 +287,44 @@ export default {
     ...mapActions(['getUserDetail']),
     applicantRegister() {
       console.log(this.form);
+      this.dobError = '';
+      this.addressError = '';
+      this.universityError = '';
+      this.courseError = '';
+      this.cgpaError = '';
+      this.cvError = '';
+      this.photoError = '';
+      console.log(this.form.cv === undefined);
+
+      if (this.form.dob === undefined) {
+        this.dobError = 'This field is required.';
+      }
+      if (this.form.cv === undefined) {
+        this.cvError = 'Kindly upload your CV';
+      }
+      if (this.form.photo === undefined) {
+        this.photoError = 'Applicant photo required';
+      }
+      if (this.form.address === undefined) {
+        this.addressError = 'This field is required.';
+      }
+      if (this.form.university === undefined) {
+        this.universityError = 'This field is required.';
+      }
+      if (this.form.course === undefined) {
+        this.courseError = 'This field is required.';
+      }
+      if (this.form.cgpa === undefined) {
+        this.cgpaError = 'This field is required.';
+      }
+      const errors = [this.dobError, this.addressError, this.photoError,
+        this.universityError, this.courseError, this.cgpaError, this.cvError];
+      for (let i = 0; i < errors.length; i += 1) {
+        if (errors[i]) {
+          return;
+        }
+      }
+
       this.getUserDetail(this.form);
       this.form = {
         firstName: '',
@@ -332,6 +384,11 @@ export default {
 </script>
 
 <style scoped>
+.invalid {
+  font-size: 15px;
+  color: red;
+  margin-top: 10px;
+}
 .header{
     margin: 0 auto;
     padding-top: 20px;
@@ -358,7 +415,7 @@ input[type="text"]:disabled, input[type="email"]:disabled {
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
     margin: 30px auto;
-    height: 643px;
+    min-height: 710px;
     width: 963px;
 }
 .uploads{
@@ -378,7 +435,7 @@ input[type="text"]:disabled, input[type="email"]:disabled {
     background-color: #fff;
 }
 .form-wrapper {
-    margin-top: 54px;
+    margin-top: 20px;
 }
 .form-wrapper-2, .form-wrapper {
     display: flex;
@@ -386,10 +443,10 @@ input[type="text"]:disabled, input[type="email"]:disabled {
     gap: 62px;
 }
 .form-wrapper-2{
-    margin-top: 29px;
+    margin-top: 15px;
 }
 .form-child-1,.form-child-2 {
-    margin: 0px 10px;
+    margin: 0px 5px;
 }
 .form-child-1 label, .form-child-2 label{
     font-size: 14px;
@@ -410,7 +467,7 @@ input[type="text"]:disabled, input[type="email"]:disabled {
     background: #7557d3;
 }
 .submit-bottom{
-    margin-top: 50px;
+    margin-top: 20px;
     margin-bottom: 39px;
 }
 </style>
