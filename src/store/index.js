@@ -25,6 +25,7 @@ export default new Vuex.Store({
     allQuestions: [],
     question: [],
     questionCount: 1,
+    assessmentQuestionCount: 1,
     questionIndex: 0,
     userAnswers: [],
     timer: 200,

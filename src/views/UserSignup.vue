@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <div class="sub-header">
-        <!-- <img src="../assets/new_logo.svg" alt="logo"> -->
+        <img src="../assets/enyatalogo.svg" alt="logo">
         <h3>Applicant Sign Up</h3>
       </div>
     </div>
@@ -17,6 +17,7 @@
                   v-model="form.firstName"
                   placeholder="">
               </b-form-input>
+              <p class="invalid"> {{ firstNameError }} </p>
           </div>
 
           <div class="form-child-2">
@@ -28,6 +29,7 @@
                   type="text"
                   placeholder="">
               </b-form-input>
+              <p class="invalid"> {{ lastNameError }} </p>
           </div>
       </div>
 
@@ -37,10 +39,11 @@
               <b-form-input
               id="inline-form-input-email"
               class="input"
-              type="email"
               v-model="form.email"
               placeholder="">
               </b-form-input>
+              <p class="invalid"> {{ emailError }} </p>
+
               </div>
           <div class="form-child-2">
               <label>Phone Number</label>
@@ -50,6 +53,7 @@
               v-model="form.phoneNumber"
               placeholder="">
               </b-form-input>
+              <p class="invalid"> {{ phoneNoError }} </p>
           </div>
       </div>
 
@@ -63,10 +67,12 @@
               type="password"
               placeholder=""
               ><b-form-input-append is-text>
+              <p></p>
               <b-icon icon="eye-fill" aria-hidden="true" style="font-size:24px, color:gray;">
               </b-icon>
               </b-form-input-append>
               </b-form-input>
+              <p class="invalid"> {{ passwordError }} </p>
           </div>
           <div class="form-child-2">
               <label>Confirm Password</label>
@@ -81,6 +87,7 @@
               </b-icon>
               </b-input-group-prepend>
               </b-form-input>
+              <p class="invalid" > {{ confirmPasswordError }}</p>
           </div>
       </div>
       <div class="signup-bottom">
@@ -106,11 +113,53 @@ export default {
     return {
       form: {
       },
+      passwordError: '',
+      confirmPasswordError: '',
+      phoneNoError: '',
+      emailError: '',
+      firstNameError: '',
+      lastNameError: '',
     };
   },
   methods: {
     ...mapActions(['userSignUp']),
     onSubmit() {
+      console.log(this.form);
+      this.passwordError = '';
+      this.confirmPasswordError = '';
+      this.phoneNoError = '';
+      this.emailError = '';
+      this.firstNameError = '';
+      this.lastNameError = '';
+
+      if (this.form.password.length < 7) {
+        this.passwordError = 'Please make sure your password is at least 7 characters.';
+      }
+      if (this.form.firstName === undefined) {
+        this.firstNameError = 'First name is required';
+        console.log(this.form.firstName);
+      }
+      if (this.form.lastName === undefined) {
+        this.lastNameError = 'Last name is required';
+      }
+      if (this.form.password !== this.form.confirmPassword) {
+        this.confirmPasswordError = 'Password must be the same.';
+      }
+      if (this.form.phoneNumber.length < 11) {
+        this.phoneNoError = 'Phone number should be at least 11 digits';
+      }
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!re.test(this.form.email.toLowerCase())) {
+        this.emailError = 'Please enter a valid email';
+      }
+      const errors = [this.passwordError, this.confirmPasswordError,
+        this.phoneNoError, this.emailError, this.firstNameError, this.lastNameError];
+      for (let i = 0; i < errors.length; i += 1) {
+        if (errors[i]) {
+          // console.log(" there's an error");
+          return;
+        }
+      }
       this.userSignUp(this.form);
       this.form = {
         firstName: '',
@@ -120,6 +169,7 @@ export default {
         password: '',
         confirmPassword: '',
       };
+      console.log('hello');
     },
   },
   watch: {
@@ -138,6 +188,12 @@ export default {
 </script>
 
 <style scoped>
+.invalid {
+  font-size: 15px;
+  color: red;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .header{
     margin: 0 auto;
     padding-top: 100px;
