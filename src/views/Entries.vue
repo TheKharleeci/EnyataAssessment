@@ -14,7 +14,18 @@
             </b-col>
           </b-row>
           <b-row no-gutters class="mt-5">
-            <b-col cols="11">
+            <b-table
+              id="entries-table"
+              :items="applicants"
+              :fields="fields"
+              head-variant="dark"
+              table-variant="light"
+              :borderless="true"
+              responsive="sm"
+              ref="selectableTable"
+              selectable>
+            </b-table>
+            <!-- <b-col cols="11">
               <div>
                 <div class="table-header">
                   <b-row no-gutters class="align-items-center">
@@ -26,12 +37,12 @@
                         </button> </span>
                       </b-col>
                       <b-col cols="2" class="d-flex justify-content-center">Address</b-col>
-                      <b-col cols="2">University</b-col>
-                      <b-col cols="1">CGPA
-                        <button class="btn">
+                      <b-col cols="2">University</b-col> -->
+                      <!-- <b-col cols="1" data-sortable="true">CGPA -->
+                        <!-- <button class="btn">
                           <img src="../assets/age-arrow.svg" alt="sort button">
-                        </button>
-                      </b-col>
+                        </button> -->
+                      <!-- </b-col>
                   </b-row>
                 </div>
                 <b-list-group class="">
@@ -50,7 +61,7 @@
                   </b-list-group-item>
                 </b-list-group>
               </div>
-            </b-col>
+            </b-col> -->
             <b-col cols=""></b-col>
           </b-row>
         </b-col>
@@ -68,6 +79,42 @@ export default {
   name: 'Dashbord',
   components: {
     AdminSideBar,
+  },
+  data() {
+    return {
+      fields: [
+        {
+          key: 'name',
+          label: 'Name',
+          sortable: true,
+        },
+        {
+          key: 'email',
+          label: 'Email',
+          sortable: false,
+        },
+        {
+          key: 'date_of_birth',
+          label: 'DOB-Age',
+          sortable: true,
+        },
+        {
+          key: 'address',
+          label: 'Address',
+          sortable: false,
+        },
+        {
+          key: 'university',
+          label: 'University',
+          sortable: false,
+        },
+        {
+          key: 'cgpa',
+          label: 'Cgpa',
+          sortable: true,
+        },
+      ],
+    };
   },
 
   computed: {

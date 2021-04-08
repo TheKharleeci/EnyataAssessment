@@ -19,8 +19,19 @@
             </b-col>
           </b-row>
           <b-row no-gutters class="mr-5">
-            <b-col cols="12">
-              <div>
+            <b-table
+              id="entries-table"
+              :items="applicants"
+              :fields="fields"
+              head-variant="dark"
+              table-variant="light"
+              :borderless="true"
+              responsive="sm"
+              ref="selectableTable"
+              selectable>
+            </b-table>
+            <!-- <b-col cols="12"> -->
+              <!-- <div>
                 <div class="table-header ">
                   <b-row no-gutters class="align-items-center">
                     <b-col cols="2" class="d-flex justify-content-start">Name</b-col>
@@ -64,8 +75,8 @@
                     </b-row>
                   </b-list-group-item>
                 </b-list-group>
-              </div>
-            </b-col>
+              </div> -->
+            <!-- </b-col> -->
             <b-col cols=""></b-col>
           </b-row>
         </b-col>
@@ -82,6 +93,47 @@ export default {
   name: 'Dashbord',
   components: {
     AdminSideBar,
+  },
+  data() {
+    return {
+      fields: [
+        {
+          key: 'name',
+          label: 'Name',
+          sortable: true,
+        },
+        {
+          key: 'email',
+          label: 'Email',
+          sortable: false,
+        },
+        {
+          key: 'date_of_birth',
+          label: 'DOB-Age',
+          sortable: true,
+        },
+        {
+          key: 'address',
+          label: 'Address',
+          sortable: false,
+        },
+        {
+          key: 'university',
+          label: 'University',
+          sortable: false,
+        },
+        {
+          key: 'cgpa',
+          label: 'Cgpa',
+          sortable: true,
+        },
+        {
+          key: 'score',
+          label: 'Test Score',
+          sortable: true,
+        },
+      ],
+    };
   },
   computed: {
     ...mapGetters({
