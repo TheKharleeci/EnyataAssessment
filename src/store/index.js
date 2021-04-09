@@ -23,6 +23,11 @@ export default new Vuex.Store({
     question: [],
     questionCount: 1,
     questionIndex: 0,
+    totalSetQuestions: 1,
+    allSetQuestionsCount: 1,
+    step: 0,
+    setQuestions: [],
+    currentSetQuestion: {},
     userAnswers: [],
     timer: 200,
     applicantCount: 0,
@@ -47,15 +52,30 @@ export default new Vuex.Store({
     currentDate: (state, payload) => { state.date = payload; },
     currentAdmin: (state, payload) => { state.admin = payload; },
     currentAdminDetails: (state, payload) => { state.adminDetails = payload; },
-    testQuestions: (state, payload) => { state.allQuestions.push(...payload); },
+    testQuestions: (state, payload) => { state.allQuestions = payload; },
     currentQuestion: (state, payload) => { state.question = payload; },
     updateQuestionCount: (state) => { state.questionCount += 1; },
     reduceQuestionCount: (state) => { state.questionCount -= 1; },
+    resetQuestionCount: (state) => { state.questionCount = 1; },
+    resetQuestionIndex: (state) => { state.questionIndex = 0; },
     raiseQuestionIndex: (state) => { state.questionIndex += 1; },
     reduceQuestionIndex: (state) => { state.questionIndex -= 1; },
     collectUserAnswers: (state, payload) => { state.userAnswers.push(payload); },
     setTimer: (state, payload) => { state.timer = payload; },
     updateApplicantCount: (state) => { state.applicantCount += 1; },
+    addNewQuestion: (state, payload) => {
+      const index = state.step;
+      console.log(index);
+      state.setQuestions[index] = payload;
+      // state.setQuestions.push(payload);
+    },
+    countSetQuestions: (state) => { state.step += 1; },
+    prevSetQuestion: (state) => { state.step -= 1; },
+    countTotalQuestions: (state) => { state.totalSetQuestions += 1; },
+    reduceTotalQuestions: (state) => { state.totalSetQuestions -= 1; },
+    // reduceCurrQuestions: (state) => { state.totalSetQuestions -= 1; },
+    allSetQuestions: (state) => { state.allSetQuestionsCount += 1; },
+    changeCurrentQuestion: (state, payload) => { state.currentSetQuestion = payload; },
     updateRegDaysCount: (state, payload) => { state.days = payload; },
     regDay: (state, payload) => { state.registeredDay = payload; },
     loggedOut: (state, payload) => { state.logoutResponse = payload; },
@@ -133,8 +153,8 @@ export default new Vuex.Store({
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/login', payload);
       commit('currentAdminDetails', response.data);
       commit('currentAdmin', response.data.data.admin);
-      console.log(response.data.data);
-      console.log(response.data);
+      // console.log(response.data.data);
+      // console.log(response.data);
     },
 
     // async setTime({ commit, getters }, payload) {
@@ -190,6 +210,8 @@ export default new Vuex.Store({
       const orderedQuestions = quiz.data.data;
       const response = orderedQuestions.sort(() => Math.random() - 0.5);
       console.log(response);
+      commit('resetQuestionCount');
+      commit('resetQuestionIndex');
       commit('testQuestions', response);
     },
 
@@ -216,6 +238,38 @@ export default new Vuex.Store({
       });
       console.log(response);
     },
+
+    setNewQuestion({ commit, getters }, payload) {
+      const currentQuestion = payload;
+      commit('addNewQuestion', currentQuestion);
+
+      commit('countSetQuestions');
+      commit('countTotalQuestions');
+      const step = getters.numberOfSetQuestions;
+      const questions = getters.viewQuestions;
+      const nextQuestion = questions[step];
+      commit('changeCurrentQuestion', nextQuestion);
+    },
+    showPrevQuestion({ commit, getters }) {
+      commit('prevSetQuestion');
+      commit('reduceTotalQuestions');
+      const step = getters.numberOfSetQuestions;
+      const questions = getters.viewQuestions;
+      const currentQuestion = questions[step];
+      commit('changeCurrentQuestion', currentQuestion);
+      console.log(getters.showCurrentSetQuestion);
+    },
+    // async createQuestion({ getters }, payload) {
+    //   console.log(payload);
+    //   console.log(getters.loggedInAdminDetails.data.token);
+    //   const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/createQuestion', payload, {
+    //     headers: {
+    //       authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
+    //     },
+    //   });
+    //   console.log(payload);
+    //   console.log(response);
+    // },
 
     nextQuestion({ commit, getters, dispatch }) {
       const index = getters.currentQuestionIndex;
@@ -319,6 +373,10 @@ export default new Vuex.Store({
     userCount: (state) => state.users.length,
     displayUserDp: (state) => state.userProfilePicture,
     error: (state) => state.loginError,
+    numberOfSetQuestions: (state) => state.step,
+    viewQuestions: (state) => state.setQuestions,
+    questionNumber: (state) => state.totalSetQuestions,
+    showCurrentSetQuestion: (state) => state.currentSetQuestion,
   },
   modules: {
   },

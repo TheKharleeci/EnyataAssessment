@@ -19,10 +19,16 @@ import ModalPassword from '../components/ModalPassword.vue';
 import ResetPassword from '../components/ResetPassword.vue';
 import DashboardForm from '../components/DashboardForm.vue';
 import ApplicationDashboard from '../views/ApplicationDashboard.vue';
+import AssessmentQuestions from '../components/AssessmentQuestions.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: '/assessment',
+    name: 'AssessmentQuestions',
+    component: AssessmentQuestions,
+  },
   {
     path: '/userLogin',
     name: 'UserLogin',

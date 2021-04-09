@@ -7,11 +7,12 @@
             <h1>Compose Assessment</h1>
             <div class="right-wrapper-one">
                 <div class="right-wrapper-left">
-                    <p>15/30</p>
+                    <!-- <p>15/30</p> -->
+                    <p> {{ questionNumber }}/5</p>
                     <button>+ Choose file</button>
                 </div>
             </div>
-            <b-form @submit.prevent="onSubmit">
+            <b-form>
             <div class="instruction">
                 <label>Questions</label>
                 <b-form-input
@@ -27,6 +28,7 @@
                     v-model="form.optionA"
                     id="inline-form-input-optiona"
                     class="input"
+                    :class="{'selected': correctAnswer === form.optionA}"
                     @dblclick="makeCorrect(form.optionA)">
                 </b-form-input>
                 </div>
@@ -36,6 +38,7 @@
                     v-model="form.optionB"
                     id="inline-form-input-optionb"
                     class="input"
+                    :class="{'selected': correctAnswer === form.optionB}"
                     @dblclick="makeCorrect(form.optionB)">
                 </b-form-input>
                 </div>
@@ -48,6 +51,7 @@
                     v-model="form.optionC"
                     id="inline-form-input-closuredate"
                     class="input"
+                    :class="{'selected': correctAnswer === form.optionC}"
                     @dblclick="makeCorrect(form.optionC)">
                 </b-form-input>
                 </div>
@@ -57,31 +61,55 @@
                     v-model="form.optionD"
                     id="inline-form-input-batchid"
                     class="input"
+                    :class="{'selected': correctAnswer === form.optionD}"
                     @dblclick="makeCorrect(form.optionD)">
                 </b-form-input>
                 </div>
             </div>
-            <div class="right-wrapper-four">
-            <b-button class="toggle">Previous</b-button>
-            <b-button class="toggle">Next</b-button>
-            </div>
-
-            <div class="btn d-flex">
-                <b-button id="button" type="submit">Finish</b-button>
-            </div>
             </b-form>
+            <!-- <div>
+                <AssessmentQuestions />
+            </div> -->
+            <div class="right-wrapper-four">
+                <div>
+                <b-button class="toggle" v-if="questionNumber === 1"
+                disabled>Previous</b-button>
+                <b-button class="toggle" v-else @click="previousQuestion">Previous</b-button>
+                </div>
+                <div>
+                <!-- <b-button class="toggle"
+                v-if="questionNumber === numberOfSetQuestions.length"
+                disabled >Next</b-button> -->
+                <!-- <b-button class="toggle" :disabled="questionLength" @click="newQuestion">
+                  Next
+                </b-button> -->
+                <b-button class="toggle" v-if="questionNumber >= 6" disabled>
+                  Next
+                </b-button>
+                <b-button class="toggle" v-else @click="newQuestion">
+                  Next
+                </b-button>
+                </div>
+            </div>
+            <div class="btn d-flex">
+                <b-button id="button" v-if="questionNumber <= 5"
+                disabled @click.prevent="onSubmit">Finish</b-button>
+                <b-button id="button" v-else @click.prevent="onSubmit">Finish</b-button>
+            </div>
         </div>
   </div>
 </template>
 
 <script>
 import AdminSideBar from '@/components/AdminSideBar.vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+// import AssessmentQuestions from '@/components/AssessmentQuestions.vue';
 
 export default {
   name: 'ComposeAssessment',
   components: {
     AdminSideBar,
+    // AssessmentQuestions,
   },
   data() {
     return {
@@ -93,7 +121,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['createQuestion']),
+    ...mapActions(['createQuestion', 'setNewQuestion', 'showPrevQuestion']),
     addClass() {
       this.selectedAnswer = !this.selectedAnswer;
     },
@@ -104,17 +132,63 @@ export default {
     },
     onSubmit() {
       console.log(this.correctAnswer);
+      // const payload = { ...this.form, correctAnswer: this.correctAnswer };
+      // this.newQuestion();
+      const data = this.viewQuestions;
+      console.log(data);
+      this.createQuestion(data);
+      // this.form = {
+      //   title: '',
+      //   optionA: '',
+      //   optionB: '',
+      //   optionC: '',
+      //   optionD: '',
+      //   correctAnswer: '',
+      // };
+    },
+    newQuestion() {
       const payload = { ...this.form, correctAnswer: this.correctAnswer };
-      this.createQuestion(payload);
+      this.setNewQuestion(payload);
       this.form = {
         title: '',
         optionA: '',
         optionB: '',
         optionC: '',
         optionD: '',
-        correctAnswer: '',
+        correctAnswer: null,
       };
     },
+    previousQuestion() {
+      this.showPrevQuestion();
+    },
+  },
+  watch: {
+    // questionNumber: {
+    //   handler() {
+    //     if (this.questionNumber > 5) {
+    //       this.questionNumber = 5;
+    //     }
+    //   },
+    // },
+    questionNumber(newCount, oldCount) {
+      if (newCount >= 6) {
+        // this.questionNumber = oldCount;
+        this.$set(this.questionNumber, oldCount);
+      }
+      console.log('new', newCount);
+      console.log('old', oldCount);
+    },
+    showCurrentSetQuestion: {
+      deep: true,
+      handler() {
+        if (this.showCurrentSetQuestion) {
+          this.form = { ...this.showCurrentSetQuestion };
+        }
+      },
+    },
+  },
+  computed: {
+    ...mapGetters(['numberOfSetQuestions', 'questionNumber', 'showCurrentSetQuestion', 'viewQuestions']),
   },
 };
 </script>
@@ -123,8 +197,9 @@ export default {
 .red {
   background-color: red;
 }
-.green {
-    background-color: #31D283;;
+.selected {
+  background-color: #31D283;
+  color: #000;
 }
 /* .green input[type=text] {
   background-color: #3CBC8D;
@@ -204,6 +279,7 @@ label{
 .right-wrapper-four{
     display: flex;
     margin-top: 52px;
+    margin-bottom: 20px;
     justify-content: space-around;
 }
 .toggle{
@@ -211,12 +287,12 @@ label{
     height: 41px;
     border-radius: 4px;
     color: #fff;
-    background: #2B3C4E;
+    background:  #7557D3;
 }
 .btn{
     justify-content: center;
-    margin-top: 55px;
-    margin-bottom: 97px;
+    /* margin-top: 55px; */
+    /* margin-bottom: 97px; */
 }
 #button{
     width: 205px;
