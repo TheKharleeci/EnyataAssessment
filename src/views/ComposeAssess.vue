@@ -83,7 +83,7 @@
                 <!-- <b-button class="toggle" :disabled="questionLength" @click="newQuestion">
                   Next
                 </b-button> -->
-                <b-button class="toggle" v-if="questionNumber >= 6" disabled>
+                <b-button class="toggle" v-if="questionNumber >= 5" disabled>
                   Next
                 </b-button>
                 <b-button class="toggle" v-else @click="newQuestion">
@@ -92,7 +92,7 @@
                 </div>
             </div>
             <div class="btn d-flex">
-                <b-button id="button" v-if="questionNumber <= 5"
+                <b-button id="button" v-if="questionNumber <= 4"
                 disabled @click.prevent="onSubmit">Finish</b-button>
                 <b-button id="button" v-else @click.prevent="onSubmit">Finish</b-button>
             </div>
@@ -133,7 +133,7 @@ export default {
     onSubmit() {
       console.log(this.correctAnswer);
       // const payload = { ...this.form, correctAnswer: this.correctAnswer };
-      // this.newQuestion();
+      this.newQuestion();
       const data = this.viewQuestions;
       console.log(data);
       this.createQuestion(data);
@@ -170,14 +170,14 @@ export default {
     //     }
     //   },
     // },
-    questionNumber(newCount, oldCount) {
-      if (newCount >= 6) {
-        // this.questionNumber = oldCount;
-        this.$set(this.questionNumber, oldCount);
-      }
-      console.log('new', newCount);
-      console.log('old', oldCount);
-    },
+    // questionNumber(newCount, oldCount) {
+    //   if (newCount >= 6) {
+    // this.questionNumber = oldCount;
+    // this.$set(this.questionNumber, oldCount);
+    //   }
+    //   console.log('new', newCount);
+    //   console.log('old', oldCount);
+    // },
     showCurrentSetQuestion: {
       deep: true,
       handler() {

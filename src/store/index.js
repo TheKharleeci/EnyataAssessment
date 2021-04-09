@@ -71,7 +71,13 @@ export default new Vuex.Store({
     },
     countSetQuestions: (state) => { state.step += 1; },
     prevSetQuestion: (state) => { state.step -= 1; },
-    countTotalQuestions: (state) => { state.totalSetQuestions += 1; },
+    // countTotalQuestions: (state) => { state.totalSetQuestions += 1; },
+    countTotalQuestions: (state) => {
+      if (state.totalSetQuestions < 5) {
+        state.totalSetQuestions += 1;
+        console.log('check', state.totalSetQuestions);
+      } else state.totalSetQuestions = 5;
+    },
     reduceTotalQuestions: (state) => { state.totalSetQuestions -= 1; },
     // reduceCurrQuestions: (state) => { state.totalSetQuestions -= 1; },
     allSetQuestions: (state) => { state.allSetQuestionsCount += 1; },
