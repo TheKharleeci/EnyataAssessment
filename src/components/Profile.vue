@@ -1,6 +1,7 @@
 <template>
   <div>
-    <b-row no-gutters>
+    <b-form enctype="multipart/form-data">
+      <b-row no-gutters>
       <!-- <b-col cols="3"></b-col> -->
       <b-col cols="9">
         <b-row no-gutters>
@@ -8,7 +9,7 @@
               <div class="d-flex justify-content-between">
                 <h4>Profiles Setting</h4>
                 <button class="edit-button"
-                 @click="enableEdit"
+                 @click.prevent="enableEdit"
                 variant="outline-primary">Edit</button>
               </div>
               <span class="spanD"></span>
@@ -21,7 +22,7 @@
                 class="profileImg">
                 </b-img>
               </div>
-              <div class="body-upload-2">
+                <div class="body-upload-2" enctype="multipart/form-data">
                 <VueFileAgent
                         ref="vueFileAgent"
                         :theme="'list'"
@@ -98,11 +99,13 @@
           </b-row>
           <b-row no-gutters >
             <b-col cols="9" class="d-flex justify-content-center">
-              <b-button @click="save" :disabled="disabled" class="save-button">Save</b-button>
+              <b-button @click.prevent="save"
+              :disabled="disabled" class="save-button">Save</b-button>
             </b-col>
           </b-row>
       </b-col>
     </b-row>
+    </b-form>
   </div>
 </template>
 

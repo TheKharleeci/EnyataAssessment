@@ -51,9 +51,9 @@
             </b-form-group>
             <div class="mt-3">
             <b-button type="submit" block variant="light">Sign In</b-button>
-            <div class="register float-right">
+            <!-- <div class="register float-right">
               <p> <i><small>Forgot Password?</small></i></p>
-            </div>
+            </div> -->
             </div>
           </b-form>
         </div>

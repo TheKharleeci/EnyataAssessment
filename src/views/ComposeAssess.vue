@@ -5,13 +5,34 @@
     </div>
         <div class="body-right">
             <h1>Compose Assessment</h1>
-            <div class="right-wrapper-one">
+            <b-form @submit.prevent="onSubmit" enctype="multipart/form-data">
+                <div class="right-wrapper-one">
                 <div class="right-wrapper-left">
                     <p>1/5</p>
-                    <button>+ Choose file</button>
+                    <div class="body-upload-2" enctype="multipart/form-data">
+                <VueFileAgent
+                        ref="vueFileAgent"
+                        :theme="'list'"
+                        :multiple="false"
+                        :deletable="false"
+                        :meta="true"
+                        :accept="'.jpg, .png'"
+                        :maxSize="'2MB'"
+                        :maxFiles="1"
+                        :helpText="'+ Choose file'"
+                        :errorText="{
+                          type: 'Invalid file type. Only .jpg, .png Allowed',
+                          size: 'Files should not exceed 2MB in size',
+                        }"
+                        @select="photosSelected($event)"
+                        @beforedelete="onBeforeDelete($event)"
+                        @delete="fileDeleted($event)"
+                        v-model="fileRecordsPhoto">
+                      </VueFileAgent>
+                </div>
+                    <!-- <button>+ Choose file</button> -->
                 </div>
             </div>
-            <b-form @submit.prevent="onSubmit">
             <div class="instruction">
                 <label>Questions</label>
                 <b-form-input
@@ -90,6 +111,11 @@ export default {
       correctAnswer: '',
       selectedAnswer: false,
       deleteClicked: false,
+      photo: '',
+      fileRecordsPhoto: [],
+      uploadUrl: 'https://enyata-recruitment-portal.herokuapp.com/upload', // change this to the backend endpoint on heroku
+      uploadHeaders: { 'X-Test-Header': 'vue-file-agent' },
+      fileRecordsForPhoto: [],
     };
   },
   methods: {
@@ -114,6 +140,10 @@ export default {
         optionD: '',
         correctAnswer: '',
       };
+    },
+    photosSelected(fileRecordsNewlySelected) {
+      const validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
+      this.photo = validFileRecords[0].file;
     },
   },
 };

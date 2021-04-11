@@ -128,6 +128,22 @@ export default new Vuex.Store({
       commit('assignUser', response.data.data);
       commit('updateApplicantCount');
     },
+    async updateAdmin({ commit, getters }, payload) {
+      const formdata = new FormData();
+      Object.keys(payload).forEach((key) => (
+        formdata.append(key, payload[key])
+      ));
+      console.log(formdata);
+      const response = await axios.put('https://enyata-recruitment-portal.herokuapp.com/update', formdata, {
+        headers: {
+          authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
+        },
+      });
+      commit('currentAdmin', response.data);
+      console.log(response.data);
+      // commit('', response.data.data);
+      // commit('');
+    },
     async loginAdmin({ commit }, payload) {
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/login', payload);
       const tokens = response.data.data.token;
