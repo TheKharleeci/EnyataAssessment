@@ -39,7 +39,7 @@
                         :multiple="false"
                         :deletable="false"
                         :meta="true"
-                        :accept="'.jpg, .png'"
+                        :accept="'.jpg, .jpeg, .png'"
                         :maxSize="'2MB'"
                         :maxFiles="1"
                         :helpText="'+ Upload Photo'"
@@ -469,5 +469,10 @@ input[type="text"]:disabled, input[type="email"]:disabled {
 .submit-bottom{
     margin-top: 20px;
     margin-bottom: 39px;
+}
+input:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+  outline: none;
 }
 </style>

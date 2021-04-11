@@ -1,9 +1,9 @@
 <template>
 <div class="box">
     <div class="body">
-        <p>Are you sure you want to approve<br/><span>this application?</span></p>
+        <p>Are you sure you want to decline<br/><span>this application?</span></p>
         <div class="space">
-            <button @click.prevent="approveUser">Yes</button>
+            <button @click.prevent="declineUser">Yes</button>
             <button @click.prevent="confirm">No</button>
         </div>
     </div>
@@ -14,18 +14,17 @@
 import { mapMutations, mapActions } from 'vuex';
 
 export default {
-  name: 'ApproveModal',
-  props: ['entryItem'],
+  name: 'DeclineModal',
+
   methods: {
     ...mapMutations(['changeApplicationStatus']),
     ...mapActions(['updateStatus']),
-    approveUser() {
+    declineUser() {
       const data = {
         id: this.entryItem.id,
-        applicationStatus: 'Approved',
+        applicationStatus: 'Declined',
       };
       this.updateStatus(data);
-      this.hideApprove();
     },
     confirm() {
       const data = {
@@ -33,7 +32,7 @@ export default {
         applicationStatus: 'Pending',
       };
       this.updateStatus(data);
-      this.hideApprove();
+      this.$router.push('/entries');
     },
   },
   mounted() {
@@ -77,6 +76,7 @@ p{
 }
 .space button{
     outline: none;
+    border: 1px solid #474747;
     font-size: 14px;
     width: 120px;
 

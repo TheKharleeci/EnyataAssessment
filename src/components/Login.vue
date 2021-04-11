@@ -185,4 +185,9 @@ input {
   box-sizing: border-box;
   border-radius: 4px;
 }
+input:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+  outline: none;
+}
 </style>

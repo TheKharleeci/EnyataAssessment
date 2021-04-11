@@ -1,53 +1,45 @@
 <template>
+
 <div class="box">
     <div class="body">
-        <p>Are you sure you want to approve<br/><span>this application?</span></p>
+        <p>Are you sure you want to decline<br/><span>this application?</span></p>
         <div class="space">
-            <button @click.prevent="approveUser">Yes</button>
-            <button @click.prevent="confirm">No</button>
+            <button @click.prevent="decline">Yes</button>
+            <button @click.prevent="check">No</button>
         </div>
     </div>
 </div>
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex';
-
 export default {
-  name: 'ApproveModal',
-  props: ['entryItem'],
+  name: 'DeclineModal',
+
   methods: {
-    ...mapMutations(['changeApplicationStatus']),
-    ...mapActions(['updateStatus']),
-    approveUser() {
-      const data = {
-        id: this.entryItem.id,
-        applicationStatus: 'Approved',
-      };
-      this.updateStatus(data);
-      this.hideApprove();
+    decline() {
+
     },
-    confirm() {
-      const data = {
-        id: this.entryItem.id,
-        applicationStatus: 'Pending',
-      };
-      this.updateStatus(data);
-      this.hideApprove();
+    check() {
+      this.$router.push('/decline');
     },
-  },
-  mounted() {
-    this.changeApplicationStatus();
   },
 };
 </script>
 
 <style scoped>
+.body{
+   box-shadow: 8px 18px 20px rgba(79, 79, 79, 0.3);
+   height: 250px;
+   width: 250px;
+   margin: auto;
+   border-radius: 16px;
+
+}
 .body p{
+  padding-top: 50px;
   font-size: 16px;
   font-weight: 300;
-  color: #000;
-  margin-top: 30px;
+  color: #474747;
 }
 button{
 width: 125px;
@@ -77,6 +69,7 @@ p{
 }
 .space button{
     outline: none;
+    border: 1px solid #474747;
     font-size: 14px;
     width: 120px;
 

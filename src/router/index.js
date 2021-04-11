@@ -7,6 +7,7 @@ import LoginAdmin from '../views/LoginAdmin.vue';
 import Dashboard from '../views/Dashboard.vue';
 import Entries from '../views/Entries.vue';
 import Results from '../views/Results.vue';
+import Questions from '../views/Questions.vue';
 import ClientDashboard from '../views/ClientDashboard.vue';
 import AdminProfile from '../views/AdminProfile.vue';
 import UserSignup from '../views/UserSignup.vue';
@@ -17,11 +18,12 @@ import ComposeAssess from '../views/ComposeAssess.vue';
 import ForgetPassword from '../components/ForgetPassword.vue';
 import ModalPassword from '../components/ModalPassword.vue';
 import ResetPassword from '../components/ResetPassword.vue';
-import DashboardForm from '../components/DashboardForm.vue';
 import ApplicationDashboard from '../views/ApplicationDashboard.vue';
 import ResetSuccessful from '../components/ResetSuccessful.vue';
 import SuccessfulApplication from '../components/SuccessfulApplication.vue';
 import store from '../store';
+import ApproveModal from '../components/ApproveModal.vue';
+import DeclineModal from '../components/DeclineModal.vue';
 
 Vue.use(VueRouter);
 const ifAuthenticated = (to, from, next) => {
@@ -84,18 +86,13 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Questions.vue'),
+    component: Questions.vue,
     beforeEnter: ifAuthenticated,
   },
   {
     path: '/admin/login',
     name: 'LoginAdmin',
     component: LoginAdmin,
-  },
-  {
-    path: '/dashboard1',
-    name: 'DashboardForm',
-    component: DashboardForm,
   },
   {
     path: '/app',
@@ -187,6 +184,16 @@ const routes = [
     path: '/SuccessfulApplication',
     name: 'SuccessfulApplication',
     component: SuccessfulApplication,
+  },
+  {
+    path: '/approve',
+    name: 'ApproveModal',
+    component: ApproveModal,
+  },
+  {
+    path: '/decline',
+    name: 'DeclineModal',
+    component: DeclineModal,
   },
   {
     path: '/404',

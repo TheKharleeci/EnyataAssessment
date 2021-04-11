@@ -23,7 +23,7 @@
               <b-col cols="1"></b-col>
               <b-col cols="3" class="text-left">
                 <p>Application Status</p>
-                <h2>{{ currentApplicant ["application_status"] }}</h2>
+                <h2>{{ currentApplicant['application_status'] }}</h2>
                 <span id="spanB"></span>
                 <h6>We will get back to you</h6>
               </b-col>
@@ -62,8 +62,8 @@
 </template>
 
 <script>
-import ApplicantSideBar from '@/components/ApplicantSideBar.vue';
 import { mapActions, mapGetters } from 'vuex';
+import ApplicantSideBar from '../components/ApplicantSideBar.vue';
 
 export default {
   name: 'Dashbord',
@@ -71,31 +71,25 @@ export default {
     ApplicantSideBar,
   },
   methods: {
-    ...mapActions(['loginUser', 'getQuestions', 'selectQuestion', 'nextQuestion', 'regDayCount', 'currentApplicant']),
+    ...mapActions(['loginUser', 'getQuestions', 'selectQuestion', 'nextQuestion', 'regDayCount']),
     takeAssessment() {
       this.$router.push('/takeAssess');
     },
+
   },
-  // watch: {
-  //   getQuestions: {
-  //     deep: true,
-  //     handler() {
-  //       this.selectQuestion();
-  //       this.$router.push('/questions');
-  //     },
-  //   },
-  // },
   computed: {
     ...mapGetters(['loggedInUser', 'currentApplicant', 'applicationDate', 'getAllQuestions', 'countQuestions', 'daysSinceReg']),
   },
-  // mounted() {
-  //   this.loginUser();
-  // },
+  mounted() {
+    // this.loginUser();
+    // this.currentApplicant;
+    console.log('hhfaf', this.currentApplicant);
+    return this.$store.dispatch('currentApplicant');
+  },
 };
 </script>
 
 <style scoped>
-
 .headerText {
   margin-top: 50px;
   margin-bottom: 10px ;

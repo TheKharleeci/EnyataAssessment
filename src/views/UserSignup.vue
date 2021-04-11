@@ -267,4 +267,9 @@ label{
     font-weight: normal;
     font-style: normal;
 }
+input:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+  outline: none;
+}
 </style>

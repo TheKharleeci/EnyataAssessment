@@ -10,8 +10,6 @@
                 <p><small>Thank you!</small></p>
             </div>
             <div class="body-right-top-right">
-                <!-- <p><small>Timer</small></p>
-                <h2>23<small>min</small><span> 043<small>sec</small></span></h2> -->
             </div>
         </div>
         <div class="success">
@@ -25,7 +23,7 @@
 </template>
 
 <script>
-import ApplicantSideBar from '@/components/ApplicantSideBar.vue';
+import ApplicantSideBar from '../components/ApplicantSideBar.vue';
 
 export default {
   name: 'Successful',

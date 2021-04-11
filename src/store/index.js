@@ -37,6 +37,7 @@ export default new Vuex.Store({
     userPw: [],
     applicants: [],
     loginError: '',
+    applicationStatus: '',
     // nextButtonDisabled: false,
     // previousButtonDisabled: true,
     // assessmentQuestions: [],
@@ -64,6 +65,10 @@ export default new Vuex.Store({
     loggedOut: (state, payload) => { state.logoutResponse = payload; },
     reset: (state, payload) => { state.user.push(payload); },
     allApplicants: (state, payload) => { state.applicants = payload; },
+    // application status change
+    changeApplicationStatus: (state, payload) => {
+      state.currentUser.applicationStatus = payload;
+    },
     setNewPassword: (state, payload) => { state.userPw = payload; },
     setRegister: (state, payload) => {
       state.usersDetail.push(payload);
@@ -119,14 +124,11 @@ export default new Vuex.Store({
     },
     regDayCount({ commit, getters }) {
       const start = new Date(getters.dayRegistered);
-      // console.log(start);
       const end = new Date();
-      // console.log(end);
       let diff = 0;
       const days = 1000 * 60 * 60 * 24;
       diff = end - start;
       diff = Math.floor(diff / days);
-      // console.log(diff);
       commit('updateRegDaysCount', diff);
     },
 
@@ -148,6 +150,14 @@ export default new Vuex.Store({
       console.log(response.data);
       // commit('', response.data.data);
       // commit('');
+    },
+
+    async updateStatus({ commit }, payload) {
+      console.log(payload);
+      const { id } = payload;
+      const response = await axios.put(`https://enyata-recruitment-portal.herokuapp.com/updateUser/${id}`, payload);
+      commit('changeApplicationStatus', response.data);
+      console.log(response.data);
     },
 
     async loginAdmin({ commit }, payload) {
