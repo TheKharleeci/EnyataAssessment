@@ -133,7 +133,7 @@ export default new Vuex.Store({
       Object.keys(payload).forEach((key) => (
         formdata.append(key, payload[key])
       ));
-      console.log(formdata);
+      // console.log(formdata);
       const response = await axios.put('https://enyata-recruitment-portal.herokuapp.com/update', formdata, {
         headers: {
           authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
@@ -157,8 +157,12 @@ export default new Vuex.Store({
       // console.log(response.data);
     },
     async createQuestion({ getters }, payload) {
-      console.log(getters.loggedInAdminDetails.data.token);
-      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/createQuestion', payload, {
+      const formdata = new FormData();
+      Object.keys(payload).forEach((key) => (
+        formdata.append(key, payload[key])
+      ));
+      console.log(formdata);
+      const response = await axios.post('http://localhost:3000/admin/createQuestion', formdata, {
         headers: {
           authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
         },

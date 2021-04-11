@@ -9,7 +9,7 @@
                 <div class="right-wrapper-one">
                 <div class="right-wrapper-left">
                     <p>1/5</p>
-                    <div class="body-upload-2" enctype="multipart/form-data">
+                    <div class="body-upload-2">
                 <VueFileAgent
                         ref="vueFileAgent"
                         :theme="'list'"
@@ -134,6 +134,7 @@ export default {
       this.createQuestion(payload);
       this.form = {
         title: '',
+        photo: '',
         optionA: '',
         optionB: '',
         optionC: '',
@@ -143,7 +144,7 @@ export default {
     },
     photosSelected(fileRecordsNewlySelected) {
       const validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
-      this.photo = validFileRecords[0].file;
+      this.form.photo = validFileRecords[0].file;
     },
   },
 };

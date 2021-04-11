@@ -12,6 +12,7 @@ import AdminProfile from '../views/AdminProfile.vue';
 import UserSignup from '../views/UserSignup.vue';
 import AdminTimer from '../views/AdminTimer.vue';
 import SuccessfulPage from '../views/SuccessfulPage.vue';
+import CreateApplication from '../views/CreateApplication.vue';
 import TakeAssess from '../views/TakeAssess.vue';
 import ComposeAssess from '../views/ComposeAssess.vue';
 import ForgetPassword from '../components/ForgetPassword.vue';
@@ -161,6 +162,12 @@ const routes = [
     path: '/compose',
     name: 'ComposeAssess',
     component: ComposeAssess,
+    beforeEnter: ifAdminAuthenticated,
+  },
+  {
+    path: '/createApplication',
+    name: 'CreateApplication',
+    component: CreateApplication,
     beforeEnter: ifAdminAuthenticated,
   },
   {

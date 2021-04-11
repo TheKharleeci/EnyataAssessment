@@ -81,7 +81,7 @@ export default {
       this.$router.push('/dashboard');
     },
     createApplication() {
-      this.$router.push('/questions');
+      this.$router.push('/CreateApplication');
     },
     viewEntries() {
       this.$router.push('/entries');
