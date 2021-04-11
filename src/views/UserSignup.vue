@@ -51,6 +51,7 @@
           <div class="form-child-2">
               <label>Phone Number</label>
               <b-form-input
+              type = "tel"
               id="inline-form-input-phonenumber"
               class="input"
               v-model="form.phoneNumber"
@@ -65,7 +66,7 @@
           <div class="form-child-1">
               <label>Password</label>
               <b-form-input
-              id="inline-form-input-password"
+              id="password"
               class="input"
               v-model="form.password"
               type="password"
@@ -82,12 +83,12 @@
           <div class="form-child-2">
               <label>Confirm Password</label>
               <b-form-input
-              id="inline-form-input-confirmpassword"
+              id="confirmpassword"
               class="input"
               type="password"
               v-model="form.confirmPassword"
+              disabled
               @keypress="onTypeConfirmPassword"
-              @keydown="onMouse"
               placeholder="">
               <b-input-group-prepend is-text>
               <b-icon icon="eye-fill" aria-hidden="true" style="font-size:24px, color:gray;">
@@ -152,12 +153,21 @@ export default {
       const re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}/;
       if (!re.test(this.form.password)) {
         this.passwordError = 'password should be at least 7 chanracters with a lowercase, uppercase letter and number';
+      } else {
+        document.getElementById('signup').disabled = false;
+        // $('#signup').prop('disabled', false);
+        document.getElementById('confirmpassword').disabled = false;
       }
     },
+    // Recheck this one...
     onTypeConfirmPassword() {
       this.confirmPasswordError = '';
-      if (this.form.password !== this.form.confirmPassword) {
-        this.confirmPasswordError = 'Password must be the same.';
+      const password = document.getElementById('password').value;
+      const cpassword = document.getElementById('confirmpassword').value;
+      if (cpassword === password) {
+        this.confirmPasswordError = 'All good';
+      } else {
+        this.confirmPasswordError = 'Password must match';
       }
     },
     onTypeEmail() {

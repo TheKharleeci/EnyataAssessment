@@ -46,6 +46,7 @@ export default {
         email: '',
       };
       this.$modal.hide('modal-forgot-password');
+      this.$router.push('/userLogin');
     },
     show() {
       this.$modal.show('modal-forgot-password');

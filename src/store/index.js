@@ -6,8 +6,8 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 // const vuexLocal = new VuexPersistence({
-//   storage: window.SessionStorage,
-//   // key: 'clients',
+//   storage: window.localStorage,
+// key: 'clients',
 // });
 
 export default new Vuex.Store({
@@ -25,18 +25,17 @@ export default new Vuex.Store({
     allQuestions: [],
     question: [],
     questionCount: 1,
-    assessmentQuestionCount: 1,
     questionIndex: 0,
     userAnswers: [],
-    timer: 200,
+    timerMinutes: 0,
+    timerSeconds: 0,
     applicantCount: 0,
     days: 0,
     logoutResponse: {},
     usersDetail: [],
-    user: [],
     userPw: [],
+    user: [],
     applicants: [],
-    loginError: '',
     // nextButtonDisabled: false,
     // previousButtonDisabled: true,
     // assessmentQuestions: [],
@@ -57,7 +56,8 @@ export default new Vuex.Store({
     raiseQuestionIndex: (state) => { state.questionIndex += 1; },
     reduceQuestionIndex: (state) => { state.questionIndex -= 1; },
     collectUserAnswers: (state, payload) => { state.userAnswers.push(payload); },
-    setTimer: (state, payload) => { state.timer = payload; },
+    setMinutes: (state, payload) => { state.timerMinutes = payload; },
+    setSeconds: (state, payload) => { state.timerSeconds = payload; },
     updateApplicantCount: (state) => { state.applicantCount += 1; },
     updateRegDaysCount: (state, payload) => { state.days = payload; },
     regDay: (state, payload) => { state.registeredDay = payload; },
@@ -70,30 +70,21 @@ export default new Vuex.Store({
     },
     authSuccess: (state, payload) => {
       state.status = 'success';
-      state.toks = payload;
+      state.toks.push(payload);
     },
     authAdminSuccess: (state, payload) => {
       state.status = 'success';
-      state.adminToks = payload;
+      state.adminToks.push(payload);
     },
     authError: (state) => {
       state.status = 'error';
       state.toks = [];
     },
     authRequest: (state) => { state.status = 'loading'; },
-
-    setLoginError: (state, payload) => { state.loginError = payload; },
   },
   actions: {
     async loginUser({ commit, dispatch }, payload) {
-      let response;
-      try {
-        response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/login', payload);
-      } catch (error) {
-        console.log('Invalid login details');
-        commit('setLoginError', 'Invalid login details');
-        return;
-      }
+      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/login', payload);
       const createdAt = response.data.data.user.created_at;
       const tokens = response.data.data.token;
       console.log(response.data);
@@ -137,19 +128,6 @@ export default new Vuex.Store({
       commit('assignUser', response.data.data);
       commit('updateApplicantCount');
     },
-    async updateAdmin({ commit, getters }, payload) {
-      console.log(payload);
-      const response = await axios.put('https://enyata-recruitment-portal.herokuapp.com/update', payload, {
-        headers: {
-          authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
-        },
-      });
-      commit('currentAdmin', response.data);
-      console.log(response.data);
-      // commit('', response.data.data);
-      // commit('');
-    },
-
     async loginAdmin({ commit }, payload) {
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/login', payload);
       const tokens = response.data.data.token;
@@ -161,36 +139,8 @@ export default new Vuex.Store({
       commit('authAdminSuccess', tokens);
       // console.log(response.data.data);
       // console.log(response.data);
-      console.log(response.data.data);
-      console.log(response.data);
     },
-
-    async setTime({ getters }, payload) {
-      console.log(payload);
-      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/setTime', payload, {
-        headers: {
-          authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
-        },
-      });
-      console.log(response.data);
-    },
-
-    async getTime({ commit, getters }) {
-      const response = await axios.get('https://enyata-recruitment-portal.herokuapp.com/timer', {
-        headers: {
-          authorization: `Bearer ${getters.loggedInUser.token}`,
-        },
-      });
-      console.log(response);
-      console.log(response.data, 'this is it');
-      console.log(response.data.data);
-      console.log(response.data.data.time);
-      commit('setTimer', response.data.data.time);
-    },
-    // },
-
     async createQuestion({ getters }, payload) {
-      console.log(payload);
       console.log(getters.loggedInAdminDetails.data.token);
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/createQuestion', payload, {
         headers: {
@@ -200,7 +150,6 @@ export default new Vuex.Store({
       console.log(payload);
       console.log(response);
     },
-
     async getQuestions({ commit, getters }) {
       delete axios.defaults.headers.common.Authorization;
       // console.log(getters.loggedInUser.token);
@@ -211,7 +160,6 @@ export default new Vuex.Store({
       });
       const orderedQuestions = quiz.data.data;
       const response = orderedQuestions.sort(() => Math.random() - 0.5);
-      console.log(response);
       commit('testQuestions', response);
     },
     async setApplicants({ commit, getters }) {
@@ -235,24 +183,18 @@ export default new Vuex.Store({
       const questions = getters.getAllQuestions;
       if (questions.length !== 0) {
         const currQuestion = questions[index];
-        // const test = questions[index].id;
-        // console.log(currQuestion);
-        // console.log(test);
+        const test = questions[index].id;
+        console.log(currQuestion);
+        console.log(test);
         commit('currentQuestion', currQuestion);
         // dispatch('handleDisableButton');
       }
     },
-    // CHECK THIS
-    // async submitAnswers({ getters }, payload) {
-    //   console.log(payload);
-    //   console.log(getters.loggedInUser);
-    //   const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/user/answers', payload, {
-    //     headers: {
-    //       authorization: `Bearer ${getters.loggedInUser.token}`,
-    //     },
-    //   });
-    //   console.log(response);
+    // selectAnswer({ commit, getters }) {
+
     // },
+
+    // checkUserCount({ commit, getters }) {},
 
     nextQuestion({ commit, getters, dispatch }) {
       const index = getters.currentQuestionIndex;
@@ -277,9 +219,9 @@ export default new Vuex.Store({
       dispatch('selectQuestion');
       // dispatch('handleDisableButton');
     },
-    // async merge() {
-    //   await axios.put('https://enyata-recruitment-portal.herokuapp.com/merge');
-    // },
+    async merge() {
+      await axios.put('https://enyata-recruitment-portal.herokuapp.com/merge');
+    },
     async getUserDetail({ commit, getters }, payload) {
       let formdata = new FormData();
       Object.keys(payload).forEach((key) => (
@@ -295,7 +237,7 @@ export default new Vuex.Store({
       });
       formdata = {};
       commit('setRegister', response.data);
-      // axios.put('https://enyata-recruitment-portal.herokuapp.com/merge');
+      axios.put('https://enyata-recruitment-portal.herokuapp.com/merge');
       console.log(response);
     },
 
@@ -321,6 +263,7 @@ export default new Vuex.Store({
           console.log(password);
         });
     },
+
     async logout({ commit }) {
       await axios.post('https://enyata-recruitment-portal.herokuapp.com/logout')
         .then((response) => {
@@ -328,20 +271,6 @@ export default new Vuex.Store({
           commit('authError');
           commit('loggedIn', '');
           localStorage.removeItem('user-token');
-          delete axios.defaults.headers.common.Authorization;
-        }).catch((error) => {
-          console.log(error);
-        });
-    },
-
-    // added
-    async logoutAdmin({ commit }) {
-      await axios.post('http://localhost:3000/admin/logout')
-        .then((response) => {
-          console.log(response);
-          // commit('authError');
-          commit('authAdminSuccess', '');
-          localStorage.removeItem('admin-token');
           delete axios.defaults.headers.common.Authorization;
         }).catch((error) => {
           console.log(error);
@@ -360,29 +289,20 @@ export default new Vuex.Store({
     showCurrentQuestion: (state) => state.question,
     countQuestions: (state) => state.questionCount,
     currentQuestionIndex: (state) => state.questionIndex,
-    quizTime: (state) => state.timer,
+    quizTimeMinutes: (state) => state.setMinutes,
+    quizTimeSeconds: (state) => state.setSeconds,
     totalApplications: (state) => state.applicantCount,
     daysSinceReg: (state) => state.days,
     dayRegistered: (state) => state.registeredDay,
     userCount: (state) => state.users.length,
     isAuthenticated: (state) => state.toks.length, // added
-    isAdminAuthenticated: (state) => {
-      const admin = state.adminToks.length;
-      console.log(admin);
-      return admin;
-    },
+    isAdminAuthenticated: (state) => state.adminToks.length,
     authStatus: (state) => state.status, // added
     getApplicants: (state) => {
       const item = state.applicants;
       console.log(item);
       return item;
     },
-    getNumberOfApplicants: (state) => {
-      const item = state.applicants.length;
-      console.log(item);
-      return item;
-    },
-    error: (state) => state.loginError,
   },
   modules: {
   },

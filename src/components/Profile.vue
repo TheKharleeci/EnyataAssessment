@@ -21,9 +21,27 @@
                 class="profileImg">
                 </b-img>
               </div>
-              <button class="imageBtn">
-                Upload new image
-              </button>
+              <div class="body-upload-2">
+                <VueFileAgent
+                        ref="vueFileAgent"
+                        :theme="'list'"
+                        :multiple="false"
+                        :deletable="false"
+                        :meta="true"
+                        :accept="'.jpg, .png'"
+                        :maxSize="'2MB'"
+                        :maxFiles="1"
+                        :helpText="'+ Upload Photo'"
+                        :errorText="{
+                          type: 'Invalid file type. Only .jpg, .png Allowed',
+                          size: 'Files should not exceed 2MB in size',
+                        }"
+                        @select="photosSelected($event)"
+                        @beforedelete="onBeforeDelete($event)"
+                        @delete="fileDeleted($event)"
+                        v-model="fileRecordsPhoto">
+                      </VueFileAgent>
+                </div>
               <button class="btn-color">x Remove</button>
             </div>
           </b-row>
@@ -98,11 +116,16 @@ export default {
       profileImg: {
         blank: true, blankColor: '#777', width: 54, height: 54, class: '',
       },
+      fileRecordsPhoto: [],
+      uploadUrl: 'https://enyata-recruitment-portal.herokuapp.com/upload', // change this to the backend endpoint on heroku
+      uploadHeaders: { 'X-Test-Header': 'vue-file-agent' },
+      fileRecordsForPhoto: [],
       admin: {
         name: '',
         phoneNumber: '',
         country: '',
         address: '',
+        photo: '',
       },
       disabled: true,
     };
@@ -118,6 +141,10 @@ export default {
       //   email: '',
       //   password: '',
       // };
+    },
+    photosSelected(fileRecordsNewlySelected) {
+      const validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
+      this.admin.photo = validFileRecords[0].file;
     },
   },
   watch: {

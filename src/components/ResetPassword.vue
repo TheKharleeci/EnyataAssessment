@@ -17,18 +17,35 @@
         label-for="input-2"
         class="text-left label"
         >
-          <b-form-input
+          <div>
+            <b-form-input
             id="input-2"
             v-model="password"
             placeholder="Enter new password"
             type="password"
             data-toggle="password"
             required
+            @keypress="onTypePassword"
           ></b-form-input>
+          <small class="invalid"> {{ passwordError }} </small>
+          </div> <br><br>
+          <div>
+            <b-form-input
+            id="input-3"
+            v-model="confirmPassword"
+            placeholder="Confirm new password"
+            type="password"
+            data-toggle="password"
+            required
+            @keyup="onTypeConfirmPassword"
+          ></b-form-input>
+          <small class="invalid" > {{ confirmPasswordError }}</small>
+          </div>
           <br>
         </b-form-group>
         <div >
-        <b-button type="submit" class="button" block variant="dark" >Change Password</b-button>
+        <b-button type="submit" class="button" block variant="dark" >
+          Change Password</b-button>
         </div>
       </b-form>
       </div>
@@ -44,6 +61,9 @@ export default {
   data() {
     return {
       password: '',
+      confirmPassword: '',
+      passwordError: '',
+      confirmPasswordError: '',
     };
   },
   methods: {
@@ -52,10 +72,27 @@ export default {
       console.log(this.$route.params.token);
       const obj = {
         password: this.password,
+        confirmPassword: this.confirmPassword,
         token: this.$route.params.token,
       };
       this.newPassword(obj);
       this.$router.push('/resetSuccessful');
+    },
+    onTypePassword() {
+      this.passwordError = '';
+      const re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}/;
+      if (!re.test(this.password)) {
+        this.passwordError = 'password should be at least 7 chanracters with a lowercase, uppercase letter and number';
+        // document.querySelector('button').enabled = true;
+      }
+    },
+    onTypeConfirmPassword() {
+      this.confirmPasswordError = '';
+      if (this.password !== this.confirmPassword) {
+        this.confirmPasswordError = 'Password must match';
+      } else {
+        this.confirmPasswordError = 'All good';
+      }
     },
   },
 };
