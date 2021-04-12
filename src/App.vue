@@ -15,6 +15,7 @@
       <router-link to="/successfulPage">success</router-link> |
       <router-link to="/takeAssess">Assess</router-link> |
       <router-link to="/compose">Compose</router-link> |
+      <router-link to="/assessment">AssessmentQuestions</router-link>
     </div>
     <router-view/>
   </div>

@@ -9,10 +9,6 @@
                 <h1>Assessment Taken!</h1>
                 <p><small>Thank you!</small></p>
             </div>
-            <div class="body-right-top-right">
-                <!-- <p><small>Timer</small></p>
-                <h2>23<small>min</small><span> 043<small>sec</small></span></h2> -->
-            </div>
         </div>
         <div class="success">
             <img src="../assets/success.svg" alt="successful">

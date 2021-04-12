@@ -25,6 +25,8 @@ import SuccessfulApplication from '../components/SuccessfulApplication.vue';
 import ApproveModal from '../components/ApproveModal.vue';
 import DeclineModal from '../components/DeclineModal.vue';
 import store from '../store';
+import AssessmentQuestions from '../components/AssessmentQuestions.vue';
+
 
 Vue.use(VueRouter);
 const ifAuthenticated = (to, from, next) => {
@@ -70,6 +72,11 @@ const ifAdminAuthenticated = (to, from, next) => {
 };
 
 const routes = [
+  {
+    path: '/assessment',
+    name: 'AssessmentQuestions',
+    component: AssessmentQuestions,
+  },
   {
     path: '/userLogin',
     name: 'UserLogin',

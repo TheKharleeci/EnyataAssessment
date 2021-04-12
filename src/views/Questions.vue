@@ -31,7 +31,8 @@
             <!-- <h4>{{ picked }}</h4> -->
             <div>
               <p class="questions">
-                <i>{{ showCurrentQuestion['title']}} </i></p>
+                <i>{{ showCurrentQuestion['title']}} </i>
+              </p>
               <div class="options text-left">
                 <ul class="list-group">
                   <li class="list-group-item d-flex">
@@ -127,7 +128,7 @@
           <b-col cols="3"></b-col>
           <b-col cols="5">
             <div>
-              <b-button  v-if="countQuestions === getAllQuestions.length" class="finishBtn"
+              <b-button v-if="countQuestions === getAllQuestions.length" class="finishBtn"
                 type="submit" variant="dark" @click="submitTest">
                 Finish
               </b-button>
@@ -291,12 +292,16 @@ p {
 label {
   width: 355px;
   height: 33px;
+  padding-top: 5px;
+  margin-bottom: 0;
 }
 li {
   border: none;
+  align-items: center;
 }
 .option:hover {
   background-color: #31D283;
+  /* padding-top: 2px; */
   width: 355px;
   height: 33px;
 }
@@ -309,6 +314,7 @@ input[type="radio"]:checked + label {
   font-size: 16px;
   line-height: 19px;
   color: #2B3C4E;
+  padding-left: 56px;
 }
 .finishBtn {
   width: 205px;

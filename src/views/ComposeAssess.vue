@@ -8,31 +8,14 @@
             <b-form @submit.prevent="onSubmit" enctype="multipart/form-data">
                 <div class="right-wrapper-one">
                 <div class="right-wrapper-left">
-                    <p> {{ questionNumber }}/5</p>
-                    <!-- <div class="body-upload-2">
-                <VueFileAgent
-                        ref="vueFileAgent"
-                        :theme="'list'"
-                        :multiple="false"
-                        :deletable="false"
-                        :meta="true"
-                        :accept="'.jpg, .png'"
-                        :maxSize="'2MB'"
-                        :maxFiles="1"
-                        :helpText="'+ Choose file'"
-                        :errorText="{
-                          type: 'Invalid file type. Only .jpg, .png Allowed',
-                          size: 'Files should not exceed 2MB in size',
-                        }"
-                        @select="photosSelected($event)"
-                        @beforedelete="onBeforeDelete($event)"
-                        @delete="fileDeleted($event)"
-                        v-model="fileRecordsPhoto">
-                      </VueFileAgent>
-                </div> -->
-                    <!-- <button>+ Choose file</button> -->
+
+                    <!-- <p>15/30</p> -->
+                    <p> {{ questionNumber }}/ {{ maxQuestions }}</p>
+                    <button>+ Choose file</button>
                 </div>
             </div>
+            <b-form>
+
             <div class="instruction">
                 <label>Questions</label>
                 <b-form-input
@@ -86,28 +69,42 @@
                 </b-form-input>
                 </div>
             </div>
+            </b-form>
+            <!-- <div>
+                <AssessmentQuestions />
+            </div> -->
             <div class="right-wrapper-four">
                 <div>
-                    <b-button class="toggle" v-if="questionNumber === 1"
-                    disabled>Previous</b-button>
-                    <b-button class="toggle" v-else @click="previousQuestion">Previous</b-button>
+
+
+                <b-button class="toggle" v-if="questionNumber === 1"
+                disabled>Previous</b-button>
+                <b-button class="toggle" v-else @click="previousQuestion">Previous</b-button>
                 </div>
                 <div>
-                    <b-button class="toggle" v-if="questionNumber >= 5" disabled>
-                    Next
-                    </b-button>
-                    <b-button class="toggle" v-else @click="newQuestion">
-                    Next
-                    </b-button>
+                <!-- <b-button class="toggle"
+                v-if="questionNumber === numberOfSetQuestions.length"
+                disabled >Next</b-button> -->
+                <!-- <b-button class="toggle" :disabled="questionLength" @click="newQuestion">
+                  Next
+                </b-button> -->
+                <b-button class="toggle" v-if="questionNumber >= maxQuestions" disabled>
+                  Next
+                </b-button>
+                <b-button class="toggle" v-else @click="newQuestion">
+                  Next
+                </b-button>
+
                 </div>
             </div>
-
             <div class="btn d-flex">
-                <b-button id="button" v-if="questionNumber <= 4"
+
+
+                <b-button id="button" v-if="questionNumber <= maxQuestions - 1"
+
                 disabled @click.prevent="onSubmit">Finish</b-button>
                 <b-button id="button" v-else @click.prevent="onSubmit">Finish</b-button>
             </div>
-            </b-form>
         </div>
   </div>
 </template>
@@ -116,10 +113,15 @@
 import AdminSideBar from '@/components/AdminSideBar.vue';
 import { mapActions, mapGetters } from 'vuex';
 
+import constants from '../constants';
+// import AssessmentQuestions from '@/components/AssessmentQuestions.vue';
+
+
 export default {
   name: 'ComposeAssessment',
   components: {
     AdminSideBar,
+    // AssessmentQuestions,
   },
   data() {
     return {
@@ -128,11 +130,8 @@ export default {
       correctAnswer: '',
       selectedAnswer: false,
       deleteClicked: false,
-      //   photo: '',
-      fileRecordsPhoto: [],
-      uploadUrl: 'https://enyata-recruitment-portal.herokuapp.com/upload', // change this to the backend endpoint on heroku
-      uploadHeaders: { 'X-Test-Header': 'vue-file-agent' },
-      fileRecordsForPhoto: [],
+      maxQuestions: constants.totalQuestionNumber,
+
     };
   },
   methods: {
@@ -147,27 +146,20 @@ export default {
     },
     onSubmit() {
       console.log(this.correctAnswer);
-      //   const payload = { ...this.form, correctAnswer: this.correctAnswer };
+      // const payload = { ...this.form, correctAnswer: this.correctAnswer };
       this.newQuestion();
       const data = this.viewQuestions;
       console.log(data);
       this.createQuestion(data);
-    //   this.form = {
-    //     title: '',
-    //     photo: '',
-    //     optionA: '',
-    //     optionB: '',
-    //     optionC: '',
-    //     optionD: '',
-    //     correctAnswer: '',
-    //   };
+      // this.form = {
+      //   title: '',
+      //   optionA: '',
+      //   optionB: '',
+      //   optionC: '',
+      //   optionD: '',
+      //   correctAnswer: '',
+      // };
     },
-
-    // photosSelected(fileRecordsNewlySelected) {
-    //   const validFileRecords =
-    // fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
-    //   this.photo = validFileRecords[0].file;
-    // },
     newQuestion() {
       const payload = { ...this.form, correctAnswer: this.correctAnswer };
       this.setNewQuestion(payload);
@@ -186,6 +178,21 @@ export default {
     },
   },
   watch: {
+    // questionNumber: {
+    //   handler() {
+    //     if (this.questionNumber > 5) {
+    //       this.questionNumber = 5;
+    //     }
+    //   },
+    // },
+    // questionNumber(newCount, oldCount) {
+    //   if (newCount >= 6) {
+    // this.questionNumber = oldCount;
+    // this.$set(this.questionNumber, oldCount);
+    //   }
+    //   console.log('new', newCount);
+    //   console.log('old', oldCount);
+    // },
     showCurrentSetQuestion: {
       deep: true,
       handler() {
@@ -205,8 +212,9 @@ export default {
 .red {
   background-color: red;
 }
-.green {
-    background-color: #31D283;;
+.selected {
+  background-color: #31D283;
+  color: #000;
 }
 .selected {
   background-color: #31D283;
@@ -290,6 +298,7 @@ label{
 .right-wrapper-four{
     display: flex;
     margin-top: 52px;
+    margin-bottom: 20px;
     justify-content: space-around;
 }
 .toggle{
@@ -297,12 +306,12 @@ label{
     height: 41px;
     border-radius: 4px;
     color: #fff;
-    background: #2B3C4E;
+    background:  #7557D3;
 }
 .btn{
     justify-content: center;
-    margin-top: 55px;
-    margin-bottom: 97px;
+    /* margin-top: 55px; */
+    /* margin-bottom: 97px; */
 }
 #button{
     width: 205px;
