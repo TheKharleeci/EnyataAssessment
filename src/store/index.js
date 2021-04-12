@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
+import constants from '../constants';
 // import VuexPersistence from 'vuex-persist';
 
 Vue.use(Vuex);
@@ -73,10 +74,10 @@ export default new Vuex.Store({
     prevSetQuestion: (state) => { state.step -= 1; },
     // countTotalQuestions: (state) => { state.totalSetQuestions += 1; },
     countTotalQuestions: (state) => {
-      if (state.totalSetQuestions < 5) {
+      if (state.totalSetQuestions < constants.totalQuestionNumber) {
         state.totalSetQuestions += 1;
         console.log('check', state.totalSetQuestions);
-      } else state.totalSetQuestions = 5;
+      } else state.totalSetQuestions = constants.totalQuestionNumber;
     },
     reduceTotalQuestions: (state) => { state.totalSetQuestions -= 1; },
     // reduceCurrQuestions: (state) => { state.totalSetQuestions -= 1; },
@@ -197,7 +198,7 @@ export default new Vuex.Store({
     async createQuestion({ getters }, payload) {
       console.log(payload);
       console.log(getters.loggedInAdminDetails.data.token);
-      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/createQuestion', payload, {
+      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/createQuestion', { questions: payload }, {
         headers: {
           authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
         },

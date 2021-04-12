@@ -8,7 +8,7 @@
             <div class="right-wrapper-one">
                 <div class="right-wrapper-left">
                     <!-- <p>15/30</p> -->
-                    <p> {{ questionNumber }}/5</p>
+                    <p> {{ questionNumber }}/ {{ maxQuestions }}</p>
                     <button>+ Choose file</button>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                 <!-- <b-button class="toggle" :disabled="questionLength" @click="newQuestion">
                   Next
                 </b-button> -->
-                <b-button class="toggle" v-if="questionNumber >= 5" disabled>
+                <b-button class="toggle" v-if="questionNumber >= maxQuestions" disabled>
                   Next
                 </b-button>
                 <b-button class="toggle" v-else @click="newQuestion">
@@ -92,7 +92,7 @@
                 </div>
             </div>
             <div class="btn d-flex">
-                <b-button id="button" v-if="questionNumber <= 4"
+                <b-button id="button" v-if="questionNumber <= maxQuestions - 1"
                 disabled @click.prevent="onSubmit">Finish</b-button>
                 <b-button id="button" v-else @click.prevent="onSubmit">Finish</b-button>
             </div>
@@ -103,6 +103,7 @@
 <script>
 import AdminSideBar from '@/components/AdminSideBar.vue';
 import { mapActions, mapGetters } from 'vuex';
+import constants from '../constants';
 // import AssessmentQuestions from '@/components/AssessmentQuestions.vue';
 
 export default {
@@ -118,6 +119,7 @@ export default {
       correctAnswer: '',
       selectedAnswer: false,
       deleteClicked: false,
+      maxQuestions: constants.totalQuestionNumber,
     };
   },
   methods: {
