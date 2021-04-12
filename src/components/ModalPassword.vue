@@ -93,4 +93,9 @@ border-radius: 4px;
 .btn-body{
 justify-content: center;
 }
+input:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+  outline: none;
+}
 </style>

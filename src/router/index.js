@@ -22,6 +22,8 @@ import DashboardForm from '../components/DashboardForm.vue';
 import ApplicationDashboard from '../views/ApplicationDashboard.vue';
 import ResetSuccessful from '../components/ResetSuccessful.vue';
 import SuccessfulApplication from '../components/SuccessfulApplication.vue';
+import ApproveModal from '../components/ApproveModal.vue';
+import DeclineModal from '../components/DeclineModal.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -194,6 +196,16 @@ const routes = [
     path: '/SuccessfulApplication',
     name: 'SuccessfulApplication',
     component: SuccessfulApplication,
+  },
+  {
+    path: '/approve',
+    name: 'ApproveModal',
+    component: ApproveModal,
+  },
+  {
+    path: '/decline',
+    name: 'DeclineModal',
+    component: DeclineModal,
   },
   {
     path: '/404',

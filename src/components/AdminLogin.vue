@@ -160,6 +160,11 @@ h4 {
   height: 100%;
   position: relative;
 }
+input:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+  outline: none;
+}
 /* .form { */
   /* margin-right: 20px; */
 /* } */

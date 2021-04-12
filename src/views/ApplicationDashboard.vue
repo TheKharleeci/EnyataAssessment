@@ -410,4 +410,9 @@ export default {
     margin-top: 50px;
     margin-bottom: 39px;
 }
+input:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+  outline: none;
+}
 </style>

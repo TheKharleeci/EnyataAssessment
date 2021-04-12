@@ -158,4 +158,9 @@ input {
   /* height: 48px;
   width: 379px; */
 }
+input:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+  outline: none;
+}
 </style>

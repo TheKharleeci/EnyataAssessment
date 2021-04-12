@@ -8,8 +8,8 @@
             <b-form @submit.prevent="onSubmit" enctype="multipart/form-data">
                 <div class="right-wrapper-one">
                 <div class="right-wrapper-left">
-                    <p>1/5</p>
-                    <div class="body-upload-2">
+                    <p> {{ questionNumber }}/5</p>
+                    <!-- <div class="body-upload-2">
                 <VueFileAgent
                         ref="vueFileAgent"
                         :theme="'list'"
@@ -29,7 +29,7 @@
                         @delete="fileDeleted($event)"
                         v-model="fileRecordsPhoto">
                       </VueFileAgent>
-                </div>
+                </div> -->
                     <!-- <button>+ Choose file</button> -->
                 </div>
             </div>
@@ -48,6 +48,7 @@
                     v-model="form.optionA"
                     id="inline-form-input-optiona"
                     class="input"
+                    :class="{'selected': correctAnswer === form.optionA}"
                     @dblclick="makeCorrect(form.optionA)">
                 </b-form-input>
                 </div>
@@ -57,6 +58,7 @@
                     v-model="form.optionB"
                     id="inline-form-input-optionb"
                     class="input"
+                    :class="{'selected': correctAnswer === form.optionB}"
                     @dblclick="makeCorrect(form.optionB)">
                 </b-form-input>
                 </div>
@@ -69,6 +71,7 @@
                     v-model="form.optionC"
                     id="inline-form-input-closuredate"
                     class="input"
+                    :class="{'selected': correctAnswer === form.optionC}"
                     @dblclick="makeCorrect(form.optionC)">
                 </b-form-input>
                 </div>
@@ -78,17 +81,31 @@
                     v-model="form.optionD"
                     id="inline-form-input-batchid"
                     class="input"
+                    :class="{'selected': correctAnswer === form.optionD}"
                     @dblclick="makeCorrect(form.optionD)">
                 </b-form-input>
                 </div>
             </div>
             <div class="right-wrapper-four">
-            <b-button class="toggle">Previous</b-button>
-            <b-button class="toggle">Next</b-button>
+                <div>
+                    <b-button class="toggle" v-if="questionNumber === 1"
+                    disabled>Previous</b-button>
+                    <b-button class="toggle" v-else @click="previousQuestion">Previous</b-button>
+                </div>
+                <div>
+                    <b-button class="toggle" v-if="questionNumber >= 5" disabled>
+                    Next
+                    </b-button>
+                    <b-button class="toggle" v-else @click="newQuestion">
+                    Next
+                    </b-button>
+                </div>
             </div>
 
             <div class="btn d-flex">
-                <b-button id="button" type="submit">Finish</b-button>
+                <b-button id="button" v-if="questionNumber <= 4"
+                disabled @click.prevent="onSubmit">Finish</b-button>
+                <b-button id="button" v-else @click.prevent="onSubmit">Finish</b-button>
             </div>
             </b-form>
         </div>
@@ -97,7 +114,7 @@
 
 <script>
 import AdminSideBar from '@/components/AdminSideBar.vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'ComposeAssessment',
@@ -111,7 +128,7 @@ export default {
       correctAnswer: '',
       selectedAnswer: false,
       deleteClicked: false,
-      photo: '',
+      //   photo: '',
       fileRecordsPhoto: [],
       uploadUrl: 'https://enyata-recruitment-portal.herokuapp.com/upload', // change this to the backend endpoint on heroku
       uploadHeaders: { 'X-Test-Header': 'vue-file-agent' },
@@ -119,7 +136,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['createQuestion']),
+    ...mapActions(['createQuestion', 'setNewQuestion', 'showPrevQuestion']),
     addClass() {
       this.selectedAnswer = !this.selectedAnswer;
     },
@@ -130,22 +147,56 @@ export default {
     },
     onSubmit() {
       console.log(this.correctAnswer);
+      //   const payload = { ...this.form, correctAnswer: this.correctAnswer };
+      this.newQuestion();
+      const data = this.viewQuestions;
+      console.log(data);
+      this.createQuestion(data);
+    //   this.form = {
+    //     title: '',
+    //     photo: '',
+    //     optionA: '',
+    //     optionB: '',
+    //     optionC: '',
+    //     optionD: '',
+    //     correctAnswer: '',
+    //   };
+    },
+
+    // photosSelected(fileRecordsNewlySelected) {
+    //   const validFileRecords =
+    // fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
+    //   this.photo = validFileRecords[0].file;
+    // },
+    newQuestion() {
       const payload = { ...this.form, correctAnswer: this.correctAnswer };
-      this.createQuestion(payload);
+      this.setNewQuestion(payload);
       this.form = {
         title: '',
-        photo: '',
+        // photo: '',
         optionA: '',
         optionB: '',
         optionC: '',
         optionD: '',
-        correctAnswer: '',
+        correctAnswer: null,
       };
     },
-    photosSelected(fileRecordsNewlySelected) {
-      const validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
-      this.form.photo = validFileRecords[0].file;
+    previousQuestion() {
+      this.showPrevQuestion();
     },
+  },
+  watch: {
+    showCurrentSetQuestion: {
+      deep: true,
+      handler() {
+        if (this.showCurrentSetQuestion) {
+          this.form = { ...this.showCurrentSetQuestion };
+        }
+      },
+    },
+  },
+  computed: {
+    ...mapGetters(['numberOfSetQuestions', 'questionNumber', 'showCurrentSetQuestion', 'viewQuestions']),
   },
 };
 </script>
@@ -156,6 +207,10 @@ export default {
 }
 .green {
     background-color: #31D283;;
+}
+.selected {
+  background-color: #31D283;
+  color: #000;
 }
 /* .green input[type=text] {
   background-color: #3CBC8D;
@@ -252,5 +307,10 @@ label{
 #button{
     width: 205px;
     height: 41px;
+}
+input:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+  outline: none;
 }
 </style>

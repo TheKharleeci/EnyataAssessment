@@ -78,7 +78,8 @@
               </b-icon>
               </b-form-input-append>
               </b-form-input>
-              <small class="invalid"> {{ passwordError }} </small>
+              <br>
+              <small class="invalid"><span>{{ passwordError }}</span> </small>
           </div>
           <div class="form-child-2">
               <label>Confirm Password</label>
@@ -88,7 +89,6 @@
               type="password"
               v-model="form.confirmPassword"
               disabled
-              @keypress="onTypeConfirmPassword"
               placeholder="">
               <b-input-group-prepend is-text>
               <b-icon icon="eye-fill" aria-hidden="true" style="font-size:24px, color:gray;">
@@ -143,7 +143,6 @@ export default {
       this.lastNameError = '';
       if (this.form.lastName === undefined || this.form.lastName === '') {
         this.lastNameError = 'last name is required';
-        console.log('hello');
       } else if (this.form.lastName !== undefined && this.form.lastName.length < 3) {
         this.lastNameError = 'last name length should be greater than 3';
       }
@@ -152,7 +151,7 @@ export default {
       this.passwordError = '';
       const re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}/;
       if (!re.test(this.form.password)) {
-        this.passwordError = 'password should be at least 7 chanracters with a lowercase, uppercase letter and number';
+        this.passwordError = 'Password should contain at least 7 characters ';
       } else {
         document.getElementById('signup').disabled = false;
         // $('#signup').prop('disabled', false);
@@ -162,9 +161,7 @@ export default {
     // Recheck this one...
     onTypeConfirmPassword() {
       this.confirmPasswordError = '';
-      const password = document.getElementById('password').value;
-      const cpassword = document.getElementById('confirmpassword').value;
-      if (cpassword === password) {
+      if (this.form.password === this.form.confirmPassword) {
         this.confirmPasswordError = 'All good';
       } else {
         this.confirmPasswordError = 'Password must match';
@@ -339,5 +336,10 @@ label{
     color: #4F4F4F;
     font-weight: normal;
     font-style: normal;
+}
+input:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+  outline: none;
 }
 </style>

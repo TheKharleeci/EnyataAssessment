@@ -26,6 +26,11 @@ export default new Vuex.Store({
     question: [],
     questionCount: 1,
     questionIndex: 0,
+    totalSetQuestions: 1,
+    allSetQuestionsCount: 1,
+    step: 0,
+    setQuestions: [],
+    currentSetQuestion: {},
     userAnswers: [],
     timerMinutes: 0,
     timerSeconds: 0,
@@ -36,6 +41,9 @@ export default new Vuex.Store({
     userPw: [],
     user: [],
     applicants: [],
+    allApplicants: [],
+    applicationStatus: '',
+    timer: 200,
     // nextButtonDisabled: false,
     // previousButtonDisabled: true,
     // assessmentQuestions: [],
@@ -60,13 +68,36 @@ export default new Vuex.Store({
     setSeconds: (state, payload) => { state.timerSeconds = payload; },
     updateApplicantCount: (state) => { state.applicantCount += 1; },
     updateRegDaysCount: (state, payload) => { state.days = payload; },
+    addNewQuestion: (state, payload) => {
+      const index = state.step;
+      console.log(index);
+      state.setQuestions[index] = payload;
+      // state.setQuestions.push(payload);
+    },
+    countSetQuestions: (state) => { state.step += 1; },
+    prevSetQuestion: (state) => { state.step -= 1; },
+    // countTotalQuestions: (state) => { state.totalSetQuestions += 1; },
+    countTotalQuestions: (state) => {
+      if (state.totalSetQuestions < 5) {
+        state.totalSetQuestions += 1;
+        console.log('check', state.totalSetQuestions);
+      } else state.totalSetQuestions = 5;
+    },
+    reduceTotalQuestions: (state) => { state.totalSetQuestions -= 1; },
+    // reduceCurrQuestions: (state) => { state.totalSetQuestions -= 1; },
+    allSetQuestions: (state) => { state.allSetQuestionsCount += 1; },
+    changeCurrentQuestion: (state, payload) => { state.currentSetQuestion = payload; },
     regDay: (state, payload) => { state.registeredDay = payload; },
     loggedOut: (state, payload) => { state.logoutResponse = payload; },
     reset: (state, payload) => { state.user.push(payload); },
-    allApplicants: (state, payload) => { state.applicants = payload; },
+    pendingApplicants: (state, payload) => { state.applicants = payload; },
+    seeAppliedApplicants: (state, payload) => { state.allApplicants = payload; },
     setNewPassword: (state, payload) => { state.userPw = payload; },
     setRegister: (state, payload) => {
       state.usersDetail.push(payload);
+    },
+    changeApplicationStatus: (state, payload) => {
+      state.currentUser.applicationStatus = payload;
     },
     authSuccess: (state, payload) => {
       state.status = 'success';
@@ -128,6 +159,13 @@ export default new Vuex.Store({
       commit('assignUser', response.data.data);
       commit('updateApplicantCount');
     },
+    async updateStatus({ commit }, payload) {
+      console.log(payload);
+      const { id } = payload;
+      const response = await axios.put(`https://enyata-recruitment-portal.herokuapp.com/updateUser/${id}`, payload);
+      commit('changeApplicationStatus', response.data);
+      console.log(response.data);
+    },
     async updateAdmin({ commit, getters }, payload) {
       const formdata = new FormData();
       Object.keys(payload).forEach((key) => (
@@ -144,6 +182,25 @@ export default new Vuex.Store({
       // commit('', response.data.data);
       // commit('');
     },
+    setNewQuestion({ commit, getters }, payload) {
+      const currentQuestion = payload;
+      commit('addNewQuestion', currentQuestion);
+      commit('countSetQuestions');
+      commit('countTotalQuestions');
+      const step = getters.numberOfSetQuestions;
+      const questions = getters.viewQuestions;
+      const nextQuestion = questions[step];
+      commit('changeCurrentQuestion', nextQuestion);
+    },
+    showPrevQuestion({ commit, getters }) {
+      commit('prevSetQuestion');
+      commit('reduceTotalQuestions');
+      const step = getters.numberOfSetQuestions;
+      const questions = getters.viewQuestions;
+      const currentQuestion = questions[step];
+      commit('changeCurrentQuestion', currentQuestion);
+      console.log(getters.showCurrentSetQuestion);
+    },
     async loginAdmin({ commit }, payload) {
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/login', payload);
       const tokens = response.data.data.token;
@@ -157,12 +214,9 @@ export default new Vuex.Store({
       // console.log(response.data);
     },
     async createQuestion({ getters }, payload) {
-      const formdata = new FormData();
-      Object.keys(payload).forEach((key) => (
-        formdata.append(key, payload[key])
-      ));
-      console.log(formdata);
-      const response = await axios.post('http://localhost:3000/admin/createQuestion', formdata, {
+      console.log(payload);
+      console.log(getters.loggedInAdminDetails.data.token);
+      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/createQuestion', payload, {
         headers: {
           authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
         },
@@ -192,7 +246,33 @@ export default new Vuex.Store({
       })
         .then((response) => {
           console.log(response.data.data);
-          commit('allApplicants', response.data.data);
+          commit('pendingApplicants', response.data.data);
+        }).catch((error) => {
+          console.log(error);
+        });
+    },
+    async submitAnswers({ getters }, payload) {
+      console.log(payload);
+      console.log(getters.loggedInUser);
+      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/user/answers', payload, {
+        headers: {
+          authorization: `Bearer ${getters.loggedInUser.token}`,
+        },
+      });
+      console.log(response);
+    },
+
+    async getAllApplicants({ commit, getters }) {
+      delete axios.defaults.headers.common.Authorization;
+      // console.log(getters.loggedInUser.token);
+      await axios.get('https://enyata-recruitment-portal.herokuapp.com/allApplicants', {
+        headers: {
+          authorization: `Bearer ${getters.loggedInAdminDetails.data.token}`,
+        },
+      })
+        .then((response) => {
+          // console.log(response.data);
+          commit('seeAppliedApplicants', response.data.data);
         }).catch((error) => {
           console.log(error);
         });
@@ -309,6 +389,7 @@ export default new Vuex.Store({
     showCurrentQuestion: (state) => state.question,
     countQuestions: (state) => state.questionCount,
     currentQuestionIndex: (state) => state.questionIndex,
+    quizTime: (state) => state.timer,
     quizTimeMinutes: (state) => state.setMinutes,
     quizTimeSeconds: (state) => state.setSeconds,
     totalApplications: (state) => state.applicantCount,
@@ -318,9 +399,20 @@ export default new Vuex.Store({
     isAuthenticated: (state) => state.toks.length, // added
     isAdminAuthenticated: (state) => state.adminToks.length,
     authStatus: (state) => state.status, // added
+    displayUserDp: (state) => state.userProfilePicture,
+    error: (state) => state.loginError,
+    numberOfSetQuestions: (state) => state.step,
+    viewQuestions: (state) => state.setQuestions,
+    questionNumber: (state) => state.totalSetQuestions,
+    showCurrentSetQuestion: (state) => state.currentSetQuestion,
     getApplicants: (state) => {
       const item = state.applicants;
       console.log(item);
+      return item;
+    },
+    getNumberOfApplicants: (state) => {
+      const item = state.allApplicants.length;
+      console.log(state.allApplicants.length);
       return item;
     },
   },

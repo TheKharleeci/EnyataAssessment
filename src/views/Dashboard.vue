@@ -105,7 +105,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch('setApplicants');
+    this.$store.dispatch('getAllApplicants');
   },
   computed: {
     ...mapGetters(['totalApplications', 'getNumberOfApplicants', 'userCount']),
