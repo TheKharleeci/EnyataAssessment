@@ -27,7 +27,6 @@ import DeclineModal from '../components/DeclineModal.vue';
 import store from '../store';
 import AssessmentQuestions from '../components/AssessmentQuestions.vue';
 
-
 Vue.use(VueRouter);
 const ifAuthenticated = (to, from, next) => {
   if (store.getters.isAuthenticated) {

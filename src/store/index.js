@@ -90,25 +90,25 @@ export default new Vuex.Store({
     allSetQuestions: (state) => { state.allSetQuestionsCount += 1; },
     changeCurrentQuestion: (state, payload) => { state.currentSetQuestion = payload; },
     updateRegDaysCount: (state, payload) => { state.days = payload; },
-    addNewQuestion: (state, payload) => {
-      const index = state.step;
-      console.log(index);
-      state.setQuestions[index] = payload;
-      // state.setQuestions.push(payload);
-    },
-    countSetQuestions: (state) => { state.step += 1; },
-    prevSetQuestion: (state) => { state.step -= 1; },
+    // addNewQuestion: (state, payload) => {
+    //   const index = state.step;
+    //   console.log(index);
+    //   state.setQuestions[index] = payload;
+    //   // state.setQuestions.push(payload);
+    // },
+    // countSetQuestions: (state) => { state.step += 1; },
+    // prevSetQuestion: (state) => { state.step -= 1; },
     // countTotalQuestions: (state) => { state.totalSetQuestions += 1; },
-    countTotalQuestions: (state) => {
-      if (state.totalSetQuestions < 5) {
-        state.totalSetQuestions += 1;
-        console.log('check', state.totalSetQuestions);
-      } else state.totalSetQuestions = 5;
-    },
-    reduceTotalQuestions: (state) => { state.totalSetQuestions -= 1; },
+    // countTotalQuestions: (state) => {
+    //   if (state.totalSetQuestions < 5) {
+    //     state.totalSetQuestions += 1;
+    //     console.log('check', state.totalSetQuestions);
+    //   } else state.totalSetQuestions = 5;
+    // },
+    // reduceTotalQuestions: (state) => { state.totalSetQuestions -= 1; },
     // reduceCurrQuestions: (state) => { state.totalSetQuestions -= 1; },
-    allSetQuestions: (state) => { state.allSetQuestionsCount += 1; },
-    changeCurrentQuestion: (state, payload) => { state.currentSetQuestion = payload; },
+    // allSetQuestions: (state) => { state.allSetQuestionsCount += 1; },
+    // changeCurrentQuestion: (state, payload) => { state.currentSetQuestion = payload; },
     regDay: (state, payload) => { state.registeredDay = payload; },
     loggedOut: (state, payload) => { state.logoutResponse = payload; },
     reset: (state, payload) => { state.user.push(payload); },
@@ -204,25 +204,16 @@ export default new Vuex.Store({
       // commit('', response.data.data);
       // commit('');
     },
-    setNewQuestion({ commit, getters }, payload) {
-      const currentQuestion = payload;
-      commit('addNewQuestion', currentQuestion);
-      commit('countSetQuestions');
-      commit('countTotalQuestions');
-      const step = getters.numberOfSetQuestions;
-      const questions = getters.viewQuestions;
-      const nextQuestion = questions[step];
-      commit('changeCurrentQuestion', nextQuestion);
-    },
-    showPrevQuestion({ commit, getters }) {
-      commit('prevSetQuestion');
-      commit('reduceTotalQuestions');
-      const step = getters.numberOfSetQuestions;
-      const questions = getters.viewQuestions;
-      const currentQuestion = questions[step];
-      commit('changeCurrentQuestion', currentQuestion);
-      console.log(getters.showCurrentSetQuestion);
-    },
+    // setNewQuestion({ commit, getters }, payload) {
+    //   const currentQuestion = payload;
+    //   commit('addNewQuestion', currentQuestion);
+    //   commit('countSetQuestions');
+    //   commit('countTotalQuestions');
+    //   const step = getters.numberOfSetQuestions;
+    //   const questions = getters.viewQuestions;
+    //   const nextQuestion = questions[step];
+    //   commit('changeCurrentQuestion', nextQuestion);
+    // },
     async loginAdmin({ commit }, payload) {
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/admin/login', payload);
       const tokens = response.data.data.token;
@@ -316,8 +307,6 @@ export default new Vuex.Store({
       });
       console.log(response);
     },
-
-
     async getAllApplicants({ commit, getters }) {
       delete axios.defaults.headers.common.Authorization;
       // console.log(getters.loggedInUser.token);
@@ -352,7 +341,6 @@ export default new Vuex.Store({
 
     // checkUserCount({ commit, getters }) {},
 
-
     setNewQuestion({ commit, getters }, payload) {
       const currentQuestion = payload;
       commit('addNewQuestion', currentQuestion);
@@ -384,8 +372,6 @@ export default new Vuex.Store({
     //   console.log(payload);
     //   console.log(response);
     // },
-
-
     nextQuestion({ commit, getters, dispatch }) {
       const index = getters.currentQuestionIndex;
       const questions = getters.getAllQuestions;
