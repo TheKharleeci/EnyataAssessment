@@ -18,6 +18,7 @@
           label-for="input-1"
         >
           <b-form-input
+          @click="errorMsg = ''"
             id="input-1"
             v-model="form.email"
             type="email"
@@ -33,6 +34,7 @@
         class="text-left label"
         type="password">
           <b-form-input
+            @click="errorMsg = ''"
             id="input-2"
             v-model="form.password"
             placeholder="Enter password"
@@ -43,7 +45,8 @@
           <br>
         </b-form-group>
         <div class="">
-        <p class="invalid" v-show="error"> {{ error }}</p>
+        <p class="invalid"> {{ errorMsg }} </p>
+        <!-- <p class="invalid" v-show="error"> hi {{ error }} </p> -->
         <b-button type="submit"
         class="button" block variant="dark">Sign In</b-button>
         <div class="register d-flex justify-content-between">
@@ -63,32 +66,53 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
-
   data() {
     return {
       form: {
       },
+      submitStatus: null,
+      errorMsg: '',
     };
   },
   methods: {
     ...mapActions(['loginUser']),
     onSubmit() {
-      // const { form } = this;
+      // let attempt;
       this.loginUser(this.form);
       this.form = {
         email: '',
         password: '',
       };
+      // if (this.form.email === 'currentApplicant[email]' && this.form.password
+      // === 'currentApplicant[password]') {
+      //   console.log('Login successfully');
+      //   this.toSignUp();
+      // } else {
+      //   attempt -= 3;
+      //   if (attempt === 0) {
+      //     this.form.email.disable = true;
+      //     console.log('try again');
+      //   }
+      //     return false;
+      // }
+      // }
+      // return false;
     },
     toSignUp() {
       this.$router.push('/signup');
     },
   },
   watch: {
+    error: {
+      deep: true,
+      handler() {
+        this.errorMsg = this.error;
+        // console.log(this.errorMsg);
+      },
+    },
     loggedInUser: {
       deep: true,
       handler() {
-        // this.isLoading = false;
         this.$router.push('/app');
       },
     },
@@ -160,5 +184,10 @@ input {
   border: 1.5px solid #BDBDBD;
   box-sizing: border-box;
   border-radius: 4px;
+}
+input:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+  outline: none;
 }
 </style>

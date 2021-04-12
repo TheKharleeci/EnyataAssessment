@@ -8,7 +8,8 @@
       class="border border-dark"
       no-header shadow>
         <div class="sidebar-top">
-          <b-img v-bind="profileImg" rounded="circle" alt="Profile Image"
+          <b-img v-bind="profileImg" rounded="circle"
+          alt="Profile Image" :src= currentApplicant.picture
           class="mb-2">
           </b-img>
           <div class="text-white">
@@ -18,7 +19,6 @@
         </div>
         <div class="sidebar-body text-left p-3">
           <nav class="mb-3">
-            <img :src="displayUserDp" alt="">
             <b-nav vertical>
               <b-nav-item href="#" @click="toDashboard" active class="admin-menu">
                 <img src="../assets/Dashboard.svg" alt="" class="mr-3 d-inline-block">
@@ -51,7 +51,7 @@ export default {
     return {
       visible: true,
       profileImg: {
-        blankColor: '#777', width: 100, height: 100, class: 'mt-4',
+        width: 100, height: 100, class: 'mt-4',
       },
     };
   },
@@ -79,7 +79,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['loggedInUser', 'currentApplicant', 'displayUserDp']),
+    ...mapGetters(['loggedInUser', 'currentApplicant']),
   },
 };
 </script>

@@ -11,8 +11,6 @@
               <span class="spanD"></span>
               <div class="text-left">
                 <p class="timer">Set Time</p>
-                <h2 >00 <span>
-                  <small>min</small></span> 010 <span> <small>sec</small></span></h2>
                   <input type="number" min="0" max = "99"
                   class="time"
                   v-model="time.min"
@@ -52,10 +50,10 @@ export default {
       const seconds = parseInt(this.time.sec, 10);
       this.testTime = minutes + seconds;
       console.log(this.testTime);
+
       const payload = { time: this.testTime };
       this.setTime(payload);
     },
-
   },
   components: {
   },

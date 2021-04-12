@@ -5,14 +5,17 @@
     </div>
         <div class="body-right">
             <h1>Compose Assessment</h1>
-            <div class="right-wrapper-one">
+            <b-form @submit.prevent="onSubmit" enctype="multipart/form-data">
+                <div class="right-wrapper-one">
                 <div class="right-wrapper-left">
+
                     <!-- <p>15/30</p> -->
                     <p> {{ questionNumber }}/ {{ maxQuestions }}</p>
                     <button>+ Choose file</button>
                 </div>
             </div>
             <b-form>
+
             <div class="instruction">
                 <label>Questions</label>
                 <b-form-input
@@ -72,6 +75,8 @@
             </div> -->
             <div class="right-wrapper-four">
                 <div>
+
+
                 <b-button class="toggle" v-if="questionNumber === 1"
                 disabled>Previous</b-button>
                 <b-button class="toggle" v-else @click="previousQuestion">Previous</b-button>
@@ -89,10 +94,14 @@
                 <b-button class="toggle" v-else @click="newQuestion">
                   Next
                 </b-button>
+
                 </div>
             </div>
             <div class="btn d-flex">
+
+
                 <b-button id="button" v-if="questionNumber <= maxQuestions - 1"
+
                 disabled @click.prevent="onSubmit">Finish</b-button>
                 <b-button id="button" v-else @click.prevent="onSubmit">Finish</b-button>
             </div>
@@ -103,8 +112,10 @@
 <script>
 import AdminSideBar from '@/components/AdminSideBar.vue';
 import { mapActions, mapGetters } from 'vuex';
+
 import constants from '../constants';
 // import AssessmentQuestions from '@/components/AssessmentQuestions.vue';
+
 
 export default {
   name: 'ComposeAssessment',
@@ -120,6 +131,7 @@ export default {
       selectedAnswer: false,
       deleteClicked: false,
       maxQuestions: constants.totalQuestionNumber,
+
     };
   },
   methods: {
@@ -153,6 +165,7 @@ export default {
       this.setNewQuestion(payload);
       this.form = {
         title: '',
+        // photo: '',
         optionA: '',
         optionB: '',
         optionC: '',
@@ -198,6 +211,10 @@ export default {
 <style scoped>
 .red {
   background-color: red;
+}
+.selected {
+  background-color: #31D283;
+  color: #000;
 }
 .selected {
   background-color: #31D283;
@@ -299,5 +316,10 @@ label{
 #button{
     width: 205px;
     height: 41px;
+}
+input:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+  outline: none;
 }
 </style>

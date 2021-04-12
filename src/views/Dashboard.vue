@@ -15,14 +15,14 @@
           <b-row no-gutters >
             <b-col cols="3" class="text-left">
               <p>Current Applications</p>
-              <h2> {{ totalApplications }} </h2>
+              <h2> {{ getNumberOfApplicants }} </h2>
               <span id="spanA"></span>
               <h6>Academy 2.0</h6>
               <!-- <h2> {{ userCount }} </h2> -->
             </b-col>
             <b-col cols="3" class="text-left">
               <p>Total Applications</p>
-              <h2>{{ totalApplications }} </h2>
+              <h2>{{ getNumberOfApplicants }} </h2>
               <span id="spanB"></span>
               <h6>All entries so far</h6>
             </b-col>
@@ -104,8 +104,11 @@ export default {
       this.$router.push('/compose');
     },
   },
+  mounted() {
+    this.$store.dispatch('getAllApplicants');
+  },
   computed: {
-    ...mapGetters(['totalApplications', 'userCount']),
+    ...mapGetters(['totalApplications', 'getNumberOfApplicants', 'userCount']),
   },
 };
 </script>

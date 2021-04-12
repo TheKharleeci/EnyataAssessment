@@ -9,6 +9,7 @@
       <router-link to="/client">ClientDashboard</router-link> |
       <router-link to="/results">Results</router-link> |
       <router-link to="/adminProfile">Admin</router-link> |
+      <router-link to="/app">Application</router-link> |
       <router-link to="/signup">signup</router-link> |
       <router-link to="/timer">timer</router-link> |
       <router-link to="/successfulPage">success</router-link> |

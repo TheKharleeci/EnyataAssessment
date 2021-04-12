@@ -51,9 +51,9 @@
             </b-form-group>
             <div class="mt-3">
             <b-button type="submit" block variant="light">Sign In</b-button>
-            <div class="register float-right">
+            <!-- <div class="register float-right">
               <p> <i><small>Forgot Password?</small></i></p>
-            </div>
+            </div> -->
             </div>
           </b-form>
         </div>
@@ -159,6 +159,11 @@ h4 {
   width: 100%;
   height: 100%;
   position: relative;
+}
+input:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+  outline: none;
 }
 /* .form { */
   /* margin-right: 20px; */

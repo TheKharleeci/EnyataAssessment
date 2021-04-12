@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <div class="sub-header">
-        <!-- <img src="../assets/new_logo.svg" alt="logo"> -->
+        <img src="../assets/enyatalogo.svg" alt="logo">
         <h3>Applicant Sign Up</h3>
       </div>
     </div>
@@ -15,19 +15,23 @@
                   class="input"
                   type="text"
                   v-model="form.firstName"
-                  placeholder="">
+                  placeholder=""
+                  @keydown="onTypeFirstName">
               </b-form-input>
+              <small class="invalid"> {{ firstNameError }} </small>
           </div>
 
           <div class="form-child-2">
               <label>Last Name</label>
               <b-form-input
                   class="input"
-                  id="inline-form-input-lastname"
+                  id="last"
                   v-model="form.lastName"
                   type="text"
-                  placeholder="">
+                  placeholder=""
+                  @keydown="onTypeLastName">
               </b-form-input>
+              <small class="invalid"> {{ lastNameError }} </small>
           </div>
       </div>
 
@@ -37,19 +41,24 @@
               <b-form-input
               id="inline-form-input-email"
               class="input"
-              type="email"
               v-model="form.email"
+              @keydown="onTypeEmail"
               placeholder="">
               </b-form-input>
+              <small class="invalid"> {{ emailError }} </small>
+
               </div>
           <div class="form-child-2">
               <label>Phone Number</label>
               <b-form-input
+              type = "tel"
               id="inline-form-input-phonenumber"
               class="input"
               v-model="form.phoneNumber"
+              @keyup="onTypeNumber"
               placeholder="">
               </b-form-input>
+              <small class="invalid"> {{ phoneNoError }} </small>
           </div>
       </div>
 
@@ -57,35 +66,41 @@
           <div class="form-child-1">
               <label>Password</label>
               <b-form-input
-              id="inline-form-input-password"
+              id="password"
               class="input"
               v-model="form.password"
               type="password"
+              @keydown="onTypePassword"
               placeholder=""
               ><b-form-input-append is-text>
+              <p></p>
               <b-icon icon="eye-fill" aria-hidden="true" style="font-size:24px, color:gray;">
               </b-icon>
               </b-form-input-append>
               </b-form-input>
+              <br>
+              <small class="invalid"><span>{{ passwordError }}</span> </small>
           </div>
           <div class="form-child-2">
               <label>Confirm Password</label>
               <b-form-input
-              id="inline-form-input-confirmpassword"
+              id="confirmpassword"
               class="input"
               type="password"
               v-model="form.confirmPassword"
+              disabled
               placeholder="">
               <b-input-group-prepend is-text>
               <b-icon icon="eye-fill" aria-hidden="true" style="font-size:24px, color:gray;">
               </b-icon>
               </b-input-group-prepend>
               </b-form-input>
+              <small class="invalid" > {{ confirmPasswordError }}</small>
           </div>
       </div>
       <div class="signup-bottom">
       <!-- <router-link :to = "{dashboard: '/dashboard'}"> -->
-      <b-button type="submit" block variant="light" id="signup">
+      <b-button type="submit" block variant="light" id="signup" >
           Sign Up</b-button>
           <!-- </router-link> -->
       <br/>
@@ -106,10 +121,114 @@ export default {
     return {
       form: {
       },
+      passwordError: '',
+      confirmPasswordError: '',
+      phoneNoError: '',
+      emailError: '',
+      firstNameError: '',
+      lastNameError: '',
     };
   },
   methods: {
     ...mapActions(['userSignUp']),
+    onTypeFirstName() {
+      this.firstNameError = '';
+      if (this.form.firstName === undefined) {
+        this.firstNameError = 'First name is required';
+      } else if (this.form.firstName !== undefined && this.form.firstName.length < 3) {
+        this.firstNameError = 'First name length should be greater than 3';
+      }
+    },
+    onTypeLastName() {
+      this.lastNameError = '';
+      if (this.form.lastName === undefined || this.form.lastName === '') {
+        this.lastNameError = 'last name is required';
+      } else if (this.form.lastName !== undefined && this.form.lastName.length < 3) {
+        this.lastNameError = 'last name length should be greater than 3';
+      }
+    },
+    onTypePassword() {
+      this.passwordError = '';
+      const re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}/;
+      if (!re.test(this.form.password)) {
+        this.passwordError = 'Password should contain at least 7 characters ';
+      } else {
+        document.getElementById('signup').disabled = false;
+        // $('#signup').prop('disabled', false);
+        document.getElementById('confirmpassword').disabled = false;
+      }
+    },
+    // Recheck this one...
+    onTypeConfirmPassword() {
+      this.confirmPasswordError = '';
+      if (this.form.password === this.form.confirmPassword) {
+        this.confirmPasswordError = 'All good';
+      } else {
+        this.confirmPasswordError = 'Password must match';
+      }
+    },
+    onTypeEmail() {
+      this.emailError = '';
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!re.test(this.form.email)) {
+        this.emailError = 'Please enter a valid email';
+      }
+    },
+    onTypeNumber() {
+      this.phoneNoError = '';
+      const reg = new RegExp('^[0-9]+$');
+      if (this.form.phoneNumber.length < 11 || !reg.test(this.form.phoneNumber)) {
+        this.phoneNoError = 'Phone number should be at least 11 digits';
+      }
+    },
+    // onType() {
+    //   this.passwordError = '';
+    //   this.confirmPasswordError = '';
+    //   this.phoneNoError = '';
+    //   this.emailError = '';
+    //   this.firstNameError = '';
+    //   this.lastNameError = '';
+
+    //   // if (this.form.password.length < 7) {
+    //   //   this.passwordError = 'Please make sure your password is at least 7 characters.';
+    //   // }
+    //   if (this.form.firstName === undefined) {
+    //     this.firstNameError = 'First name is required';
+    //   }
+    //   if (this.form.lastName === undefined) {
+    //     this.lastNameError = 'Last name is required';
+    //   }
+    //   if (this.form.password !== this.form.confirmPassword) {
+    //     this.confirmPasswordError = 'Password must be the same.';
+    //   }
+    //   // if (this.form.phoneNumber.length < 11) {
+    //   //   this.phoneNoError = 'Phone number should be at least 11 digits';
+    //   // }
+    //   // const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@
+    //   // ((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]
+    // {2,}))$/;
+    //   // if (!re.test(this.form.email.toLowerCase())) {
+    //   //   this.emailError = 'Please enter a valid email';
+    //   // }
+    //   const errors = [this.passwordError, this.confirmPasswordError,
+    //     this.phoneNoError, this.emailError, this.firstNameError, this.lastNameError];
+    //   for (let i = 0; i < errors.length; i += 1) {
+    //     if (errors[i]) {
+    //       // console.log(" there's an error");
+    //       return;
+    //     }
+    //   }
+    //   // this.userSignUp(this.form);
+    //   // this.form = {
+    //   //   firstName: '',
+    //   //   lastName: '',
+    //   //   email: '',
+    //   //   phoneNumber: '',
+    //   //   password: '',
+    //   //   confirmPassword: '',
+    //   // };
+    //   console.log('hello');
+    // },
     onSubmit() {
       this.userSignUp(this.form);
       this.form = {
@@ -138,6 +257,12 @@ export default {
 </script>
 
 <style scoped>
+.invalid {
+  font-size: 15px;
+  color: red;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .header{
     margin: 0 auto;
     padding-top: 100px;
@@ -211,5 +336,10 @@ label{
     color: #4F4F4F;
     font-weight: normal;
     font-style: normal;
+}
+input:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+  outline: none;
 }
 </style>

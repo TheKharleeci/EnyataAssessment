@@ -9,23 +9,23 @@
         <b-col cols="9">
            <b-row no-gutters >
             <b-col class="text-left">
-              <h2 class="headerText">Entries - Batch 2</h2>
-              <p> <small> <i>Comprises all that applied for batch 2</i> </small> </p>
+              <h2 class="headerText">Entries - Batch 1</h2>
+              <p> <small> <i>Comprises all that applied for batch 1</i> </small> </p>
             </b-col>
           </b-row>
           <b-row no-gutters class="mt-5">
             <b-col cols="11">
               <div>
-                <div class="table-header">
+                <!-- <div class="table-header">
                   <b-row no-gutters class="align-items-center">
                     <b-col cols="2">Name</b-col>
-                      <b-col cols="2">Email</b-col>
+                      <b-col cols="3">Email</b-col>
                       <b-col cols="2">DOB-Age <span>
                         <button class="btn">
                           <img src="../assets/age-arrow.svg" alt="sort button">
                         </button> </span>
                       </b-col>
-                      <b-col cols="3">Address</b-col>
+                      <b-col cols="2" class="d-flex justify-content-center">Address</b-col>
                       <b-col cols="2">University</b-col>
                       <b-col cols="1">CGPA
                         <button class="btn">
@@ -33,39 +33,51 @@
                         </button>
                       </b-col>
                   </b-row>
+                </div> -->
+                 <div>
+                <!-- <b-list-group class="" >
+                  <b-list-group-item href="#" class="batch" @click="show(applicant)"
+                    v-for="applicant in applicants" :key="applicant.index">
+                    <b-row no-gutters>
+                      <b-col cols="2">
+                        {{ applicant.name }}</b-col>
+                      <b-col cols="3">
+                        {{ applicant.email }}</b-col>
+                      <b-col cols="2">{{ applicant.date_of_birth }}</b-col>
+                      <b-col cols="2">{{ applicant.address }}</b-col>
+                      <b-col cols="2">{{ applicant.university }}</b-col>
+                      <b-col cols="1">{{ applicant.cgpa }}</b-col>
+                    </b-row>
+                  </b-list-group-item>
+                </b-list-group> -->
+                 <b-table class="table table-hover"
+              id="entries-table"
+              href="#"
+              :items="applicants"
+              :fields="fields"
+              head-variant="dark"
+              table-variant="light"
+              :borderless="true"
+              responsive="sm"
+              ref="selectableTable"
+              selectable @row-clicked="(item) =>
+                show(item)">
+            </b-table>
                 </div>
-                <b-list-group class="">
-                  <b-list-group-item href="#" class="batch">
-                    <b-row no-gutters>
-                      <b-col cols="2">Ify Chinke</b-col>
-                      <b-col cols="2">ify@enyata.com</b-col>
-                      <b-col cols="2">12/09/19</b-col>
-                      <b-col cols="3">3 Sabo Ave, Yaba, Lagos</b-col>
-                      <b-col cols="2">University of Nigeria</b-col>
-                      <b-col cols="1">5.0</b-col>
-                    </b-row>
-                  </b-list-group-item>
-                  <b-list-group-item href="#" class="batch">
-                    <b-row no-gutters>
-                      <b-col cols="2">Ify Chinke</b-col>
-                      <b-col cols="2">ify@enyata.com</b-col>
-                      <b-col cols="2">12/09/19</b-col>
-                      <b-col cols="3">3 Sabo Ave, Yaba, Lagos</b-col>
-                      <b-col cols="2">University of Nigeria</b-col>
-                      <b-col cols="1">5.0</b-col>
-                    </b-row>
-                  </b-list-group-item>
-                  <b-list-group-item href="#" class="batch">
-                    <b-row no-gutters>
-                      <b-col cols="2">Ify Chinke</b-col>
-                      <b-col cols="2">ify@enyata.com</b-col>
-                      <b-col cols="2">12/09/19</b-col>
-                      <b-col cols="3">3 Sabo Ave, Yaba, Lagos</b-col>
-                      <b-col cols="2">University of Nigeria</b-col>
-                      <b-col cols="1">5.0</b-col>
-                    </b-row>
-                  </b-list-group-item>
-                </b-list-group>
+                 <modal name="modal-entries"
+            :resizeable = "true"
+            :draggable="true"
+            :width="600"
+            :height="1024">
+              <EntriesModal @approve="methodHere"
+              @decline="closeDeclineModal" :entryItem="entryItem" />
+            </modal>
+                <modal name="approve-modal" :width="400">
+                    <ApproveModal :entryItem = 'entryItem'/>
+                </modal>
+                <modal name="decline-modal" :width="400">
+                    <DeclineModal :entryItem = 'entryItem'/>
+                </modal>
               </div>
             </b-col>
             <b-col cols=""></b-col>
@@ -77,12 +89,97 @@
 </template>
 
 <script>
-import AdminSideBar from '@/components/AdminSideBar.vue';
+import { mapGetters } from 'vuex';
+import AdminSideBar from '../components/AdminSideBar.vue';
+import EntriesModal from '../components/EntriesModal.vue';
+import ApproveModal from '../components/ApproveModal.vue';
+import DeclineModal from '../components/DeclineModal.vue';
 
 export default {
-  name: 'Dashbord',
+  name: 'Entries',
   components: {
     AdminSideBar,
+    EntriesModal,
+    ApproveModal,
+    DeclineModal,
+  },
+  data() {
+    return {
+      showModal: false,
+      entryItem: {},
+      fields: [
+        {
+          key: 'name',
+          label: 'Name',
+          sortable: true,
+        },
+        {
+          key: 'email',
+          label: 'Email',
+          sortable: false,
+        },
+        {
+          key: 'date_of_birth',
+          label: 'DOB-Age',
+          sortable: true,
+        },
+        {
+          key: 'address',
+          label: 'Address',
+          sortable: false,
+        },
+        {
+          key: 'university',
+          label: 'University',
+          sortable: false,
+        },
+        {
+          key: 'cgpa',
+          label: 'Cgpa',
+          sortable: true,
+        },
+      ],
+    };
+  },
+  methods: {
+    show(applicant) {
+      this.entryItem = applicant;
+      this.$modal.show('modal-entries');
+      console.log('applicant', this.entryItem);
+    },
+    methodHere() {
+      // call method to hide other modal
+      this.hide();
+      // call method to show modal here
+      this.showApproveModal();
+    },
+    closeDeclineModal() {
+      this.hide();
+      this.display();
+    },
+    showApproveModal() {
+      this.$modal.show('approve-modal');
+    },
+    hideApprove() {
+      this.$modal.show('approve-modal');
+    },
+    display() {
+      this.$modal.show('decline-modal');
+    },
+    hideDecline() {
+      this.$modal.hide('decline-modal');
+    },
+    hide() {
+      this.$modal.hide('modal-entries');
+    },
+  },
+  computed: {
+    ...mapGetters({
+      applicants: 'getApplicants',
+    }),
+  },
+  mounted() {
+    this.$store.dispatch('setApplicants');
   },
 };
 </script>
@@ -100,49 +197,28 @@ export default {
   margin-top: 90px;
   margin-bottom: 1px ;
 }
-a {
+.table-hover{
+  background: #fff;
+}
+a{
   color: #4f4f4f;
   border: transparent;
   border-left: 4px solid transparent;
-  /* border: none; */
 }
 a:hover {
   color: #2B3C4E;
-  /* background: cadetblue; */
-  /* font-weight: 550; */
-  /* border-left-color: #31D283; */
   border-color: #7557D3;
   box-shadow: 8px 18px 20px rgba(79, 79, 79, 0.3);
   border-radius: 8px;
 }
-/* .bar {
-  width: 21%;
-} */
-/* .wrapper {
-  min-height: 100vh;
-}
-b-container {
-  margin: 0;
-}*/
 .main-page {
   padding-top: 80px;
   padding-bottom: 15px;
-  /* margin-left: 0; */
 }
-/*.intro-text {
-  font-style: italic;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  color: #2B3C4E;
-  margin-top: 14px;
-  margin-bottom: 60px;
-} */
 #spanA, #spanB, #spanC {
   display:block;
   width:65%;
   border-top: 4px solid #006DF0;
-  /* background: #006DF0; */
   border-radius: 4px;
 }
 #spanB {
@@ -173,7 +249,6 @@ h6 {
   font-size: 12px;
   line-height: 14px;
   color: #4F4F4F;
-  /* margin-bottom: 20px; */
 }
 .boxHeader {
   font-weight: bold;
@@ -187,26 +262,9 @@ font-weight: normal;
 font-size: 14px;
 line-height: 22px;
 color: #4F4F4F;
-/* width: 482px; */
 height: 50px;
+z-index: 98;
 }
-/* .batchText {
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 22px;
-  color: #4F4F4F;
-} */
-/*
-p {
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 17px;
-  color: #4F4F4F;
-}
-.line {
-  border-bottom: 1px solid #CECECE;
-  height: 60px;
-} */
 .box {
   width: 400px;
   min-height: 352px;
@@ -230,7 +288,6 @@ font-size: 16px;
 line-height: 23px;
 color: #4F4F4F;
 }
-
 .btnText {
 font-weight: bold;
 font-size: 16px;
@@ -257,11 +314,56 @@ color: #FFFFFF;
 }
 .btn {
   border: none;
-  /* padding: 0; */
-  /* padding: 0;
-  margin: 0; */
 }
 button:focus {
   outline: none;
+}
+.modal-container{
+    overflow-y: auto;
+    height: 100vh;
+    width: 50vw;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 99;
+}
+.big-container{
+ margin-left: 48px;
+}
+.image-wrapper{
+    width: 179px;
+    height: 179px;
+    border: 1px solid #474747;
+    margin-top: 20px;
+    margin-bottom: 6px;
+}
+p{
+    text-align: left;
+    font-weight: 500;
+    font-size: 16px;
+}
+.wrapper{
+    display: flex;
+    gap: 32px;
+    justify-content: left;
+    margin-top: 20px;
+    align-content: left;
+}
+label{
+    color: #474747;
+    font-size: 14px;
+    font-weight: 200;
+}
+.input{
+    width: 231px;
+    height: 36px;
+}
+.btn-wrapper{
+    margin-top: 32px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }
 </style>

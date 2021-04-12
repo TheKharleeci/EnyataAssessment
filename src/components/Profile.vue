@@ -1,6 +1,7 @@
 <template>
   <div>
-    <b-row no-gutters>
+    <b-form enctype="multipart/form-data">
+      <b-row no-gutters>
       <!-- <b-col cols="3"></b-col> -->
       <b-col cols="9">
         <b-row no-gutters>
@@ -8,7 +9,7 @@
               <div class="d-flex justify-content-between">
                 <h4>Profiles Setting</h4>
                 <button class="edit-button"
-                 @click="enableEdit"
+                 @click.prevent="enableEdit"
                 variant="outline-primary">Edit</button>
               </div>
               <span class="spanD"></span>
@@ -21,9 +22,27 @@
                 class="profileImg">
                 </b-img>
               </div>
-              <button class="imageBtn">
-                Upload new image
-              </button>
+                <div class="body-upload-2" enctype="multipart/form-data">
+                <VueFileAgent
+                        ref="vueFileAgent"
+                        :theme="'list'"
+                        :multiple="false"
+                        :deletable="false"
+                        :meta="true"
+                        :accept="'.jpg, .png'"
+                        :maxSize="'2MB'"
+                        :maxFiles="1"
+                        :helpText="'+ Upload Photo'"
+                        :errorText="{
+                          type: 'Invalid file type. Only .jpg, .png Allowed',
+                          size: 'Files should not exceed 2MB in size',
+                        }"
+                        @select="photosSelected($event)"
+                        @beforedelete="onBeforeDelete($event)"
+                        @delete="fileDeleted($event)"
+                        v-model="fileRecordsPhoto">
+                      </VueFileAgent>
+                </div>
               <button class="btn-color">x Remove</button>
             </div>
           </b-row>
@@ -80,11 +99,13 @@
           </b-row>
           <b-row no-gutters >
             <b-col cols="9" class="d-flex justify-content-center">
-              <b-button @click="save" :disabled="disabled" class="save-button">Save</b-button>
+              <b-button @click.prevent="save"
+              :disabled="disabled" class="save-button">Save</b-button>
             </b-col>
           </b-row>
       </b-col>
     </b-row>
+    </b-form>
   </div>
 </template>
 
@@ -98,11 +119,16 @@ export default {
       profileImg: {
         blank: true, blankColor: '#777', width: 54, height: 54, class: '',
       },
+      fileRecordsPhoto: [],
+      uploadUrl: 'https://enyata-recruitment-portal.herokuapp.com/upload', // change this to the backend endpoint on heroku
+      uploadHeaders: { 'X-Test-Header': 'vue-file-agent' },
+      fileRecordsForPhoto: [],
       admin: {
         name: '',
         phoneNumber: '',
         country: '',
         address: '',
+        photo: '',
       },
       disabled: true,
     };
@@ -119,8 +145,16 @@ export default {
       //   password: '',
       // };
     },
+    photosSelected(fileRecordsNewlySelected) {
+      const validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
+      this.admin.photo = validFileRecords[0].file;
+    },
   },
   watch: {
+    loggedInAdmin: {
+      immediate: true,
+      handler() {},
+    },
     updateAdmin: {
       deep: true,
       handler() {

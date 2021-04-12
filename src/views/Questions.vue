@@ -168,11 +168,11 @@ export default {
     quizTime: {
       immediate: true,
       handler() {
-        console.log(this.quizTime);
-        console.log(this.timerCount);
+        // console.log(this.quizTime);
+        // console.log(this.timerCount);
         if (!Number.isNaN(this.quizTime)) {
-          console.log(this.quizTime);
-          console.log(this.timerCount);
+          // console.log(this.quizTime);
+          // console.log(this.timerCount);
           this.timerCount = this.quizTime;
         }
       },
@@ -184,7 +184,7 @@ export default {
             this.timerCount -= 1;
           }, 1000);
         } else {
-          alert('Time Up!');
+          // alert('Time Up!');
           this.submitTest();
         }
       },
@@ -223,7 +223,7 @@ export default {
     },
     submitTest() {
       console.log(this.answers);
-      this.submitAnswers(this.answers);
+      // this.submitAnswers(this.answers);
       this.$router.push('/successfulPage');
     },
   },

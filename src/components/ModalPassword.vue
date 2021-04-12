@@ -1,29 +1,29 @@
 <template>
 <div>
-<div class=" d-flex btn" v-on:click.capture="show">
-<button>Send Link</button>
-</div>
-<modal name="modal-forgot-password" @append="opened">
-<b-form class="form-body" id ="modalForm" method="post" @submit.prevent="sendLink">
-<p>Kindly input your email address below.</p>
-<div class="form-group">
-<label for="email">Email Address</label>
-<b-form-input
-id="inline-form-input-email"
-class="input"
-name="email"
-type="text"
-v-model="form.email"
->
-</b-form-input>
-</div>
-<div class="d-flex btn-body">
-<button class="ok-btn" type="submit"
->OK</button>
-</div>
-</b-form>
-</modal>
-</div>
+            <div class=" d-flex btn" v-on:click.capture="show">
+            <button>Send Link</button>
+            </div>
+            <modal name="modal-forgot-password" @append="opened">
+                <b-form class="form-body" id ="modalForm" method="post" @submit.prevent="sendLink">
+                    <p>Kindly input your email address below.</p>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <b-form-input
+                        id="inline-form-input-email"
+                        class="input"
+                        name="email"
+                        type="text"
+                        v-model="form.email"
+                        >
+                        </b-form-input>
+                    </div>
+                    <div class="d-flex btn-body">
+                        <button class="ok-btn" type="submit"
+                        >OK</button>
+                    </div>
+                </b-form>
+            </modal>
+    </div>
 </template>
 
 <script>
@@ -46,6 +46,7 @@ export default {
         email: '',
       };
       this.$modal.hide('modal-forgot-password');
+      this.$router.push('/userLogin');
     },
     show() {
       this.$modal.show('modal-forgot-password');
@@ -91,5 +92,10 @@ border-radius: 4px;
 }
 .btn-body{
 justify-content: center;
+}
+input:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+  outline: none;
 }
 </style>

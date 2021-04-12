@@ -10,22 +10,33 @@
            <b-row no-gutters >
             <b-col class="text-left">
               <div class="d-flex ">
-                <h2 class="headerText">Results - Batch 2</h2>
+                <h2 class="headerText">Results - Batch 1</h2>
                 <div class="arrow">
                   <img src="../assets/down-arrow.svg" alt="">
                 </div>
               </div>
-              <p> <small> <i>Comprises all that applied for batch 2</i> </small> </p>
+              <p> <small> <i>Comprises all that applied for batch 1</i> </small> </p>
             </b-col>
           </b-row>
           <b-row no-gutters class="mr-5">
-            <b-col cols="12">
-              <div>
+            <b-table
+              id="entries-table"
+              :items="applicants"
+              :fields="fields"
+              head-variant="dark"
+              table-variant="light"
+              :borderless="true"
+              responsive="sm"
+              ref="selectableTable"
+              selectable>
+            </b-table>
+            <!-- <b-col cols="12"> -->
+              <!-- <div>
                 <div class="table-header ">
                   <b-row no-gutters class="align-items-center">
-                    <b-col cols="">Name</b-col>
-                      <b-col cols="2">Email</b-col>
-                      <b-col cols="2">DOB-Age <span>
+                    <b-col cols="2" class="d-flex justify-content-start">Name</b-col>
+                      <b-col cols="2" class="d-flex justify-content-start">Email</b-col>
+                      <b-col cols="2" class="d-flex justify-content-start">DOB-Age <span>
                         <button class="btn">
                           <img src="../assets/age-arrow.svg" alt="sort button">
                         </button> </span>
@@ -45,42 +56,27 @@
                   </b-row>
                 </div>
                 <b-list-group class="">
-                  <b-list-group-item href="#" class="batch">
-                    <b-row no-gutters >
-                      <b-col cols="2">Ify Chinke</b-col>
-                      <b-col cols="2">ify@enyata.com</b-col>
-                      <b-col cols="2">12/09/19</b-col>
-                      <b-col cols="2">3 Sabo Ave, Yaba, Lagos</b-col>
-                      <b-col cols="2">University of Nigeria</b-col>
-                      <b-col cols="1">5.0</b-col>
-                      <b-col cols="1">15</b-col>
-                    </b-row>
-                  </b-list-group-item>
-                  <b-list-group-item href="#" class="batch">
+                  <b-list-group-item href="#" class="batch"
+                  v-for="applicant in applicants" :key="applicant.id">
                     <b-row no-gutters>
-                      <b-col cols="2">Ify Chinke</b-col>
-                      <b-col cols="2">ify@enyata.com</b-col>
-                      <b-col cols="2">12/09/19</b-col>
-                      <b-col cols="2">3 Sabo Ave, Yaba, Lagos</b-col>
-                      <b-col cols="2">University of Nigeria</b-col>
-                      <b-col cols="1">5.0</b-col>
-                      <b-col cols="1">20</b-col>
-                    </b-row>
-                  </b-list-group-item>
-                  <b-list-group-item href="#" class="batch">
-                    <b-row no-gutters>
-                      <b-col cols="2">Ify Chinke</b-col>
-                      <b-col cols="2">ify@enyata.com</b-col>
-                      <b-col cols="2">12/09/19</b-col>
-                      <b-col cols="2">3 Sabo Ave, Yaba, Lagos</b-col>
-                      <b-col cols="2">University of Nigeria</b-col>
-                      <b-col cols="1">5.0</b-col>
-                      <b-col cols="1">19</b-col>
+                      <b-col cols="2" class="d-flex justify-content-start g-2">
+                        {{ applicant.name }}</b-col>
+                      <b-col cols="2" class="d-flex justify-content-start">
+                        {{ applicant.email }}</b-col>
+                      <b-col cols="2" class="d-flex justify-content-start">
+                        {{ applicant.date_of_birth }}</b-col>
+                      <b-col cols="2" class="d-flex justify-content-center">
+                        {{ applicant.address }}</b-col>
+                      <b-col cols="2" class="d-flex justify-content-center">
+                        {{ applicant.university }}</b-col>
+                      <b-col cols="1">
+                        {{ applicant.cgpa }}</b-col>
+                      <b-col cols="1" class="d-flex justify-content-center">19</b-col>
                     </b-row>
                   </b-list-group-item>
                 </b-list-group>
-              </div>
-            </b-col>
+              </div> -->
+            <!-- </b-col> -->
             <b-col cols=""></b-col>
           </b-row>
         </b-col>
@@ -91,11 +87,62 @@
 
 <script>
 import AdminSideBar from '@/components/AdminSideBar.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Dashbord',
   components: {
     AdminSideBar,
+  },
+  data() {
+    return {
+      fields: [
+        {
+          key: 'name',
+          label: 'Name',
+          sortable: true,
+        },
+        {
+          key: 'email',
+          label: 'Email',
+          sortable: false,
+        },
+        {
+          key: 'date_of_birth',
+          label: 'DOB-Age',
+          sortable: true,
+        },
+        {
+          key: 'address',
+          label: 'Address',
+          sortable: false,
+        },
+        {
+          key: 'university',
+          label: 'University',
+          sortable: false,
+        },
+        {
+          key: 'cgpa',
+          label: 'Cgpa',
+          sortable: true,
+        },
+        {
+          key: 'score',
+          label: 'Test Score',
+          sortable: true,
+        },
+      ],
+    };
+  },
+  computed: {
+    ...mapGetters({
+      applicants: 'getApplicants',
+    }),
+  },
+
+  mounted() {
+    this.$store.dispatch('setApplicants');
   },
 };
 </script>
