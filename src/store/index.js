@@ -45,6 +45,7 @@ export default new Vuex.Store({
     allApplicants: [],
     applicationStatus: '',
     timer: 200,
+    usersAnswers: [],
     // nextButtonDisabled: false,
     // previousButtonDisabled: true,
     // assessmentQuestions: [],
@@ -90,25 +91,6 @@ export default new Vuex.Store({
     allSetQuestions: (state) => { state.allSetQuestionsCount += 1; },
     changeCurrentQuestion: (state, payload) => { state.currentSetQuestion = payload; },
     updateRegDaysCount: (state, payload) => { state.days = payload; },
-    // addNewQuestion: (state, payload) => {
-    //   const index = state.step;
-    //   console.log(index);
-    //   state.setQuestions[index] = payload;
-    //   // state.setQuestions.push(payload);
-    // },
-    // countSetQuestions: (state) => { state.step += 1; },
-    // prevSetQuestion: (state) => { state.step -= 1; },
-    // countTotalQuestions: (state) => { state.totalSetQuestions += 1; },
-    // countTotalQuestions: (state) => {
-    //   if (state.totalSetQuestions < 5) {
-    //     state.totalSetQuestions += 1;
-    //     console.log('check', state.totalSetQuestions);
-    //   } else state.totalSetQuestions = 5;
-    // },
-    // reduceTotalQuestions: (state) => { state.totalSetQuestions -= 1; },
-    // reduceCurrQuestions: (state) => { state.totalSetQuestions -= 1; },
-    // allSetQuestions: (state) => { state.allSetQuestionsCount += 1; },
-    // changeCurrentQuestion: (state, payload) => { state.currentSetQuestion = payload; },
     regDay: (state, payload) => { state.registeredDay = payload; },
     loggedOut: (state, payload) => { state.logoutResponse = payload; },
     reset: (state, payload) => { state.user.push(payload); },
@@ -134,6 +116,7 @@ export default new Vuex.Store({
       state.toks = [];
     },
     authRequest: (state) => { state.status = 'loading'; },
+    getUserAnswers: (state, payload) => { state.usersAnswers.push(payload); },
   },
   actions: {
     async loginUser({ commit, dispatch }, payload) {
@@ -297,14 +280,15 @@ export default new Vuex.Store({
           console.log(error);
         });
     },
-    async submitAnswers({ getters }, payload) {
+    async submitAnswers({ getters, commit }, payload) {
       console.log(payload);
       console.log(getters.loggedInUser);
-      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/user/answers', payload, {
+      const response = await axios.post('http://localhost:3000/answers', payload, {
         headers: {
           authorization: `Bearer ${getters.loggedInUser.token}`,
         },
       });
+      commit('getUserAnswers', response.data);
       console.log(response);
     },
     async getAllApplicants({ commit, getters }) {

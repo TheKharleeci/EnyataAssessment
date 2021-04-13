@@ -147,7 +147,6 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-
 import ApplicantSideBar from '@/components/ApplicantSideBar.vue';
 
 export default {
@@ -168,11 +167,11 @@ export default {
     quizTime: {
       immediate: true,
       handler() {
-        // console.log(this.quizTime);
-        // console.log(this.timerCount);
+        console.log(this.quizTime);
+        console.log(this.timerCount);
         if (!Number.isNaN(this.quizTime)) {
-          // console.log(this.quizTime);
-          // console.log(this.timerCount);
+          console.log(this.quizTime);
+          console.log(this.timerCount);
           this.timerCount = this.quizTime;
         }
       },
@@ -184,7 +183,7 @@ export default {
             this.timerCount -= 1;
           }, 1000);
         } else {
-          // alert('Time Up!');
+          alert('Time Up!');
           this.submitTest();
         }
       },
@@ -223,7 +222,7 @@ export default {
     },
     submitTest() {
       console.log(this.answers);
-      // this.submitAnswers(this.answers);
+      this.submitAnswers(this.answers);
       this.$router.push('/successfulPage');
     },
   },
@@ -235,9 +234,7 @@ export default {
 
 <style scoped>
 /* .endQuiz {
-
 } */
-
 .timer {
   margin-top: 60px;
   margin-top: 50px;
@@ -305,7 +302,6 @@ li {
   width: 355px;
   height: 33px;
 }
-
 input[type="radio"]:checked + label {
   background-color: #31D283;
 }
@@ -365,5 +361,4 @@ h6 {
  input.active {
   color: red;
 }
-
 </style>
