@@ -159,11 +159,11 @@ export default {
     return {
       timerCount: 360, // this.quizTime
       picked: '',
+      chosenAnswers: [],
       answers: {
       },
     };
   },
-  // for timer use else and call the finish function
   watch: {
     quizTime: {
       immediate: true,
@@ -190,12 +190,9 @@ export default {
       },
       immediate: true,
     },
-    // picked: {
-    //   console.log(this.picked),
-    // },
   },
   methods: {
-    ...mapActions(['getQuestions', 'selectQuestion', 'prevQuestion', 'submitAnswers', 'nextQuestion', 'selectAnswer']),
+    ...mapActions(['getQuestions', 'selectQuestion', 'selectAnswer', 'prevQuestion', 'submitAnswers', 'nextQuestion', 'selectAnswer']),
     next() {
       this.nextQuestion();
     },
@@ -215,28 +212,25 @@ export default {
     },
     displayRadioValue() {
       const { id } = this.showCurrentQuestion;
-      const answer = this.picked;
-      // console.log(id, answer);
-      this.answers[id] = answer;
-      console.log(this.answers);
-      // console.log(this.picked);
+      const payload = { ...this.chosenAnswers, id, value: this.picked };
+      this.selectAnswer(payload);
     },
     submitTest() {
-      console.log(this.answers);
-      // this.submitAnswers(this.answers);
+      // this.displayRadioValue();
+      console.log('three', this.getChosenAnswers);
+      const data = this.getChosenAnswers;
+      console.log(data);
+      this.submitAnswers(data);
       this.$router.push('/successfulPage');
     },
   },
   computed: {
-    ...mapGetters(['getAllQuestions', 'quizTime', 'loggedInUser', 'showCurrentQuestion', 'countQuestions', 'currentQuestionIndex']),
+    ...mapGetters(['getAllQuestions', 'quizTime', 'getChosenAnswers', 'loggedInUser', 'showCurrentQuestion', 'countQuestions', 'currentQuestionIndex']),
   },
 };
 </script>
 
 <style scoped>
-/* .endQuiz {
-
-} */
 
 .timer {
   margin-top: 60px;

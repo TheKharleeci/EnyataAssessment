@@ -45,6 +45,7 @@ export default new Vuex.Store({
     allApplicants: [],
     applicationStatus: '',
     timer: 200,
+    // answers: [],
     // nextButtonDisabled: false,
     // previousButtonDisabled: true,
     // assessmentQuestions: [],
@@ -90,6 +91,8 @@ export default new Vuex.Store({
     allSetQuestions: (state) => { state.allSetQuestionsCount += 1; },
     changeCurrentQuestion: (state, payload) => { state.currentSetQuestion = payload; },
     updateRegDaysCount: (state, payload) => { state.days = payload; },
+    // updateSelectedAnswers: (state, payload) => {state.}
+
     // addNewQuestion: (state, payload) => {
     //   const index = state.step;
     //   console.log(index);
@@ -297,15 +300,29 @@ export default new Vuex.Store({
           console.log(error);
         });
     },
+    // async submitAnswers({ getters }, payload) {
+    //   console.log(payload);
+    //   console.log(getters.loggedInUser);
+    //   const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/answers', payload, {
+    //     headers: {
+    //       authorization: `Bearer ${getters.loggedInUser.token}`,
+    //     },
+    //   });
+    //   console.log(response);
+    // },
     async submitAnswers({ getters }, payload) {
-      console.log(payload);
-      console.log(getters.loggedInUser);
-      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/user/answers', payload, {
+      console.log('check', payload);
+      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/answers', { chosenAnsers: payload }, {
         headers: {
           authorization: `Bearer ${getters.loggedInUser.token}`,
         },
       });
       console.log(response);
+    },
+    selectAnswer({ commit }, payload) {
+      const currentAnswer = payload;
+      console.log(currentAnswer);
+      commit('collectUserAnswers', currentAnswer);
     },
     async getAllApplicants({ commit, getters }) {
       delete axios.defaults.headers.common.Authorization;
@@ -329,17 +346,10 @@ export default new Vuex.Store({
       if (questions.length !== 0) {
         const currQuestion = questions[index];
         const test = questions[index].id;
-        console.log(currQuestion);
         console.log(test);
         commit('currentQuestion', currQuestion);
-        // dispatch('handleDisableButton');
       }
     },
-    // selectAnswer({ commit, getters }) {
-
-    // },
-
-    // checkUserCount({ commit, getters }) {},
 
     setNewQuestion({ commit, getters }, payload) {
       const currentQuestion = payload;
@@ -492,7 +502,7 @@ export default new Vuex.Store({
       console.log(state.allApplicants.length);
       return item;
     },
-
+    getChosenAnswers: (state) => state.userAnswers,
   },
   modules: {
   },
