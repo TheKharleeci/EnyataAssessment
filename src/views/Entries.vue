@@ -15,41 +15,7 @@
           </b-row>
           <b-row no-gutters class="mt-5">
             <b-col cols="11">
-              <div>
-                <!-- <div class="table-header">
-                  <b-row no-gutters class="align-items-center">
-                    <b-col cols="2">Name</b-col>
-                      <b-col cols="3">Email</b-col>
-                      <b-col cols="2">DOB-Age <span>
-                        <button class="btn">
-                          <img src="../assets/age-arrow.svg" alt="sort button">
-                        </button> </span>
-                      </b-col>
-                      <b-col cols="2" class="d-flex justify-content-center">Address</b-col>
-                      <b-col cols="2">University</b-col>
-                      <b-col cols="1">CGPA
-                        <button class="btn">
-                          <img src="../assets/age-arrow.svg" alt="sort button">
-                        </button>
-                      </b-col>
-                  </b-row>
-                </div> -->
                  <div>
-                <!-- <b-list-group class="" >
-                  <b-list-group-item href="#" class="batch" @click="show(applicant)"
-                    v-for="applicant in applicants" :key="applicant.index">
-                    <b-row no-gutters>
-                      <b-col cols="2">
-                        {{ applicant.name }}</b-col>
-                      <b-col cols="3">
-                        {{ applicant.email }}</b-col>
-                      <b-col cols="2">{{ applicant.date_of_birth }}</b-col>
-                      <b-col cols="2">{{ applicant.address }}</b-col>
-                      <b-col cols="2">{{ applicant.university }}</b-col>
-                      <b-col cols="1">{{ applicant.cgpa }}</b-col>
-                    </b-row>
-                  </b-list-group-item>
-                </b-list-group> -->
                  <b-table class="table table-hover"
               id="entries-table"
               href="#"
@@ -71,14 +37,13 @@
             :height="1024">
               <EntriesModal @approve="methodHere"
               @decline="closeDeclineModal" :entryItem="entryItem" />
-            </modal>
+                </modal>
                 <modal name="approve-modal" :width="400">
                     <ApproveModal :entryItem = 'entryItem'/>
                 </modal>
                 <modal name="decline-modal" :width="400">
                     <DeclineModal :entryItem = 'entryItem'/>
                 </modal>
-              </div>
             </b-col>
             <b-col cols=""></b-col>
           </b-row>

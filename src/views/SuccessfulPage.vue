@@ -3,7 +3,7 @@
       <div>
         <ApplicantSideBar/>
       </div>
-        <div class="body-right">
+        <b-container class="body-right">
         <div class="body-right-top">
             <div class="body-right-top-left">
                 <h1>Assessment Taken!</h1>
@@ -16,7 +16,7 @@
             <span>Best of luck</span></p>
             <button><a :href="'/'">Home</a></button>
         </div>
-        </div>
+        </b-container>
     </div>
 </template>
 
