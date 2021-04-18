@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/userLogin">UserLogin</router-link> |
+      <!-- <router-link to="/userLogin">UserLogin</router-link> |
       <router-link to="/questions">Questions</router-link> |
       <router-link to="/admin/login">LoginAdmin</router-link> |
       <router-link to="/dashboard">Dashboard</router-link> |
@@ -15,7 +15,7 @@
       <router-link to="/successfulPage">success</router-link> |
       <router-link to="/takeAssess">Assess</router-link> |
       <router-link to="/compose">Compose</router-link> |
-      <router-link to="/assessment">AssessmentQuestions</router-link>
+      <router-link to="/assessment">AssessmentQuestions</router-link> -->
     </div>
     <router-view/>
   </div>

@@ -39,6 +39,10 @@ export default new Vuex.Store({
     allApplicants: [],
     applicationStatus: '',
     timer: 200,
+    usersAnswers: [],
+    // nextButtonDisabled: false,
+    // previousButtonDisabled: true,
+    // assessmentQuestions: [],
     // check this for Modupe
     userData: {},
   },
@@ -112,6 +116,7 @@ export default new Vuex.Store({
       state.toks = [];
     },
     authRequest: (state) => { state.status = 'loading'; },
+    getUserAnswers: (state, payload) => { state.usersAnswers.push(payload); },
     // check this for Modupe
     setUserData: (state, payload) => { state.userData = payload; },
   },
@@ -233,14 +238,15 @@ export default new Vuex.Store({
           console.log(error);
         });
     },
-    async submitAnswers({ getters }, payload) {
-      console.log(payload);
+    async submitAnswers({ getters, commit }, payload) {
+      // console.log(payload);
       console.log(getters.loggedInUser);
-      const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/user/answers', payload, {
+      const response = await axios.post('http://localhost:4000/answers', payload, {
         headers: {
           authorization: `Bearer ${getters.loggedInUser.token}`,
         },
       });
+      commit('getUserAnswers', response.data);
       console.log(response);
     },
     async getAllApplicants({ commit, getters }) {
@@ -270,6 +276,11 @@ export default new Vuex.Store({
         commit('currentQuestion', currQuestion);
         // dispatch('handleDisableButton');
       }
+    },
+    selectAnswer({ commit }, payload) {
+      const currentAnswer = payload;
+      console.log(currentAnswer);
+      commit('collectUserAnswers', currentAnswer);
     },
 
     setNewQuestion({ commit, getters }, payload) {
@@ -424,6 +435,8 @@ export default new Vuex.Store({
       console.log(state.allApplicants.length);
       return item;
     },
+
+    getChosenAnswers: (state) => state.userAnswers,
     // check this for Modupe
     getUserData: (state) => state.userData,
 
