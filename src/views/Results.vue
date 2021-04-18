@@ -23,11 +23,12 @@
               id="entries-table"
               :items="applicants"
               :fields="fields"
-              head-variant="dark"
+              head-variant="light"
               table-variant="light"
               :borderless="true"
               responsive="sm"
               ref="selectableTable"
+              :hover="true"
               selectable>
             </b-table>
             <!-- <b-col cols="12"> -->
@@ -180,8 +181,8 @@ a:hover {
 .singleRow{
   margin-right: 20px;
 }
-.table-header {
-  background-color: #2B3C4E;
+#entries-table {
+  background-color: purple;
   height: 45px;
   color: #fff;
   font-size: 14px;
@@ -258,6 +259,9 @@ h6 {
   line-height: 19px;
   letter-spacing: -0.02em;
   color: #2B3C4E;
+}
+b-table {
+  background-color: #00F026;
 }
 .batch {
 font-weight: normal;

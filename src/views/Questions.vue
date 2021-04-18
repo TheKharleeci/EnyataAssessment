@@ -147,7 +147,6 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-
 import ApplicantSideBar from '@/components/ApplicantSideBar.vue';
 
 export default {
@@ -231,7 +230,6 @@ export default {
 </script>
 
 <style scoped>
-
 .timer {
   margin-top: 60px;
   margin-top: 50px;
@@ -299,7 +297,6 @@ li {
   width: 355px;
   height: 33px;
 }
-
 input[type="radio"]:checked + label {
   background-color: #31D283;
 }
@@ -359,5 +356,4 @@ h6 {
  input.active {
   color: red;
 }
-
 </style>
