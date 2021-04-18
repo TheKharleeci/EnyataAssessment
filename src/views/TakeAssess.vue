@@ -59,8 +59,9 @@ export default {
     height: 100vh;
 }
 .body-right{
-    margin-left: 350px;
-    margin-right: 100px;
+    /* margin-left: 350px;
+    margin-right: 100px; */
+    margin: 0 350px;
 }
 .body-right-top{
     display: flex;
