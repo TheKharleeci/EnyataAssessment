@@ -281,9 +281,9 @@ export default new Vuex.Store({
         });
     },
     async submitAnswers({ getters, commit }, payload) {
-      console.log(payload);
+      // console.log(payload);
       console.log(getters.loggedInUser);
-      const response = await axios.post('http://localhost:3000/answers', payload, {
+      const response = await axios.post('http://localhost:4000/answers', payload, {
         headers: {
           authorization: `Bearer ${getters.loggedInUser.token}`,
         },
@@ -319,11 +319,11 @@ export default new Vuex.Store({
         // dispatch('handleDisableButton');
       }
     },
-    // selectAnswer({ commit, getters }) {
-
-    // },
-
-    // checkUserCount({ commit, getters }) {},
+    selectAnswer({ commit }, payload) {
+      const currentAnswer = payload;
+      console.log(currentAnswer);
+      commit('collectUserAnswers', currentAnswer);
+    },
 
     setNewQuestion({ commit, getters }, payload) {
       const currentQuestion = payload;
@@ -476,6 +476,7 @@ export default new Vuex.Store({
       console.log(state.allApplicants.length);
       return item;
     },
+    getChosenAnswers: (state) => state.userAnswers,
 
   },
   modules: {
