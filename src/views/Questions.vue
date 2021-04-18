@@ -216,7 +216,7 @@ export default {
     },
     submitTest() {
       // this.displayRadioValue();
-      // console.log('three', this.getChosenAnswers);
+      console.log('three', this.getChosenAnswers);
       const data = this.getChosenAnswers;
       console.log(data);
       this.submitAnswers(data);

@@ -136,14 +136,6 @@ export default {
       const data = this.viewQuestions;
       console.log(data);
       this.createQuestion(data);
-      // this.form = {
-      //   title: '',
-      //   optionA: '',
-      //   optionB: '',
-      //   optionC: '',
-      //   optionD: '',
-      //   correctAnswer: '',
-      // };
     },
     newQuestion() {
       const payload = { ...this.form, correctAnswer: this.correctAnswer };
@@ -162,21 +154,6 @@ export default {
     },
   },
   watch: {
-    // questionNumber: {
-    //   handler() {
-    //     if (this.questionNumber > 5) {
-    //       this.questionNumber = 5;
-    //     }
-    //   },
-    // },
-    // questionNumber(newCount, oldCount) {
-    //   if (newCount >= 6) {
-    // this.questionNumber = oldCount;
-    // this.$set(this.questionNumber, oldCount);
-    //   }
-    //   console.log('new', newCount);
-    //   console.log('old', oldCount);
-    // },
     showCurrentSetQuestion: {
       deep: true,
       handler() {
@@ -193,17 +170,12 @@ export default {
 </script>
 
 <style scoped>
-.red {
-  background-color: red;
-}
+
 .selected {
   background-color: #31D283;
   color: #000;
 }
-/* .green input[type=text] {
-  background-color: #3CBC8D;
-  color: white;
-} */
+
 .body-all{
     display: flex;
     min-height: 100vh;

@@ -88,7 +88,7 @@
               class="input"
               type="password"
               v-model="form.confirmPassword"
-              disabled
+              @keydown="onTypeConfirmPassword"
               placeholder="">
               <b-input-group-prepend is-text>
               <b-icon icon="eye-fill" aria-hidden="true" style="font-size:24px, color:gray;">
@@ -161,7 +161,7 @@ export default {
     // Recheck this one...
     onTypeConfirmPassword() {
       this.confirmPasswordError = '';
-      if (this.form.password === this.form.confirmPassword) {
+      if (this.form.confirmPassword === this.form.password) {
         this.confirmPasswordError = 'All good';
       } else {
         this.confirmPasswordError = 'Password must match';
@@ -257,11 +257,14 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  text-align: left;
+}
 .invalid {
   font-size: 15px;
   color: red;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  /* margin-top: 20px;
+  margin-bottom: 20px; */
 }
 .header{
     margin: 0 auto;
@@ -293,7 +296,7 @@ export default {
     color: #4F4F4F;
 }
 #signup{
-    margin-top: 44px;
+    margin-top: 64px;
     height: 50px;
     background: #7557d3;
     color: #fff;
@@ -301,11 +304,13 @@ export default {
 }
 .form-wrapper {
     margin-top: 78px;
+    height: 100px;
 }
 .form-wrapper-2, .form-wrapper {
     display: flex;
     justify-content: center;
     gap: 62px;
+    height: 100px;
 }
 .form-wrapper-2{
     margin-top: 29px;
