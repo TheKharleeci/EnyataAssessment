@@ -38,7 +38,7 @@
                         :multiple="false"
                         :deletable="false"
                         :meta="true"
-                        :accept="'.jpg, .png'"
+                        :accept="'.jpg, .png, .jpeg'"
                         :maxSize="'2MB'"
                         :maxFiles="1"
                         :helpText="'+ Upload Photo'"
@@ -83,23 +83,7 @@
                   <b-form-input id="inline-form-input-lastname" class="input"
                     type="text" :placeholder="currentApplicant['last_name']"
                     value="currentApplicant['last_name']" v-model= 'form.lastName' disabled>
-                    <!--v-model.lazy="$v.lastName.$model"
-                    :class="{ 'is-invalid': $v.lastName.$error,
-                    'is-valid': !$v.lastName.$invalid }"-->
                   </b-form-input>
-                  <!--div class="valid-feedback">Your last name is valid</div>
-                  <div class="invalid-feedback">
-                    <span v-if="!$v.lastName.required">
-                      Last name is required.</span>
-                    <span v-if="!$v.lastName.minLength">
-                      Last name must have at least
-                        {{$v.lastName.$params.minLength.min}} characters.</span>
-                    <span v-if="!$v.lastName.maxLength">
-                      Last name must have at most
-                        {{$v.lastName.params.maxLength.max}} characters.</span>
-                    <span v-if="!$v.lastName.alpha">
-                      Last name should be alphabet.</span>
-                  </div-->
                 </div>
             </div>
 
@@ -109,33 +93,14 @@
                 <b-form-input id="inline-form-input-email" class="input"
                     type="text" :placeholder="currentApplicant['email']"
                     value="currentApplicant['email']" v-model= 'form.email' disabled>
-                    <!--v-model.lazy="$v.email.$model"
-                    :class="{ 'is-invalid': $v.email.$error,
-                    'is-valid': !$v.email.$invalid }"-->
                   </b-form-input>
-                <!--div class="valid-feedback">Your email is valid</div>
-                <div class="invalid-feedback">
-                  <span v-if="!$v.email.required">
-                    Email is required.</span>
-                  <span v-if="!$v.email.email">
-                    Email is not a properly formatted email address</span>
-              </div-->
             </div>
             <div class="form-child-2">
               <label>Date of Birth</label>
               <b-form-input
                 id="inline-form-input-phonenumber" class="input" type="date"
                 v-model= 'form.dob' required>
-                <!--v-model.lazy="$v.dob.$model" :class="{ 'is-invalid': $v.dob.$error,
-                'is-valid': !$v.dob.$invalid }"-->
               </b-form-input>
-              <!--div class="valid-feedback">Date of birth is valid</div>
-              <div class="invalid-feedback">
-                <span v-if="!$v.dob.required">
-                  Date of birth is required.</span>
-                <span v-if="!$v.dob.alphaNum">
-                  Date of birth should be format mm-dd-yyyy</span>
-              </div-->
             </div>
           </div>
 
@@ -145,38 +110,14 @@
                         <b-form-input
                             id="inline-form-input-address" required
                             class="input" type="text" v-model= 'form.address'>
-                            <!--v-model.lazy="$v.address.$model"
-                            :class="{ 'is-invalid': $v.address.$error,
-                            'is-valid': !$v.address.$invalid }"-->
                         </b-form-input>
-                        <!--div class="valid-feedback">Address is valid</div>
-                        <div class="invalid-feedback">
-                          <span v-if="!$v.address.required">
-                            Address is required.</span>
-                            <span v-if="!$v.address.minLength">
-                              Address must have at least
-                        {{$v.address.$params.minLength.min}} characters.</span>
-                          <span v-if="!$v.address.maxLength">
-                              Address must have at most
-                        {{$v.address.params.maxLength.max}} characters.</span>
-                          <span v-if="!$v.address.alphaNum">
-                            Address Should contain numbers and string</span>
-                      </div-->
                     </div>
                     <div class="form-child-2">
                         <label>University</label>
                         <b-form-input
                             id="inline-form-input-university" required
                             class="input" type="text" v-model= 'form.university'>
-                            <!--v-model.lazy="$v.university.$model"
-                            :class="{ 'is-invalid': $v.university.$error,
-                            'is-valid': !$v.university.$invalid }"-->
                         </b-form-input>
-                        <!--div class="valid-feedback">University is valid</div>
-                        <div class="invalid-feedback">
-                          <span v-if="!$v.university.required">
-                            University is required.</span>
-                        </div-->
                     </div>
                 </div>
 
@@ -186,38 +127,14 @@
                         <b-form-input
                             id="inline-form-input-course" required
                             class="input" type="text" v-model= 'form.course'>
-                            <!--v-model.lazy="$v.course.$model"
-                            :class="{ 'is-invalid': $v.dob.$error,
-                            'is-valid': !$v.dob.$invalid }"-->
                         </b-form-input>
-                        <!--div class="valid-feedback">Course of study is valid</div>
-                        <div class="invalid-feedback">
-                          <span v-if="!$v.course.required">
-                            Course of study is required.</span>
-                            <span v-if="!$v.course.minLength">
-                              Course of study must have at least
-                        {{$v.course.$params.minLength.min}} characters.</span>
-                          <span v-if="!$v.course.maxLength">
-                              Course of study must have at most
-                        {{$v.course.params.maxLength.max}} characters.</span>
-                      </div-->
                     </div>
                     <div class="form-child-2">
                         <label>CGPA</label>
                         <b-form-input
                             id="inline-form-input-cgpa" required
                             class="input" type="text" v-model= 'form.cgpa'>
-                            <!--v-model.lazy="$v.cgpa.$model"
-                            :class="{ 'is-invalid': $v.cgpa.$error,
-                            'is-valid': !$v.cgpa.$invalid }"-->
                         </b-form-input>
-                        <!--div class="valid-feedback">CGPA is valid</div>
-                        <div class="invalid-feedback">
-                          <span v-if="!$v.cgpa.required">
-                            CGPA is required.</span>
-                          <span v-if="!$v.cgpa.decimal">
-                            CGPA should be in format 5.00</span>
-                      </div-->
                     </div>
                 </div>
             <div class="submit-bottom">
@@ -324,10 +241,13 @@ export default {
   },
   computed: {
     ...mapGetters(['currentApplicant']),
+    currApplicant() {
+      return this.currentApplicant;
+    },
   },
-  // mounted() {
-  //   this.loadUserDetail();
-  // },
+  mounted() {
+    console.log('appl', this.currApplicant);
+  },
 };
 </script>
 

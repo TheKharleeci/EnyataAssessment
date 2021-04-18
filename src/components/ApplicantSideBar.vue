@@ -9,7 +9,7 @@
       no-header shadow>
         <div class="sidebar-top">
           <b-img v-bind="profileImg" rounded="circle"
-          alt="Profile Image" :src= currentApplicant.picture
+          alt="Profile Image" :src="userPicture"
           class="mb-2">
           </b-img>
           <div class="text-white">
@@ -79,7 +79,13 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['loggedInUser', 'currentApplicant']),
+    ...mapGetters(['loggedInUser', 'currentApplicant', 'getUserData']),
+
+    // check this for Modupe including mapGetters
+    userPicture() {
+      return this.getUserData && this.getUserData.picture
+        ? this.getUserData.picture : this.currentApplicant.picture;
+    },
   },
 };
 </script>

@@ -23,7 +23,8 @@
               <b-col cols="1"></b-col>
               <b-col cols="3" class="text-left">
                 <p>Application Status</p>
-                <h2>{{ currentApplicant ["application_status"] }}</h2>
+                <!-- check this for Modupe-->
+                <h2>{{ userStatus }}</h2>
                 <span id="spanB"></span>
                 <h6>We will get back to you</h6>
               </b-col>
@@ -86,11 +87,19 @@ export default {
   //   },
   // },
   computed: {
-    ...mapGetters(['loggedInUser', 'currentApplicant', 'applicationDate', 'getAllQuestions', 'countQuestions', 'daysSinceReg']),
+    ...mapGetters(['loggedInUser', 'currentApplicant', 'applicationDate', 'getAllQuestions', 'countQuestions', 'daysSinceReg', 'getUserData']),
+    currApplicant() {
+      return this.currentApplicant;
+    },
+    // check this for Modupe, and the mapGetter
+    userStatus() {
+      return this.getUserData && this.getUserData.application_status
+        ? this.getUserData.application_status : this.currentApplicant.application_status;
+    },
   },
-  // mounted() {
-  //   this.loginUser();
-  // },
+  mounted() {
+    console.log('appl', this.currApplicant);
+  },
 };
 </script>
 
