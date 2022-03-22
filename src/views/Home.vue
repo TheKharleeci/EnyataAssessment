@@ -92,15 +92,15 @@ export default {
     document.head.appendChild(recaptchaScript);
 
     recaptchaScript.onload = () => {
-      this.authx = AuthX('ZKTIeE7KIfBcIg2Vy5P3ExGaM7qFllY9YN3TYirD', {
-        redirect_uri: 'https://tranquil-marigold-4376b7.netlify.app/',
-        locale: 'en',
-        isSpa: true,
-        onComplete: this.loginHandler,
-        onError(error) {
-          alert(error.message);
-        },
-      });
+      this.authx = AuthX("4suilDIhJxPM7JPzCTt5RrmlJIkfrgpmKtlY2D1Z", {
+            redirect_uri: "https://authx-academy.netlify.app/userlogin",
+            locale: 'en',
+            isSpa: true,
+            onComplete: loginHandler,
+            onError: function (error) {
+                alert(error.message)
+            }
+        })
       //this.login();
     }
   },
