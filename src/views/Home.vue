@@ -87,11 +87,11 @@ export default {
     };
   },
   mounted() {
-    const recaptchaScript = document.createElement('script');
-    recaptchaScript.setAttribute('src', 'https://ajs.radius.africa/authx.js');
-    document.head.appendChild(recaptchaScript);
+    const authXScript = document.createElement('script');
+    authXScript.setAttribute('src', 'https://ajs.radius.africa/authx.js');
+    document.head.appendChild(authXScript);
 
-    recaptchaScript.onload = () => {
+    authXScript.onload = () => {
       this.authx = AuthX("4suilDIhJxPM7JPzCTt5RrmlJIkfrgpmKtlY2D1Z", {
             redirect_uri: 'https://authx-academy.netlify.app/userlogin',
             locale: 'en',
