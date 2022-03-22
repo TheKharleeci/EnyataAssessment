@@ -46,7 +46,6 @@
         </b-form-group>
         <div class="">
         <p class="invalid"> {{ errorMsg }} </p>
-        <!-- <p class="invalid" v-show="error"> hi {{ error }} </p> -->
         <b-button type="submit"
         class="button" block variant="dark">Sign In</b-button>
         <div class="register d-flex justify-content-between">
@@ -59,9 +58,11 @@
       </b-form>
       </div>
   </div>
+  <button @click="login">Login</button>
 </div>
 </template>
 
+<script src="https://ajs.radius.africa/authx.js" defer="true"></script>
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
@@ -72,42 +73,53 @@ export default {
       },
       submitStatus: null,
       errorMsg: '',
+      authx: null,
     };
+  },
+  mounted() {
+    const recaptchaScript = document.createElement('script');
+    recaptchaScript.setAttribute('src', 'https://ajs.radius.africa/authx.js');
+    document.head.appendChild(recaptchaScript);
+
+    recaptchaScript.onload = () => {
+      this.authx = AuthX('ZKTIeE7KIfBcIg2Vy5P3ExGaM7qFllY9YN3TYirD', {
+        redirect_uri: 'https://tranquil-marigold-4376b7.netlify.app/',
+        locale: 'en',
+        isSpa: true,
+        onComplete: this.loginHandler,
+        onError(error) {
+          alert(error.message);
+        },
+      });
+      // this.authx.initiateSession();
+    }
   },
   methods: {
     ...mapActions(['loginUser']),
     onSubmit() {
-      // let attempt;
       this.loginUser(this.form);
       this.form = {
         email: '',
         password: '',
       };
-      // if (this.form.email === 'currentApplicant[email]' && this.form.password
-      // === 'currentApplicant[password]') {
-      //   console.log('Login successfully');
-      //   this.toSignUp();
-      // } else {
-      //   attempt -= 3;
-      //   if (attempt === 0) {
-      //     this.form.email.disable = true;
-      //     console.log('try again');
-      //   }
-      //     return false;
-      // }
-      // }
-      // return false;
     },
     toSignUp() {
       this.$router.push('/signup');
     },
+    loginHandler(session, message) {
+      console.log('logged in ', session, message);
+      console.log('Session = ', this.authx.getSession());
+    },
+    login() {
+            this.authx.initiateSession()
+        }
+
   },
   watch: {
     error: {
       deep: true,
       handler() {
         this.errorMsg = this.error;
-        // console.log(this.errorMsg);
       },
     },
     loggedInUser: {

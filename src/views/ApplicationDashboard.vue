@@ -189,7 +189,6 @@ export default {
   methods: {
     ...mapActions(['getUserDetail']),
     applicantRegister() {
-      console.log(this.form);
       this.getUserDetail(this.form);
       this.form = {
         firstName: '',
@@ -206,15 +205,6 @@ export default {
       };
       this.$router.push('/SuccessfulApplication');
     },
-    // watch: {
-    //   getUserDetail: {
-    //     deep: true,
-    //     handler() {
-    //       // this.isLoading = false;
-    //       this.$router.push('/client');
-    //     },
-    //   },
-    // },
     loadUserDetail(response) {
       this.autoGetDetail(this.users = response);
     },
@@ -224,15 +214,11 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-      console.log('form submitted');
       this.$router.push('/dashboard');
     },
     filesSelected(fileRecordsNewlySelected) {
-      console.log(fileRecordsNewlySelected);
       const validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
       this.form.cv = validFileRecords[0].file;
-      console.log(validFileRecords);
-      console.log(this.form.cv);
     },
     photosSelected(fileRecordsNewlySelected) {
       const validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
@@ -244,9 +230,6 @@ export default {
     currApplicant() {
       return this.currentApplicant;
     },
-  },
-  mounted() {
-    console.log('appl', this.currApplicant);
   },
 };
 </script>

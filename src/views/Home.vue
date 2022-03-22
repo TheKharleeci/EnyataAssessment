@@ -4,19 +4,15 @@
         <b-container>
       <div>
         <b-navbar toggleable="lg" type="light">
-    <b-navbar-brand href="#" class="logo">
-      <img src="../assets/enyatalogo.svg" alt="logo"></b-navbar-brand>
-    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-navbar-nav class="ml-auto">
         <b-nav-form>
           <div class="button-routes" >
           <a :href="'/'" class="link">Home</a>
           <a :href="'/userlogin'" class="link">Sign in</a>
-          <button class="register">
-          <a :href="'/signup'" class="link2">Register Now</a>
-          </button>
           </div>
+          <button @click="login()" class="register"> Register</button>
+
         </b-nav-form>
       </b-navbar-nav>
         </b-navbar>
@@ -28,8 +24,8 @@
         <div class="text">
           <h2>Ever had a Dream<br/><span>of Becoming a Software</span>
           <br/><span class="engineer">Engineer?</span></h2>
-          <p>Join enyata academy today and bring your long<br/> awaiting dream to reality.</p>
-          <a :href="'/signup'"><button>Register Now</button></a>
+          <p>Join authX academy today and bring your long<br/> awaiting dream to reality.</p>
+          <div><button @click="login">Login now</button> </div>
         </div>
         <div class="image">
           <img src="../assets/home-image.svg" alt="">
@@ -75,13 +71,51 @@
 
         <b-container fluid>
       <div id="footer">
-          <p>Copyright © Enyata 2021</p>
+          <p>Copyright © AuthX 2021</p>
       </div>
         </b-container>
     </div>
   </div>
 </template>
 
+<script src="https://ajs.radius.africa/authx.js" defer="true"></script>
+<script>
+export default {
+  data() {
+    return {
+      authx: null,
+    };
+  },
+  mounted() {
+    const recaptchaScript = document.createElement('script');
+    recaptchaScript.setAttribute('src', 'https://ajs.radius.africa/authx.js');
+    document.head.appendChild(recaptchaScript);
+
+    recaptchaScript.onload = () => {
+      this.authx = AuthX('ZKTIeE7KIfBcIg2Vy5P3ExGaM7qFllY9YN3TYirD', {
+        redirect_uri: 'https://tranquil-marigold-4376b7.netlify.app/',
+        locale: 'en',
+        isSpa: true,
+        onComplete: this.loginHandler,
+        onError(error) {
+          alert(error.message);
+        },
+      });
+      //this.login();
+    }
+  },
+  methods: {
+    loginHandler(session, message) {
+      console.log('logged in ', session, message);
+      console.log('Session = ', this.authx.getSession());
+    },
+    login() {
+      this.authx.initiateSession()
+    }
+  },
+};
+
+</script>
 <style scoped>
 .button-routes{
   display: flex;

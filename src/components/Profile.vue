@@ -140,10 +140,6 @@ export default {
     },
     save() {
       this.updateAdmin(this.admin);
-      // this.form = {
-      //   email: '',
-      //   password: '',
-      // };
     },
     photosSelected(fileRecordsNewlySelected) {
       const validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
