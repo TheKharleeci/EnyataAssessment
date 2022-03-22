@@ -11,7 +11,7 @@
           <a :href="'/'" class="link">Home</a>
           <a :href="'/userlogin'" class="link">Sign in</a>
           </div>
-          <button @click="login()" class="register"> Register</button>
+          <button class="register"> Register</button>
 
         </b-nav-form>
       </b-navbar-nav>
@@ -93,15 +93,14 @@ export default {
 
     recaptchaScript.onload = () => {
       this.authx = AuthX("4suilDIhJxPM7JPzCTt5RrmlJIkfrgpmKtlY2D1Z", {
-            redirect_uri: "https://authx-academy.netlify.app/userlogin",
+            redirect_uri: 'https://authx-academy.netlify.app/userlogin',
             locale: 'en',
             isSpa: true,
-            onComplete: loginHandler,
+            onComplete: this.loginHandler,
             onError: function (error) {
                 alert(error.message)
             }
         })
-      //this.login();
     }
   },
   methods: {
