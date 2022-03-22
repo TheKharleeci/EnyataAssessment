@@ -93,7 +93,7 @@ export default {
 
     authXScript.onload = () => {
       this.authx = AuthX("4suilDIhJxPM7JPzCTt5RrmlJIkfrgpmKtlY2D1Z", {
-            redirect_uri: 'https://authx-academy.netlify.app/userlogin',
+            redirect_uri: 'https://authx-academy.netlify.app',
             locale: 'en',
             isSpa: true,
             onComplete: this.loginHandler,
