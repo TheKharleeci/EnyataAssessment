@@ -250,7 +250,7 @@ export default new Vuex.Store({
     //   });
     //   console.log(response);
     // },
-    async submitAnswers({ getters }, payload) {
+    async submitAnswers({ commit, getters }, payload) {
       console.log('check', payload);
       const response = await axios.post('https://enyata-recruitment-portal.herokuapp.com/answers', { chosenAnsers: payload }, {
         headers: {
@@ -290,11 +290,6 @@ export default new Vuex.Store({
         console.log(test);
         commit('currentQuestion', currQuestion);
       }
-    },
-    selectAnswer({ commit }, payload) {
-      const currentAnswer = payload;
-      console.log(currentAnswer);
-      commit('collectUserAnswers', currentAnswer);
     },
 
     setNewQuestion({ commit, getters }, payload) {
@@ -450,7 +445,6 @@ export default new Vuex.Store({
       return item;
     },
 
-    getChosenAnswers: (state) => state.userAnswers,
     // check this for Modupe
     getUserData: (state) => state.userData,
 
